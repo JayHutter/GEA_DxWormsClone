@@ -70,9 +70,6 @@
     <ClInclude Include="GameObject2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="ImageGO2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="TextGO2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
@@ -154,6 +151,12 @@
     <ClInclude Include="RenderTarget.h">
       <Filter>Base\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGO2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="RenderTarget.cpp">
       <Filter>Base\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
