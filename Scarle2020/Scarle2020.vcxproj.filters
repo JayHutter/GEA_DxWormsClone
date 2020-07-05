@@ -44,6 +44,15 @@
     <Filter Include="Sound\Source">
       <UniqueIdentifier>{3a9a7c92-ea31-4c2b-a902-3a6fd59547bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Component">
+      <UniqueIdentifier>{bcb9c3e1-51c6-4bf0-9744-e9fd77975f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Component\Headers">
+      <UniqueIdentifier>{c30649d7-8872-48b1-b701-ff87e59d7b5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Component\Source">
+      <UniqueIdentifier>{2244ace4-8ea8-4180-aa77-bd32ee7241d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
