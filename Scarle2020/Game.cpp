@@ -19,6 +19,9 @@
 #include "SpriteFont.h"
 #include "CommonStates.h"
 
+//Objects
+#include "Worm.h"
+
 extern void ExitGame();
 
 using namespace DirectX;
@@ -163,9 +166,13 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GD->m_GS = GS_PLAY_MAIN_CAM;
 
     //example basic 2D stuff
-    ImageGO2D* logo = new ImageGO2D("logo_small", m_d3dDevice.Get());
-    logo->SetPos(200.0f * Vector2::One);
-    m_GameObjects2D.push_back(logo);
+    //ImageGO2D* logo = new ImageGO2D("wrong", m_d3dDevice.Get());
+    //logo->SetPos(200.0f * Vector2::One);
+    //m_GameObjects2D.push_back(logo);
+
+    Worm* test_worm = new Worm(m_d3dDevice.Get());
+    test_worm->SetPos(400 * Vector2::One);
+    m_GameObjects2D.push_back(test_worm);
 
     TextGO2D* text = new TextGO2D("Test Text");
     text->SetPos(Vector2(100, 10));

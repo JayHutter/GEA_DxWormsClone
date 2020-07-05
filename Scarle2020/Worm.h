@@ -7,7 +7,7 @@
 class Worm : public ImageGO2D
 {
 public:
-	Worm();
+	Worm(ID3D11Device* _GD);
 	~Worm() = default;
 
 	virtual void Tick(GameData* _GD);
