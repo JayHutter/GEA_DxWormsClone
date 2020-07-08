@@ -53,6 +53,15 @@
     <Filter Include="GameObjects\Component\Source">
       <UniqueIdentifier>{2244ace4-8ea8-4180-aa77-bd32ee7241d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Mangers">
+      <UniqueIdentifier>{c5798edc-391b-4a9f-994a-9604e0a5dced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Source">
+      <UniqueIdentifier>{193b80e3-2e2d-4861-b0bd-6dd773c118cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Header">
+      <UniqueIdentifier>{8bc0b96b-8c14-4683-8464-02f2a9b4d80c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -157,6 +166,18 @@
     <ClInclude Include="ImageGO2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysManager.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -233,6 +254,18 @@
     </ClCompile>
     <ClCompile Include="Worm.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysManager.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
