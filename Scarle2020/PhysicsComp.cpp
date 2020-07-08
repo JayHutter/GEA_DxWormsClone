@@ -15,7 +15,14 @@ void PhysicsComp::AddForce(Vector2 _force)
 	velocity += _force;
 }
 
-void PhysicsComp::ApplyGravity()
+void PhysicsComp::ApplyGravity(bool _falling)
 {
-	AddForce(Vector2(0, gravity));
+	if (_falling)
+	{
+		AddForce(Vector2(0, gravity));
+	}
+	else
+	{
+		AddForce(Vector2(0, -(velocity.y)));
+	}
 }

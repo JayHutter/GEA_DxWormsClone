@@ -120,7 +120,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     Stage* test_stage = new Stage(m_d3dDevice.Get());
     test_stage->SetScale(2);
-    m_GameObjects2D.push_back(test_stage);
+   // m_GameObjects2D.push_back(test_stage);
 
     TextGO2D* text = new TextGO2D("Object Setup Test - STATE SYSTEM NEEDED!!!");
     text->SetPos(Vector2(100, 10));
@@ -205,16 +205,13 @@ void Game::Update(DX::StepTimer const& _timer)
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
         (*it)->Tick(m_GD);
-    }
-    //Physics
-    for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
-    {
+
         if ((*it)->GetPhysComp())
         {
             (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
+            (*it)->GetPhysComp()->ApplyGravity((*it)->GetPos().y <= 600);
         }
     }
-
     elapsedTime;
 }
 
