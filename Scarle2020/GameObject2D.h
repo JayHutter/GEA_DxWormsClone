@@ -37,7 +37,8 @@ public:
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
 
 	PhysicsComp* GetPhysComp();
-	Vector2 GetPos() { return m_pos; };
+	Vector2 GetPos() { return m_pos; }
+	CollisionComp* GetCollider() { return c_collider; }
 	
 protected:
 	Vector2 m_pos;

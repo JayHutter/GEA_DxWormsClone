@@ -55,7 +55,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_mouse->SetWindow(_window);
     m_mouse->SetMode(Mouse::MODE_RELATIVE);
     //Hide the mouse pointer
-    ShowCursor(false);
+    ShowCursor(true);
 
     //seed the random number generator
     srand((UINT)time(NULL));
@@ -118,8 +118,12 @@ void Game::Initialize(HWND _window, int _width, int _height)
     test_worm->SetPos(Vector2(600, 100));
     m_GameObjects2D.push_back(test_worm);
 
-    Stage* test_stage = new Stage(m_d3dDevice.Get());
-    test_stage->SetScale(2);
+    test_stage = new Stage(m_d3dDevice.Get());
+
+    window_space.top = 0;
+    window_space.left = 0;
+    window_space.bottom = m_outputHeight;
+    window_space.right = m_outputWidth;
    // m_GameObjects2D.push_back(test_stage);
 
     TextGO2D* text = new TextGO2D("Object Setup Test - STATE SYSTEM NEEDED!!!");
@@ -145,7 +149,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
-    m_terrain = new RenderTarget(m_d3dDevice.Get(), 200, 200);
+    m_terrain = new RenderTarget(m_d3dDevice.Get(), 1280, 720);
 }
 
 // Executes the basic game loop.
@@ -197,7 +201,7 @@ void Game::Update(DX::StepTimer const& _timer)
         }
     }
 
-    //update all objects
+    //update all objects  TODO: Move to manager
     for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
     {
         (*it)->Tick(m_GD);
@@ -209,7 +213,16 @@ void Game::Update(DX::StepTimer const& _timer)
         if ((*it)->GetPhysComp())
         {
             (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
-            (*it)->GetPhysComp()->ApplyGravity((*it)->GetPos().y <= 600);
+            if ((*it)->GetCollider())
+            {
+                (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
+
+                if ((*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()))
+                {
+                    (*it)->SetPos(Vector2(0, 10));
+                }
+               
+            }
         }
     }
     elapsedTime;
@@ -244,13 +257,14 @@ void Game::Render()
     {
         (*it)->Draw(m_DD);
     }
-/*
+
     //Code potentially for drawing into the Terrain RenderTarget
     //Draw stuff to the render texture
     m_terrain->Begin(m_d3dContext.Get());
     m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
         //draw background stuff to begin with (probably only need to do this at the start of a level
+    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), window_space, nullptr, Colors::White);
     m_DD2D->m_Sprites->End();
     m_terrain->End(m_d3dContext.Get());
 
@@ -267,7 +281,7 @@ void Game::Render()
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
     m_DD2D->m_Sprites->End();
-*/
+
     // Draw sprite batch stuff 
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
@@ -278,7 +292,7 @@ void Game::Render()
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
     m_d3dContext->OMSetDepthStencilState(m_states->DepthDefault(), 0);
-
+    
     Present();
 }
 

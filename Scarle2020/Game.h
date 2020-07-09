@@ -11,6 +11,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Audio.h"
+#include "Stage.h"
 
 using std::list;
 
@@ -115,4 +116,7 @@ private:
 
     //base line for 2D destrucable terrain
     RenderTarget* m_terrain = NULL;
+
+    Stage* test_stage = nullptr; // new Stage(m_d3dDevice.Get());
+    RECT window_space;
 };

@@ -15,6 +15,8 @@ void PhysicsComp::AddForce(Vector2 _force)
 	velocity += _force;
 }
 
+//If falling apply gravity force
+//Otherwise apply resistance
 void PhysicsComp::ApplyGravity(bool _falling)
 {
 	if (_falling)
@@ -23,6 +25,6 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	}
 	else
 	{
-		AddForce(Vector2(0, -(velocity.y)));
+		AddForce(Vector2(-(velocity.x/10), -(velocity.y * 1.1F)));
 	}
 }

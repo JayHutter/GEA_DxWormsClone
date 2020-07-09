@@ -2,39 +2,21 @@
 #include <d3d11_1.h>
 #include <SimpleMath.h>
 #include <vector>
+#include <RenderTarget.h>
 
 using namespace DirectX;
 using namespace SimpleMath;
 
-/*
-Objects collision detection
-*/
-struct CollisionBox
-{
-	Vector2 pos_a = Vector2::Zero;
-	Vector2 pos_b = Vector2::Zero;
-};
-
-/*
-Collision box that damages hurt boxes (can add knockback)
-*/
-struct HitBox : public CollisionBox
-{
-	float damage = 0;
-	Vector2 knockback = Vector2::Zero;
-};
-
 class CollisionComp
 {
 public:
-	CollisionComp() = default;
+	CollisionComp(float _width, float _height);
 	~CollisionComp() = default;
 
-	void AddHurtbox(Vector2 _pos_a, Vector2 _pos_b);
-	void AddHitBox(Vector2 _pos_a, Vector2 _pos_b, float _dmg, Vector2 _kb);
+	bool TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 pos);
 
 private:
-	std::vector<CollisionBox> hurt_boxes;
-	std::vector<HitBox> hit_boxes;
+	RECT hitbox;
+
 };
 

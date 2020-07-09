@@ -17,8 +17,8 @@ public:
 
 private:
 	bool applyGrav = false;
-	float gravity = 9.0f;
-	Vector2 velocity = Vector2(100, 600); //Vector2::Zero;
+	float gravity = 1.0f;
+	Vector2 velocity = Vector2::Zero;
 
 	Vector2* pos = nullptr;
 };

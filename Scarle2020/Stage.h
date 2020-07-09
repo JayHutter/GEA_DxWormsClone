@@ -7,6 +7,6 @@ public:
 	Stage(ID3D11Device* _GD);
 	~Stage() = default;
 private:
-
+	
 };
 
