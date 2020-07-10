@@ -53,7 +53,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(_window);
-    m_mouse->SetMode(Mouse::MODE_RELATIVE);
+    m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
     //Hide the mouse pointer
     ShowCursor(true);
 
@@ -115,10 +115,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //m_GameObjects2D.push_back(logo);
 
     Worm* test_worm = new Worm(m_d3dDevice.Get());
-    test_worm->SetPos(Vector2(600, 100));
+    test_worm->SetPos(Vector2(50, 100));
     m_GameObjects2D.push_back(test_worm);
-
-    test_stage = new Stage(m_d3dDevice.Get());
 
     window_space.top = 0;
     window_space.left = 0;
@@ -149,7 +147,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
-    m_terrain = new RenderTarget(m_d3dDevice.Get(), 1280, 720);
+    m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
+    test_stage = new Stage(m_d3dDevice.Get());
 }
 
 // Executes the basic game loop.
@@ -191,14 +190,7 @@ void Game::Update(DX::StepTimer const& _timer)
     //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
     if (m_GD->m_KBS_tracker.pressed.Space)
     {
-        if (m_GD->m_GS == GS_PLAY_MAIN_CAM)
-        {
-            m_GD->m_GS = GS_PLAY_TPS_CAM;
-        }
-        else
-        {
-            m_GD->m_GS = GS_PLAY_MAIN_CAM;
-        }
+
     }
 
     //update all objects  TODO: Move to manager
@@ -212,19 +204,21 @@ void Game::Update(DX::StepTimer const& _timer)
 
         if ((*it)->GetPhysComp())
         {
-            (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
             if ((*it)->GetCollider())
             {
-                (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
-
-                if ((*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()))
+                //READ PIXEL TEST
+                if (m_GD->m_MS.rightButton && (*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
                 {
-                    (*it)->SetPos(Vector2(0, 10));
+                    (*it)->SetPos(Vector2(m_GD->m_MS.x, m_GD->m_MS.y));
                 }
-               
+
+                (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
             }
+
+            (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
         }
     }
+
     elapsedTime;
 }
 
@@ -239,8 +233,14 @@ void Game::Render()
 
     Clear();
 
+
+
+
+
+
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
+  
 
     //set which camera to be used
     m_DD->m_cam = m_cam;
@@ -263,24 +263,28 @@ void Game::Render()
     m_terrain->Begin(m_d3dContext.Get());
     m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //draw background stuff to begin with (probably only need to do this at the start of a level
-    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), window_space, nullptr, Colors::White);
+    //draw background stuff to begin with (probably only need to do this at the start of a level
+    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), XMFLOAT2(0.0f, 0.0f)); //, window_space, nullptr, Colors::White);
     m_DD2D->m_Sprites->End();
     m_terrain->End(m_d3dContext.Get());
 
     //Code potentially for digging from the Terrain
     //Destruction of the terrain
+
+    /*
     m_terrain->Begin(m_d3dContext.Get());
     m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
     m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
         //Draw Destruction here
     m_DD2D->m_Sprites->End();
     m_terrain->End(m_d3dContext.Get());
+    */
 
     //draw the terrain at the back
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
     m_DD2D->m_Sprites->End();
+
 
     // Draw sprite batch stuff 
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
@@ -316,7 +320,7 @@ void Game::Present()
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
     // frames that will never be displayed to the screen.
-    HRESULT hr = m_swapChain->Present(1, 0);
+     HRESULT hr = m_swapChain->Present(1, 0);
 
     // If the device was reset we must completely reinitialize the renderer.
     if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
@@ -563,5 +567,5 @@ void Game::ReadInput()
     //lock the cursor to the centre of the window
     RECT window;
     GetWindowRect(m_window, &window);
-    SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
+  //  SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
 }

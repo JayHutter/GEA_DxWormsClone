@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CollisionComp.h"
 
 CollisionComp::CollisionComp(float _width, float _height)
@@ -24,10 +25,14 @@ bool CollisionComp::TerrainCollision(RenderTarget* _render_target, ID3D11DeviceC
 	}
 	*/
 	_render_target->Map(_context);
-	float alpha = _render_target->GetPixel(pos.x, pos.y, _GD)->A();
+	
+	//Color* col = _render_target->GetPixel(500, 700, _GD);
+	Color* col = _render_target->GetPixel(pos.x, -pos.y, _GD);
+	
+	auto rgb = col->RGBA();
+	auto test = pos;
 
-	Color* col = _render_target->GetPixel(500, 700, _GD);
-	if (alpha > 0.0F)
+	if (col->A() > 0.0F)
 	{
 		_render_target->Unmap(_context);
 		return true;

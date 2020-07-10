@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PhysicsComp.h"
 
 PhysicsComp::PhysicsComp(Vector2* _position)
@@ -21,7 +22,8 @@ void PhysicsComp::ApplyGravity(bool _falling)
 {
 	if (_falling)
 	{
-		AddForce(Vector2(0, gravity));
+		//AddForce(Vector2(0, gravity));
+		velocity.y = 10;
 	}
 	else
 	{
