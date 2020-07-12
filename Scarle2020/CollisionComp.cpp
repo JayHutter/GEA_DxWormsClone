@@ -15,12 +15,9 @@ bool CollisionComp::TerrainCollision(RenderTarget* _render_target, ID3D11DeviceC
 	_render_target->Map(_context);
 	//The bitmap is a few pixels higher than the actual render : Uknown cause
 	const float collision_offset = 125;
-	Color* col = _render_target->GetPixel(pos.x, (-pos.y) + hitbox.bottom + collision_offset, _GD);
-	
-	auto rgb = col->RGBA();
-	auto test = pos;
+	auto alpha = _render_target->GetPixel(pos.x, (-pos.y) + hitbox.bottom + collision_offset, _GD)->A();
 
-	if (col->A() > 0.0F)
+	if (alpha > 0.0F)
 	{
 		_render_target->Unmap(_context);
 		return true;

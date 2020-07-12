@@ -202,10 +202,12 @@ void Game::Update(DX::StepTimer const& _timer)
             if ((*it)->GetCollider())
             {
                 //READ PIXEL TEST
+                /*
                 if (m_GD->m_MS.rightButton && !(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
                 {
                     (*it)->SetPos(Vector2(m_GD->m_MS.x, m_GD->m_MS.y));
                 }
+                */
 
                 (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
             }
@@ -230,7 +232,6 @@ void Game::Render()
 
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
-  
 
     //set which camera to be used
     m_DD->m_cam = m_cam;
@@ -254,27 +255,24 @@ void Game::Render()
     m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     //draw background stuff to begin with (probably only need to do this at the start of a level
-    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), XMFLOAT2(0.0f, 0.0f)); //, window_space, nullptr, Colors::White);
+    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), XMFLOAT2(0.0f, 0.0f));
     m_DD2D->m_Sprites->End();
     m_terrain->End(m_d3dContext.Get());
 
     //Code potentially for digging from the Terrain
     //Destruction of the terrain
 
-    /*
     m_terrain->Begin(m_d3dContext.Get());
     m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
     m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
         //Draw Destruction here
     m_DD2D->m_Sprites->End();
     m_terrain->End(m_d3dContext.Get());
-    */
 
     //draw the terrain at the back
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
     m_DD2D->m_Sprites->End();
-
 
     // Draw sprite batch stuff 
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());

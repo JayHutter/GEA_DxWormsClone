@@ -118,5 +118,4 @@ private:
     RenderTarget* m_terrain = NULL;
 
     Stage* test_stage = nullptr; // new Stage(m_d3dDevice.Get());
-    RECT window_space;
 };
