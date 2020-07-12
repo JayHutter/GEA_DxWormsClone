@@ -117,11 +117,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     Worm* test_worm = new Worm(m_d3dDevice.Get());
     test_worm->SetPos(Vector2(50, 100));
     m_GameObjects2D.push_back(test_worm);
-
-    window_space.top = 0;
-    window_space.left = 0;
-    window_space.bottom = m_outputHeight;
-    window_space.right = m_outputWidth;
    // m_GameObjects2D.push_back(test_stage);
 
     TextGO2D* text = new TextGO2D("Object Setup Test - STATE SYSTEM NEEDED!!!");
@@ -207,7 +202,7 @@ void Game::Update(DX::StepTimer const& _timer)
             if ((*it)->GetCollider())
             {
                 //READ PIXEL TEST
-                if (m_GD->m_MS.rightButton && (*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
+                if (m_GD->m_MS.rightButton && !(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
                 {
                     (*it)->SetPos(Vector2(m_GD->m_MS.x, m_GD->m_MS.y));
                 }
@@ -232,11 +227,6 @@ void Game::Render()
     }
 
     Clear();
-
-
-
-
-
 
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();

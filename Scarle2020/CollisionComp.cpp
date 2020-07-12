@@ -9,25 +9,13 @@ CollisionComp::CollisionComp(float _width, float _height)
 	hitbox.right = _width / 2;
 }
 
+//Test if pixel at bottom of hitbox has collided with visible stage
 bool CollisionComp::TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 pos)
 {
-	/*
-	for (int x = (pos.x + hitbox.left); x++; x < (pos.x + hitbox.right))
-	{
-		for (int y = (pos.y + hitbox.top); y++; y < (pos.y + hitbox.bottom))
-		{
-			Color* color = _render_target->GetPixel(x, y, _GD);
-			if (color && color->A() > 0)
-			{
-				return true;
-			}
-		}
-	}
-	*/
 	_render_target->Map(_context);
-	
-	//Color* col = _render_target->GetPixel(500, 700, _GD);
-	Color* col = _render_target->GetPixel(pos.x, -pos.y, _GD);
+	//The bitmap is a few pixels higher than the actual render : Uknown cause
+	const float collision_offset = 125;
+	Color* col = _render_target->GetPixel(pos.x, (-pos.y) + hitbox.bottom + collision_offset, _GD);
 	
 	auto rgb = col->RGBA();
 	auto test = pos;
