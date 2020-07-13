@@ -172,11 +172,11 @@
     <ClInclude Include="PhysicsComp.h">
       <Filter>GameObjects\Component\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="PhysManager.h">
-      <Filter>GameObjects\Mangers\Header</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionComp.h">
       <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,11 +261,11 @@
     <ClCompile Include="PhysicsComp.cpp">
       <Filter>GameObjects\Component\Source</Filter>
     </ClCompile>
-    <ClCompile Include="PhysManager.cpp">
-      <Filter>GameObjects\Mangers\Source</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionComp.cpp">
       <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

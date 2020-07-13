@@ -12,6 +12,7 @@
 #include "Mouse.h"
 #include "Audio.h"
 #include "Stage.h"
+#include "LevelManager.h"
 
 using std::list;
 
@@ -117,5 +118,9 @@ private:
     //base line for 2D destrucable terrain
     RenderTarget* m_terrain = NULL;
 
+    LevelManager* m_level = nullptr;
+
+    //Test Vars
     Stage* test_stage = nullptr; // new Stage(m_d3dDevice.Get());
+
 };
