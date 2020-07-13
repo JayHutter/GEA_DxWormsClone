@@ -123,8 +123,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
 
-    //m_timer.SetFixedTimeStep(true);
-    //m_timer.SetTargetElapsedSeconds(1.0 / 60);
+    m_timer.SetFixedTimeStep(true);
+    m_timer.SetTargetElapsedSeconds(1.0 / 60);
 
 
     //create RenderTarget for Terrain
@@ -191,6 +191,13 @@ void Game::Update(DX::StepTimer const& _timer)
         m_level->Update(m_GD);
         m_level->UpdatePhysics(m_terrain, m_d3dContext.Get(), m_GD);
     }
+
+    //Test object deletion
+    //if (m_GD->m_KBS_tracker.IsKeyPressed(Keyboard::Space))
+    //{
+    //    delete m_level;
+    //    m_level = nullptr;
+    //}
 
     elapsedTime;
 }

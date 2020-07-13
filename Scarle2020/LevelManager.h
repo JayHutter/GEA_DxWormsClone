@@ -19,7 +19,7 @@ class LevelManager
 {
 public:
 	LevelManager() = default;
-	~LevelManager() = default;
+	~LevelManager();
 
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
 
@@ -30,9 +30,11 @@ public:
 	Stage* GetStage();
 
 private:
-	std::vector<Team*> m_teams;
+	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
 
 	Stage* m_stage = nullptr;
+
+	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
 };
 
