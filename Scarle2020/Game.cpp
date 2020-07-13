@@ -184,24 +184,6 @@ void Game::Update(DX::StepTimer const& _timer)
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
         (*it)->Tick(m_GD);
-
-        if ((*it)->GetPhysComp())
-        {
-            if ((*it)->GetCollider())
-            {
-                //READ PIXEL TEST
-                /*
-                if (m_GD->m_MS.rightButton && !(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
-                {
-                    (*it)->SetPos(Vector2(m_GD->m_MS.x, m_GD->m_MS.y));
-                }
-                */
-
-                (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
-            }
-
-            (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
-        }
     }
 
     if (m_level)

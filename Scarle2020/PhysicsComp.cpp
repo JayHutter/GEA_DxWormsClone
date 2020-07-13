@@ -29,4 +29,7 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	{
 		AddForce(Vector2(-(velocity.x/10), -(velocity.y * 1.1F)));
 	}
+
+	//velocity.y = 50 * _falling;
+	
 }

@@ -35,6 +35,8 @@ void LevelManager::Update(GameData* _GD)
 
 void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD)
 {
+	_terrain->Map(_context);
+
 	for (auto obj : m_objects)
 	{
 		PhysicsComp* phys = obj->GetPhysComp();
@@ -44,12 +46,23 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		{
 			if (coll)
 			{
+				//if (coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos())) {}
+				//{
+				//	//GRAVITY
+				//	phys->ApplyGravity(false);
+				//}
+				//else
+				//{
+				//	phys->ApplyGravity(true);
+				//}
 				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()));
 			}
 
 			phys->ApplyVelocity(_GD->m_dt);
 		}
 	}
+
+	_terrain->Unmap(_context);
 }
 
 Stage* LevelManager::GetStage()
