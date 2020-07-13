@@ -30,11 +30,11 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	{
 		m_teams.push_back(Team());
 		m_teams.back().team_colour = default_colors[i];
-		for (int j = 0; j < 500; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			Worm* w = new Worm(_GD);
 			w->SetColour(m_teams.back().team_colour);
-			w->SetPos(Vector2((j * 2) + (200*i), 200 + (50 * i))); //Test Tint : will use hud instead
+			w->SetPos(Vector2(50 + (j * 50) + (300*i), 200)); //Test Tint : will use hud instead
 			m_teams.back().worms.push_back(w);
 			m_objects.push_back(w);	
 		}
@@ -69,16 +69,18 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		{
 			if (coll)
 			{
-				if (!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()))
-				{
-					phys->ApplyGravity(true);
-				}
-				else
-				{
-					phys->ApplyGravity(false);
-					float xpos = obj->GetPos().x;
-					obj->SetPos(Vector2(xpos, 50));
-				}
+				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()));
+
+				//if (!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()))
+				//{
+				//	phys->ApplyGravity(true);
+				//}
+				//else
+				//{
+				//	phys->ApplyGravity(false);
+				//	float xpos = obj->GetPos().x;
+				//	obj->SetPos(Vector2(xpos, 50));
+				//}
 			}
 
 			phys->ApplyVelocity(_GD->m_dt);

@@ -34,7 +34,7 @@ private:
 	std::vector<GameObject2D*> m_objects;
 
 	Stage* m_stage = nullptr;
-
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
+	int m_current_team = 0;
 };
 
