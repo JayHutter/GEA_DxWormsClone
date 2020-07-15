@@ -102,11 +102,47 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 				//}
 
 				//phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
-				std::array<int, 4> collision_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
-				phys->ApplyGravity(collision_data[1] == 0);
+				std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
+				phys->ApplyGravity(coll_data[0] == 0);
+				
+				for (auto val : coll_data)
+				{
+					if (val > 0)
+					{
+						std::array<int, 4> debug = coll_data;
+					}
+				}	
 
+				//Calculate normal to collision
+				Vector2 coll_vect = Vector2::Zero;
+
+				if (coll_data[3] > coll_data[2])
+				{
+					coll_vect.x = coll_data[3] * -1;
+				}
+				else if (coll_data[2] > coll_data[3])
+				{
+					coll_vect.x = coll_data[2];
+				}
+
+				if (coll_data[1] > coll_data[0])
+				{
+					coll_vect.y = coll_data[1];
+				}
+				else if (coll_data[0] > coll_data[1])
+				{
+					coll_vect.y = coll_data[0] * -1;
+				}
+
+				if (coll_vect != Vector2::Zero)
+				{
+					//auto debug = coll_data;
+					//auto debug1 = coll_vect;
+					phys->SetVelocity(coll_vect); //Set as test
+				}
+
+				
 			}
-
 			phys->ApplyVelocity(_GD->m_dt);
 		}
 	}

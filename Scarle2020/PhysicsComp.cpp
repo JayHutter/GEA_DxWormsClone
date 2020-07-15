@@ -42,9 +42,9 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	}
 	else
 	{
-		velocity.y = -gravity;
+		//velocity.y = -gravity;
 		//Friction
-		AddForce(Vector2(-(velocity.x/10), 0));
+		//AddForce(Vector2(-(velocity.x/10), 0));
 	}
 
 	//velocity.y = 50 * _falling;
@@ -59,6 +59,11 @@ void PhysicsComp::ResultantForce()
 void PhysicsComp::MultiplyVelocity(Vector2 _force)
 {
 	velocity *= _force;
+}
+
+void PhysicsComp::ReactionForce(Vector2 _collider)
+{
+	Vector2 normal = XMVector2Orthogonal(_collider);
 }
 
 bool PhysicsComp::MovingRight()

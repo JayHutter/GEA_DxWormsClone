@@ -26,6 +26,8 @@ public:
 	bool MovingDown();
 	bool MovingUp();
 
+	void ReactionForce(Vector2 _collider);
+
 private:
 	bool applyGrav = false;
 	float gravity = 10.0f;
