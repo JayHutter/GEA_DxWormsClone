@@ -190,6 +190,7 @@ void Game::Update(DX::StepTimer const& _timer)
     {
         m_level->Update(m_GD);
         m_level->UpdatePhysics(m_terrain, m_d3dContext.Get(), m_GD);
+        m_level->Input(m_GD);
     }
 
     //Test object deletion

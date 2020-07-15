@@ -26,6 +26,7 @@ public:
 	void RenderObjects(DrawData2D* _DD);
 	void Update(GameData* _GD);
 	void UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD);
+	void Input(GameData* _GD);
 
 	Stage* GetStage();
 
@@ -35,6 +36,6 @@ private:
 
 	Stage* m_stage = nullptr;
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
-	int m_current_team = 0;
+	int m_active[2] = { 0, 3 }; //{Team, Worm}
 };
 

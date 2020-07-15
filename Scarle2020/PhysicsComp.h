@@ -13,6 +13,10 @@ public:
 
 	void ApplyVelocity(float _gt);
 	void AddForce(Vector2 _force);
+	void SetVelocity(Vector2 _force);
+	void SetVelocityX(float _force);
+	void SetVelocutyY(float _force);
+
 	void ApplyGravity(bool _falling);
 
 private:

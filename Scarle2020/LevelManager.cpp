@@ -53,7 +53,7 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 
 void LevelManager::Update(GameData* _GD)
 {
-
+	 
 }
 
 void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD)
@@ -70,7 +70,6 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 			if (coll)
 			{
 				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()));
-
 				//if (!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()))
 				//{
 				//	phys->ApplyGravity(true);
@@ -93,4 +92,34 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 Stage* LevelManager::GetStage()
 {
 	return m_stage;
+}
+
+void LevelManager::Input(GameData* _GD)
+{
+	auto key = _GD->m_KBS_tracker;
+	auto worm = m_teams[m_active[0]].worms[m_active[1]];
+
+	if (_GD->m_KBS.D)
+	{
+		worm->GetPhysComp()->SetVelocityX(20);
+	}
+	else if (_GD->m_KBS.A)
+	{
+		worm->GetPhysComp()->SetVelocityX(-20);
+	}
+
+	if (key.IsKeyReleased(Keyboard::Space))
+	{
+		Vector2 force = Vector2(0, -300);
+		if (_GD->m_KBS.D)
+		{
+			force.x = 300;
+		}
+		else if (_GD->m_KBS.A)
+		{
+			force.x = -300;
+		}
+
+		worm->GetPhysComp()->AddForce(force);
+	}
 }
