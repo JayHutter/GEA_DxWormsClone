@@ -50,3 +50,49 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	//velocity.y = 50 * _falling;
 	
 }
+
+void PhysicsComp::ResultantForce()
+{
+	velocity *= -0.5f;
+}
+
+void PhysicsComp::MultiplyVelocity(Vector2 _force)
+{
+	velocity *= _force;
+}
+
+bool PhysicsComp::MovingRight()
+{
+	if (velocity.x > 0.5)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool PhysicsComp::MovingLeft()
+{
+	if (velocity.x < 0.5)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool PhysicsComp::MovingDown()
+{
+	if (velocity.y > 0.5)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool PhysicsComp::MovingUp()
+{
+	if (velocity.y < 0.5)
+	{
+		return true;
+	}
+	return false;
+}

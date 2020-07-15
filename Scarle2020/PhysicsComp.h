@@ -16,8 +16,15 @@ public:
 	void SetVelocity(Vector2 _force);
 	void SetVelocityX(float _force);
 	void SetVelocutyY(float _force);
+	void ResultantForce();
+	void MultiplyVelocity(Vector2 _force);
 
 	void ApplyGravity(bool _falling);
+	
+	bool MovingRight();
+	bool MovingLeft();
+	bool MovingDown();
+	bool MovingUp();
 
 private:
 	bool applyGrav = false;

@@ -36,6 +36,6 @@ private:
 
 	Stage* m_stage = nullptr;
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
-	int m_active[2] = { 0, 3 }; //{Team, Worm}
+	int m_active[2] = { 3, 0 }; //{Team, Worm}
 };
 

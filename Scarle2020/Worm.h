@@ -12,6 +12,8 @@ public:
 	~Worm() = default;
 
 	virtual void Tick(GameData* _GD);
+	void Move(float _dir);
+
 
 private:
 };

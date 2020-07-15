@@ -68,18 +68,40 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		if (phys)
 		{
 			if (coll)
-			{
-				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()));
-				//if (!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos()))
-				//{
-				//	phys->ApplyGravity(true);
-				//}
-				//else
-				//{
-				//	phys->ApplyGravity(false);
-				//	float xpos = obj->GetPos().x;
-				//	obj->SetPos(Vector2(xpos, 50));
-				//}
+			{				
+				//This works but is messy 
+				//Test below and to side they are moving
+				if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Positive))
+				{
+					phys->MultiplyVelocity(Vector2(-0.5, 0));
+				}
+				if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Positive))
+				{
+					phys->MultiplyVelocity(Vector2(0.5, 0));
+					phys->AddForce(Vector2(0, -15));
+
+				}
+				else if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(),Side::Positive, Side::Positive))
+				{
+					phys->AddForce(Vector2(0, -8));
+				}
+
+				if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Negative))
+				{
+					phys->MultiplyVelocity(Vector2(-0.5, 0));
+				}
+				else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Negative))
+				{
+					phys->MultiplyVelocity(Vector2(0.5, 0));
+					phys->AddForce(Vector2(0, -15));
+				}
+				else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Negative))
+				{
+					phys->AddForce(Vector2(0, -8));
+				}
+
+				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
+
 			}
 
 			phys->ApplyVelocity(_GD->m_dt);
@@ -121,5 +143,17 @@ void LevelManager::Input(GameData* _GD)
 		}
 
 		worm->GetPhysComp()->AddForce(force);
+	}
+	
+	//DEBUG : Worm swap
+	if (key.IsKeyPressed(Keyboard::Tab))
+	{
+		if (m_active[1] == 3)
+		{
+			m_active[0] += 1;
+			m_active[0] %= 4;
+		}
+		m_active[1] += 1;
+		m_active[1] %= 4;
 	}
 }
