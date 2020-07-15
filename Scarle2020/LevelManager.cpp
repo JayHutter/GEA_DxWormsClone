@@ -69,38 +69,41 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		{
 			if (coll)
 			{				
+				//coll->UpdateHitbox(obj->GetPos());
 				//This works but is messy 
 				//Test below and to side they are moving
-				if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Positive))
-				{
-					phys->MultiplyVelocity(Vector2(-0.5, 0));
-				}
-				if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Positive))
-				{
-					phys->MultiplyVelocity(Vector2(0.5, 0));
-					phys->AddForce(Vector2(0, -15));
+				//if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Positive))
+				//{
+				//	phys->MultiplyVelocity(Vector2(-0.5, 0));
+				//}
+				//if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Positive))
+				//{
+				//	phys->MultiplyVelocity(Vector2(0.5, 0));
+				//	phys->AddForce(Vector2(0, -15));
+				//
+				//}
+				//else if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(),Side::Positive, Side::Positive))
+				//{
+				//	phys->AddForce(Vector2(0, -8));
+				//}
+				//
+				//if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Negative))
+				//{
+				//	phys->MultiplyVelocity(Vector2(-0.5, 0));
+				//}
+				//else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Negative))
+				//{
+				//	phys->MultiplyVelocity(Vector2(0.5, 0));
+				//	phys->AddForce(Vector2(0, -15));
+				//}
+				//else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Negative))
+				//{
+				//	phys->AddForce(Vector2(0, -8));
+				//}
 
-				}
-				else if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(),Side::Positive, Side::Positive))
-				{
-					phys->AddForce(Vector2(0, -8));
-				}
-
-				if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Negative))
-				{
-					phys->MultiplyVelocity(Vector2(-0.5, 0));
-				}
-				else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Negative))
-				{
-					phys->MultiplyVelocity(Vector2(0.5, 0));
-					phys->AddForce(Vector2(0, -15));
-				}
-				else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Negative))
-				{
-					phys->AddForce(Vector2(0, -8));
-				}
-
-				phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
+				//phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
+				std::array<int, 4> collision_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
+				phys->ApplyGravity(collision_data[1] == 0);
 
 			}
 
