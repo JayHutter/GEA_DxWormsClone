@@ -84,7 +84,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //find how big my window is to correctly calculate my aspect ratio
     float AR = (float)_width / (float)_height;
-
+        
+    /*
     //create a base camera
     m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
     m_cam->SetPos(Vector3(0.0f, 200.0f, 200.0f));
@@ -104,25 +105,11 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_DD->m_states = m_states;
     m_DD->m_cam = m_cam;
     m_DD->m_light = m_light;
+    */
 
     //create GameData struct and populate its pointers
     m_GD = new GameData;
     m_GD->m_GS = GS_PLAY_MAIN_CAM;
-
-    //example basic 2D stuff
-    //ImageGO2D* logo = new ImageGO2D("wrong", m_d3dDevice.Get());
-    //logo->SetPos(200.0f * Vector2::One);
-    //m_GameObjects2D.push_back(logo);
-
-    Worm* test_worm = new Worm(m_d3dDevice.Get());
-    test_worm->SetPos(Vector2(50, 100));
-    m_GameObjects2D.push_back(test_worm);
-   // m_GameObjects2D.push_back(test_stage);
-
-    TextGO2D* text = new TextGO2D("Object Setup Test - STATE SYSTEM NEEDED!!!");
-    text->SetPos(Vector2(100, 10));
-    text->SetColour(Color((float*)&Colors::Yellow));
-    m_GameObjects2D.push_back(text);
 
     //Test Sounds
     //Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
@@ -135,15 +122,18 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
+
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
+
 
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
     m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
     test_stage = new Stage(m_d3dDevice.Get());
+
+    m_level = new LevelManager();
+    m_level->SetupLevel("test_stage", 4, m_d3dDevice.Get());
 }
 
 // Executes the basic game loop.
@@ -183,38 +173,32 @@ void Game::Update(DX::StepTimer const& _timer)
     ReadInput();
     //upon space bar switch camera state
     //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
-    if (m_GD->m_KBS_tracker.pressed.Space)
-    {
-
-    }
 
     //update all objects  TODO: Move to manager
+    /*
     for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
     {
         (*it)->Tick(m_GD);
     }
+    */
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
         (*it)->Tick(m_GD);
-
-        if ((*it)->GetPhysComp())
-        {
-            if ((*it)->GetCollider())
-            {
-                //READ PIXEL TEST
-                /*
-                if (m_GD->m_MS.rightButton && !(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, Vector2(m_GD->m_MS.x, m_GD->m_MS.y)))
-                {
-                    (*it)->SetPos(Vector2(m_GD->m_MS.x, m_GD->m_MS.y));
-                }
-                */
-
-                (*it)->GetPhysComp()->ApplyGravity(!(*it)->GetCollider()->TerrainCollision(m_terrain, m_d3dContext.Get(), m_GD, (*it)->GetPos()));
-            }
-
-            (*it)->GetPhysComp()->ApplyVelocity(m_GD->m_dt);
-        }
     }
+
+    if (m_level)
+    {
+        m_level->Update(m_GD);
+        m_level->UpdatePhysics(m_terrain, m_d3dContext.Get(), m_GD);
+        m_level->Input(m_GD);
+    }
+
+    //Test object deletion
+    //if (m_GD->m_KBS_tracker.IsKeyPressed(Keyboard::Space))
+    //{
+    //    delete m_level;
+    //    m_level = nullptr;
+    //}
 
     elapsedTime;
 }
@@ -230,6 +214,7 @@ void Game::Render()
 
     Clear();
 
+    /*
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
 
@@ -248,39 +233,48 @@ void Game::Render()
     {
         (*it)->Draw(m_DD);
     }
+    
+    */
 
-    //Code potentially for drawing into the Terrain RenderTarget
-    //Draw stuff to the render texture
-    m_terrain->Begin(m_d3dContext.Get());
-    m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
-    m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-    //draw background stuff to begin with (probably only need to do this at the start of a level
-    m_DD2D->m_Sprites->Draw(test_stage->GetTexture(), XMFLOAT2(0.0f, 0.0f));
-    m_DD2D->m_Sprites->End();
-    m_terrain->End(m_d3dContext.Get());
-
-    //Code potentially for digging from the Terrain
-    //Destruction of the terrain
-
-    m_terrain->Begin(m_d3dContext.Get());
-    m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
-    m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
-        //Draw Destruction here
-    m_DD2D->m_Sprites->End();
-    m_terrain->End(m_d3dContext.Get());
-
-    //draw the terrain at the back
-    m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-    m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
-    m_DD2D->m_Sprites->End();
-
-    // Draw sprite batch stuff 
+    // Draw sprite batch stuff
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
         (*it)->Draw(m_DD2D);
     }
     m_DD2D->m_Sprites->End();
+
+    if (m_level)
+    {
+        //Code potentially for drawing into the Terrain RenderTarget
+        //Draw stuff to the render texture
+        m_terrain->Begin(m_d3dContext.Get());
+        m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
+        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        //draw background stuff to begin with (probably only need to do this at the start of a level
+        m_DD2D->m_Sprites->Draw(m_level->GetStage()->GetTexture(), XMFLOAT2(0.0f, 0.0f));
+        m_DD2D->m_Sprites->End();
+        m_terrain->End(m_d3dContext.Get());
+
+        //Code potentially for digging from the Terrain
+        //Destruction of the terrain
+
+        m_terrain->Begin(m_d3dContext.Get());
+        m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
+        m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
+        //Draw Destruction here
+        m_DD2D->m_Sprites->End();
+        m_terrain->End(m_d3dContext.Get());
+
+        //draw the terrain at the back
+        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
+        m_DD2D->m_Sprites->End();
+
+        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        m_level->RenderObjects(m_DD2D);
+        m_DD2D->m_Sprites->End();
+    }
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
     m_d3dContext->OMSetDepthStencilState(m_states->DepthDefault(), 0);

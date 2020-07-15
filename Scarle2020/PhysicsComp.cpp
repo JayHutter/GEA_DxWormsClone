@@ -16,6 +16,21 @@ void PhysicsComp::AddForce(Vector2 _force)
 	velocity += _force;
 }
 
+void PhysicsComp::SetVelocity(Vector2 _force)
+{
+	velocity = _force;
+}
+
+void PhysicsComp::SetVelocityX(float _force)
+{
+	velocity.x = _force;
+}
+
+void PhysicsComp::SetVelocutyY(float _force)
+{
+	velocity.y = _force;
+}
+
 //If falling apply gravity force
 //Otherwise apply resistance
 void PhysicsComp::ApplyGravity(bool _falling)
@@ -27,6 +42,11 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	}
 	else
 	{
-		AddForce(Vector2(-(velocity.x/10), -(velocity.y * 1.1F)));
+		velocity.y = -gravity;
+		//Friction
+		AddForce(Vector2(-(velocity.x/10), 0));
 	}
+
+	//velocity.y = 50 * _falling;
+	
 }
