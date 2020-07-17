@@ -78,14 +78,20 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		{
 			if (coll)
 			{				
-				//phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
 				std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
 
 				//Calculate normal to collision
 				if (coll_data != std::array<int, 4>{0, 0, 0, 0})
 				{
-					//phys->SetVelocity(coll->CalculateNormal(coll_data)); //Set as test
-					phys->ReactionForce(coll->CalculateNormal(coll_data));						
+					//Move object if stuck in wall
+					if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
+					{		
+						phys->SetVelocity(coll->CalculateNormal(coll_data));
+					}
+					else //apply resistive forces
+					{
+						phys->ReactionForce(coll->CalculateNormal(coll_data));
+					}
 				}	
 				phys->ApplyGravity(coll_data[0] < 4); 
 			}

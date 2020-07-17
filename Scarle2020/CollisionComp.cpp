@@ -117,8 +117,7 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 		}
 	}
 
-	return pixels;
-	
+	return pixels;	
 }
 
 Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
