@@ -11,6 +11,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Audio.h"
+#include "Stage.h"
+#include "LevelManager.h"
 
 using std::list;
 
@@ -115,4 +117,7 @@ private:
 
     //base line for 2D destrucable terrain
     RenderTarget* m_terrain = NULL;
+
+    LevelManager* m_level = nullptr;
+
 };

@@ -2,5 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ImageContentTask Include="logo_small.png" />
+    <ImageContentTask Include="default.png" />
+    <ImageContentTask Include="worm.png" />
+    <ImageContentTask Include="test_stage.png" />
+    <ImageContentTask Include="test_stage2.png" />
   </ItemGroup>
 </Project>

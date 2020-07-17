@@ -149,6 +149,18 @@
   <ItemGroup>
     <ImageContentTask Include="logo_small.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="worm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="test_stage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="test_stage2.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

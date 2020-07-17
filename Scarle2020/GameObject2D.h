@@ -8,6 +8,8 @@
 #include <d3d11_1.h>
 #include "SimpleMath.h"
 #include <string>
+#include "PhysicsComp.h"
+#include "CollisionComp.h"
 
 using namespace DirectX;
 using namespace SimpleMath;
@@ -34,6 +36,10 @@ public:
 	void SetScale(float _scale) { m_scale = _scale * Vector2::One; }
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
 
+	PhysicsComp* GetPhysComp();
+	Vector2 GetPos() { return m_pos; }
+	CollisionComp* GetCollider() { return c_collider; }
+	
 protected:
 	Vector2 m_pos;
 	float m_rotation;
@@ -41,6 +47,8 @@ protected:
 	Color m_colour;
 	Vector2 m_origin;
 
+	PhysicsComp *c_phys = nullptr;
+	CollisionComp* c_collider = nullptr;
 };
 
 
