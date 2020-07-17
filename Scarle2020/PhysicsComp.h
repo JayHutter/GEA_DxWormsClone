@@ -35,6 +35,7 @@ public:
 private:
 	void ControlSpeed();
 	float Speed();
+	void ApplyFriction(Vector2 _normal);
 
 	bool applyGrav = false;
 	float gravity = 10;
@@ -44,5 +45,6 @@ private:
 	Vector2* pos = nullptr;
 	float max_speed = 1000;
 	float min_speed = 11;
+	float mu = 0.3f; //Coefficient of friction
 };
 

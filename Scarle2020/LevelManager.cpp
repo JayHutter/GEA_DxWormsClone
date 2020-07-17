@@ -91,7 +91,6 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 			}
 			phys->ApplyVelocity(_GD->m_dt);
 		}
-
 	}
 
 	DebugRender();
@@ -111,10 +110,12 @@ void LevelManager::Input(GameData* _GD)
 
 	if (_GD->m_KBS.D)
 	{
+		//worm->GetPhysComp()->AddForce(Vector2(11, 0));
 		worm->GetPhysComp()->SetVelocityX(50);
 	}
 	else if (_GD->m_KBS.A)
 	{
+		//worm->GetPhysComp()->AddForce(Vector2(-11, 0));
 		worm->GetPhysComp()->SetVelocityX(-50);
 	}
 
@@ -123,11 +124,11 @@ void LevelManager::Input(GameData* _GD)
 		Vector2 force = Vector2(0, -300);
 		if (_GD->m_KBS.D)
 		{
-			force.x = 200;
+			force.x = 300;
 		}
 		else if (_GD->m_KBS.A)
 		{
-			force.x = -200;
+			force.x = -300;
 		}
 
 		worm->GetPhysComp()->AddForce(force);

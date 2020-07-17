@@ -26,15 +26,6 @@ void PhysicsComp::ApplyGravity(bool _falling)
 	{
 		AddForce(Vector2(0, gravity));
 	}
-	else
-	{
-		if (aerial)
-		{
-			//velocity = Vector2::Zero;
-		}
-		//Friction
-		AddForce(Vector2(-(velocity.x/2), 0));
-	}
 
 	aerial = _falling;
 }
@@ -89,6 +80,11 @@ void PhysicsComp::ReactionForce(Vector2 _normal)
 	float mag = Speed();
 	velocity.Normalize();
 	_normal.Normalize();
+
+	if (aerial)
+	{
+		ApplyFriction(_normal);
+	}
 
 	//Dont add normal if moving away
 	if ((velocity.x > 0 && _normal.x > 0) || (velocity.x < 0 && _normal.x < 0))
@@ -170,4 +166,13 @@ void PhysicsComp::ControlSpeed()
 float PhysicsComp::Speed()
 {
 	return sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+}
+
+void PhysicsComp::ApplyFriction(Vector2 _normal)
+{
+	_normal.Normalize();
+	_normal *= Speed();
+
+	float friction = mu * _normal.x;
+	velocity.x -= friction;
 }
