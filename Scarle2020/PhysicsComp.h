@@ -23,9 +23,7 @@ public:
 	void AddForce(Vector2 _force);
 	void MultiplyVelocity(Vector2 _force);
 	void MultiplyVelocity(float _power);
-	void ResultantForce();
 	void ReactionForce(Vector2 _normal);
-	void Impulse(Vector2 _force);
 
 	bool MovingRight();
 	bool MovingLeft();
@@ -35,11 +33,15 @@ public:
 	Vector2 GetVel() { return velocity; }
 
 private:
+	void ControlSpeed();
+
 	bool applyGrav = false;
 	float gravity = 10;
 	Vector2 velocity = Vector2::Zero;
 	bool aerial = true;
 
 	Vector2* pos = nullptr;
+	float max_speed = 1000;
+	float min_speed = 10;
 };
 

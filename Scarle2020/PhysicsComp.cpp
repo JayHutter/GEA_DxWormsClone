@@ -8,16 +8,9 @@ PhysicsComp::PhysicsComp(Vector2* _position)
 
 void PhysicsComp::ApplyVelocity(float _gt)
 {
-	*pos += velocity * _gt;
+	ControlSpeed();
 
-	if (velocity.x <= 5 && velocity.x >= -5)
-	{
-		velocity.x = 0;
-	}
-	if (velocity.y <= 5 && velocity.y >= -5)
-	{
-		velocity.y = 0;
-	}
+	*pos += velocity * _gt;
 }
 
 //If falling apply gravity force
@@ -94,30 +87,14 @@ void PhysicsComp::MultiplyVelocity(float _power)
 	velocity *= _power;
 }
 
-void PhysicsComp::ResultantForce()
-{
-	velocity *= -0.5f;
-}
-
 void PhysicsComp::ReactionForce(Vector2 _normal)
 {
-	//Only apply impulse once
-	if (true)
-	{
-		_normal.Normalize();
-		float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
-		_normal *= gravity;
-		//_normal *= 50;
+	_normal.Normalize();
+	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+	_normal *= gravity;
 
-		AddForce(_normal);
-	}	
+	AddForce(_normal);
 }
-
-void PhysicsComp::Impulse(Vector2 _force)
-{
-
-}
-
 
 bool PhysicsComp::MovingRight()
 {
@@ -153,4 +130,19 @@ bool PhysicsComp::MovingUp()
 		return true;
 	}
 	return false;
+}
+
+
+void PhysicsComp::ControlSpeed()
+{
+	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+	if (mag < min_speed && mag > -min_speed)
+	{
+		velocity = Vector2::Zero;
+	}
+	else if (mag > max_speed || mag < -max_speed)
+	{
+		velocity.Normalize();
+		velocity *= max_speed;
+	}
 }

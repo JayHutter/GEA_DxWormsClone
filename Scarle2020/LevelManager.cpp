@@ -78,10 +78,8 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 				if (coll_data != std::array<int, 4>{0, 0, 0, 0})
 				{
 					//phys->SetVelocity(coll->CalculateNormal(coll_data)); //Set as test
-						
+					phys->ReactionForce(coll->CalculateNormal(coll_data));						
 				}	
-
-				phys->ReactionForce(coll->CalculateNormal(coll_data));
 				phys->ApplyGravity(coll_data[0] == 0);
 			}
 			phys->ApplyVelocity(_GD->m_dt);
@@ -103,11 +101,11 @@ void LevelManager::Input(GameData* _GD)
 
 	if (_GD->m_KBS.D)
 	{
-		worm->GetPhysComp()->SetVelocityX(20);
+		worm->GetPhysComp()->SetVelocityX(50);
 	}
 	else if (_GD->m_KBS.A)
 	{
-		worm->GetPhysComp()->SetVelocityX(-20);
+		worm->GetPhysComp()->SetVelocityX(-50);
 	}
 
 	if (key.IsKeyReleased(Keyboard::Space))
@@ -144,6 +142,6 @@ void LevelManager::DebugRender(DrawData2D* _GD)
 
 	Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
 
-	debug_text->SetText(std::to_string(vel.x) + ", " + std::to_string(vel.y));
+	debug_text->SetText("[" + std::to_string(m_active[1]) + "] - " + std::to_string(vel.x) + ", " + std::to_string(vel.y));
 	debug_text->SetColour(m_teams[m_active[0]].team_colour);
 }
