@@ -19,7 +19,7 @@ struct Team
 class LevelManager
 {
 public:
-	LevelManager() = default;
+	LevelManager();
 	~LevelManager();
 
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
@@ -34,11 +34,13 @@ public:
 private:
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
-	void DebugRender(DrawData2D* _GD);
+	void DebugRender();
+	void ShowFrames(float _gt);
 
 	Stage* m_stage = nullptr;
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
 	int m_active[2] = { 1, 0 }; //{Team, Worm}
 	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
+	TextGO2D *frame_text = new TextGO2D("0");
 };
 

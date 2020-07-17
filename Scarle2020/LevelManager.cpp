@@ -3,6 +3,15 @@
 #include "DrawData2D.h"
 #include "GameData.h"
 
+LevelManager::LevelManager()
+{
+	frame_text->SetPos(Vector2(1000, 100));
+	frame_text->SetColour(Color(Colors::HotPink));
+
+	m_objects.push_back(debug_text);
+	m_objects.push_back(frame_text);
+}
+
 LevelManager::~LevelManager()
 {
 	for (auto obj : m_objects)
@@ -49,13 +58,11 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 	{
 		obj->Draw(_DD);
 	}
-
-	DebugRender(_DD);
 }
 
 void LevelManager::Update(GameData* _GD)
 {
-	 
+	ShowFrames(_GD->m_dt);
 }
 
 void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD)
@@ -80,11 +87,14 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 					//phys->SetVelocity(coll->CalculateNormal(coll_data)); //Set as test
 					phys->ReactionForce(coll->CalculateNormal(coll_data));						
 				}	
-				phys->ApplyGravity(coll_data[0] == 0);
+				phys->ApplyGravity(coll_data[0] < 4); 
 			}
 			phys->ApplyVelocity(_GD->m_dt);
 		}
+
 	}
+
+	DebugRender();
 
 	_terrain->Unmap(_context);
 }
@@ -136,12 +146,15 @@ void LevelManager::Input(GameData* _GD)
 	}
 }
 
-void LevelManager::DebugRender(DrawData2D* _GD)
+void LevelManager::DebugRender()
 {	
-	m_objects.push_back(debug_text);
-
 	Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
 
 	debug_text->SetText("[" + std::to_string(m_active[1]) + "] - " + std::to_string(vel.x) + ", " + std::to_string(vel.y));
 	debug_text->SetColour(m_teams[m_active[0]].team_colour);
+}
+
+void LevelManager::ShowFrames(float _gt)
+{
+	frame_text->SetText(std::to_string(1/_gt));
 }

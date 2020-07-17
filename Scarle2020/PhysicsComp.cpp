@@ -11,6 +11,11 @@ void PhysicsComp::ApplyVelocity(float _gt)
 	ControlSpeed();
 
 	*pos += velocity * _gt;
+
+	if (aerial)
+	{
+		ApplyGravity(aerial);
+	}
 }
 
 //If falling apply gravity force
@@ -19,27 +24,19 @@ void PhysicsComp::ApplyGravity(bool _falling)
 {
 	if (_falling)
 	{
-		//AddForce(Vector2(0, gravity));
-		//velocity.y = 10;
-		//velocity.y = gravity;
 		AddForce(Vector2(0, gravity));
 	}
 	else
 	{
 		if (aerial)
 		{
-			velocity = Vector2::Zero;
+			//velocity = Vector2::Zero;
 		}
-		//velocity.y = -gravity;		
 		//Friction
 		AddForce(Vector2(-(velocity.x/2), 0));
-		//MultiplyVelocity(Vector2(-0.7f, 1));
 	}
 
 	aerial = _falling;
-
-	//velocity.y = 50 * _falling;
-
 }
 
 
@@ -61,7 +58,7 @@ void PhysicsComp::SetVelocutyY(float _force)
 void PhysicsComp::SetVelocityDir(Vector2 _velocity)
 {
 	_velocity.Normalize();
-	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+	float mag = Speed();
 	velocity = mag * _velocity;
 }
 
@@ -89,11 +86,22 @@ void PhysicsComp::MultiplyVelocity(float _power)
 
 void PhysicsComp::ReactionForce(Vector2 _normal)
 {
+	float mag = Speed();
+	velocity.Normalize();
 	_normal.Normalize();
-	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
-	_normal *= gravity;
+
+	//Dont add normal if moving away
+	if ((velocity.x > 0 && _normal.x > 0) || (velocity.x < 0 && _normal.x < 0))
+	{
+		_normal.x = 0;
+	}
+	if ((velocity.y > 0 && _normal.y > 0) || (velocity.y < 0 && _normal.y < 0))
+	{
+		_normal.y = 0;
+	}
 
 	AddForce(_normal);
+	velocity *= mag;
 }
 
 bool PhysicsComp::MovingRight()
@@ -135,14 +143,31 @@ bool PhysicsComp::MovingUp()
 
 void PhysicsComp::ControlSpeed()
 {
-	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
-	if (mag < min_speed && mag > -min_speed)
+	if (false)
 	{
-		velocity = Vector2::Zero;
+		return;
 	}
-	else if (mag > max_speed || mag < -max_speed)
+
+	if (velocity.x < min_speed && velocity.x > -min_speed)
 	{
-		velocity.Normalize();
-		velocity *= max_speed;
+		velocity.x = 0;
 	}
+	if (velocity.y < min_speed && velocity.y > -min_speed)
+	{
+		velocity.y = 0;
+	}
+
+	if (velocity.x > max_speed || velocity.x < -max_speed)
+	{
+		velocity.x = max_speed;
+	}
+	if (velocity.y > max_speed || velocity.y < -max_speed)
+	{
+		velocity.y = max_speed;
+	}
+}
+
+float PhysicsComp::Speed()
+{
+	return sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
 }

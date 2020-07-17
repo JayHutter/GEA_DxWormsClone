@@ -34,6 +34,7 @@ public:
 
 private:
 	void ControlSpeed();
+	float Speed();
 
 	bool applyGrav = false;
 	float gravity = 10;
@@ -42,6 +43,6 @@ private:
 
 	Vector2* pos = nullptr;
 	float max_speed = 1000;
-	float min_speed = 10;
+	float min_speed = 11;
 };
 
