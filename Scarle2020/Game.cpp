@@ -132,7 +132,10 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
 
     m_level = new LevelManager();
-    m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
+    m_level->SetupLevel("test_stage", 4, m_d3dDevice.Get());
+
+    alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
+    alpha->SetPos(Vector2(600, 600));
 }
 
 // Executes the basic game loop.
@@ -262,6 +265,7 @@ void Game::Render()
         m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
         m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
         //Draw Destruction here
+        alpha->Draw(m_DD2D);
         m_DD2D->m_Sprites->End();
         m_terrain->End(m_d3dContext.Get());
 
@@ -269,7 +273,8 @@ void Game::Render()
         m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
         m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
         m_DD2D->m_Sprites->End();
-
+   
+        //Draw exsiting objects
         m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
         m_level->RenderObjects(m_DD2D);
         m_DD2D->m_Sprites->End();

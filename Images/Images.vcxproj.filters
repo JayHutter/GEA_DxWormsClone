@@ -6,5 +6,6 @@
     <ImageContentTask Include="worm.png" />
     <ImageContentTask Include="test_stage.png" />
     <ImageContentTask Include="test_stage2.png" />
+    <ImageContentTask Include="alpha_test.png" />
   </ItemGroup>
 </Project>

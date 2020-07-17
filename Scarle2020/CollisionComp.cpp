@@ -105,6 +105,7 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 	for (int y = _pos.y + hitbox.top; y < _pos.y + hitbox.bottom; y++)
 	{
 		auto alpha = _render_target->GetPixel(_pos.x + hitbox.left, y + collision_offset, _GD)->A();
+
 		if (alpha > 0.0f)
 		{
 			pixels[2] ++;

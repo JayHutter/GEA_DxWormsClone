@@ -120,4 +120,6 @@ private:
 
     LevelManager* m_level = nullptr;
 
+    ImageGO2D* alpha = nullptr;
+
 };
