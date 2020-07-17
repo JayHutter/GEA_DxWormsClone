@@ -131,3 +131,33 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 //	hitbox.top = _pos.y + half_height;
 //	hitbox.bottom = _pos.y - half_height;
 //}
+
+Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
+{
+	Vector2 normal = Vector2::Zero;
+
+	if (_collisions[3] > _collisions[2])
+	{
+		normal.x = _collisions[3] * -1;
+	}
+	else if (_collisions[2] > _collisions[3])
+	{
+		normal.x = _collisions[2];
+	}
+
+	if (_collisions[1] > _collisions[0])
+	{
+		normal.y = _collisions[1];
+	}
+	else if (_collisions[0] > _collisions[1])
+	{
+		normal.y = _collisions[0] * -1;
+	}
+
+	if (_collisions[1] == _collisions[0])
+	{
+		normal.y = _collisions[1] * -1;
+	}
+
+	return normal;
+}

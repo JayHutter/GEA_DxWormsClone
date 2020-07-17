@@ -9,12 +9,46 @@ PhysicsComp::PhysicsComp(Vector2* _position)
 void PhysicsComp::ApplyVelocity(float _gt)
 {
 	*pos += velocity * _gt;
+
+	if (velocity.x <= 5 && velocity.x >= -5)
+	{
+		velocity.x = 0;
+	}
+	if (velocity.y <= 5 && velocity.y >= -5)
+	{
+		velocity.y = 0;
+	}
 }
 
-void PhysicsComp::AddForce(Vector2 _force)
+//If falling apply gravity force
+//Otherwise apply resistance
+void PhysicsComp::ApplyGravity(bool _falling)
 {
-	velocity += _force;
+	if (_falling)
+	{
+		//AddForce(Vector2(0, gravity));
+		//velocity.y = 10;
+		//velocity.y = gravity;
+		AddForce(Vector2(0, gravity));
+	}
+	else
+	{
+		if (aerial)
+		{
+			velocity = Vector2::Zero;
+		}
+		//velocity.y = -gravity;		
+		//Friction
+		AddForce(Vector2(-(velocity.x/2), 0));
+		//MultiplyVelocity(Vector2(-0.7f, 1));
+	}
+
+	aerial = _falling;
+
+	//velocity.y = 50 * _falling;
+
 }
+
 
 void PhysicsComp::SetVelocity(Vector2 _force)
 {
@@ -31,29 +65,23 @@ void PhysicsComp::SetVelocutyY(float _force)
 	velocity.y = _force;
 }
 
-//If falling apply gravity force
-//Otherwise apply resistance
-void PhysicsComp::ApplyGravity(bool _falling)
+void PhysicsComp::SetVelocityDir(Vector2 _velocity)
 {
-	if (_falling)
-	{
-		AddForce(Vector2(0, gravity));
-		//velocity.y = 10;
-	}
-	else
-	{
-		//velocity.y = -gravity;
-		//Friction
-		//AddForce(Vector2(-(velocity.x/10), 0));
-	}
-
-	//velocity.y = 50 * _falling;
-	
+	_velocity.Normalize();
+	float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+	velocity = mag * _velocity;
 }
 
-void PhysicsComp::ResultantForce()
+void PhysicsComp::SetSpeed(float _speed)
 {
-	velocity *= -0.5f;
+	velocity.Normalize();
+	velocity *= _speed;
+}
+
+
+void PhysicsComp::AddForce(Vector2 _force)
+{
+	velocity += _force;
 }
 
 void PhysicsComp::MultiplyVelocity(Vector2 _force)
@@ -61,10 +89,35 @@ void PhysicsComp::MultiplyVelocity(Vector2 _force)
 	velocity *= _force;
 }
 
-void PhysicsComp::ReactionForce(Vector2 _collider)
+void PhysicsComp::MultiplyVelocity(float _power)
 {
-	Vector2 normal = XMVector2Orthogonal(_collider);
+	velocity *= _power;
 }
+
+void PhysicsComp::ResultantForce()
+{
+	velocity *= -0.5f;
+}
+
+void PhysicsComp::ReactionForce(Vector2 _normal)
+{
+	//Only apply impulse once
+	if (true)
+	{
+		_normal.Normalize();
+		float mag = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+		_normal *= gravity;
+		//_normal *= 50;
+
+		AddForce(_normal);
+	}	
+}
+
+void PhysicsComp::Impulse(Vector2 _force)
+{
+
+}
+
 
 bool PhysicsComp::MovingRight()
 {

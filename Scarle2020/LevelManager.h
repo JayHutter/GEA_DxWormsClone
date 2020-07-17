@@ -7,6 +7,7 @@
 #include "Stage.h"
 #include "GameObject2D.h"
 #include "ImageGO2D.h"
+#include "TextGO2D.h"
 
 
 struct Team
@@ -33,9 +34,11 @@ public:
 private:
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
+	void DebugRender(DrawData2D* _GD);
 
 	Stage* m_stage = nullptr;
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
-	int m_active[2] = { 3, 0 }; //{Team, Worm}
+	int m_active[2] = { 1, 0 }; //{Team, Worm}
+	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
 };
 

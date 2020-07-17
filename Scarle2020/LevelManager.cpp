@@ -49,6 +49,8 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 	{
 		obj->Draw(_DD);
 	}
+
+	DebugRender(_DD);
 }
 
 void LevelManager::Update(GameData* _GD)
@@ -69,79 +71,18 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		{
 			if (coll)
 			{				
-				//coll->UpdateHitbox(obj->GetPos());
-				//This works but is messy 
-				//Test below and to side they are moving
-				//if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Positive))
-				//{
-				//	phys->MultiplyVelocity(Vector2(-0.5, 0));
-				//}
-				//if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Positive))
-				//{
-				//	phys->MultiplyVelocity(Vector2(0.5, 0));
-				//	phys->AddForce(Vector2(0, -15));
-				//
-				//}
-				//else if (phys->MovingRight() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(),Side::Positive, Side::Positive))
-				//{
-				//	phys->AddForce(Vector2(0, -8));
-				//}
-				//
-				//if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Negative, Side::Negative))
-				//{
-				//	phys->MultiplyVelocity(Vector2(-0.5, 0));
-				//}
-				//else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Center, Side::Negative))
-				//{
-				//	phys->MultiplyVelocity(Vector2(0.5, 0));
-				//	phys->AddForce(Vector2(0, -15));
-				//}
-				//else if (phys->MovingLeft() && coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Negative))
-				//{
-				//	phys->AddForce(Vector2(0, -8));
-				//}
-
 				//phys->ApplyGravity(!coll->TerrainCollision(_terrain, _context, _GD, obj->GetPos(), Side::Positive, Side::Center));
 				std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
-				phys->ApplyGravity(coll_data[0] == 0);
-				
-				for (auto val : coll_data)
-				{
-					if (val > 0)
-					{
-						std::array<int, 4> debug = coll_data;
-					}
-				}	
 
 				//Calculate normal to collision
-				Vector2 coll_vect = Vector2::Zero;
+				if (coll_data != std::array<int, 4>{0, 0, 0, 0})
+				{
+					//phys->SetVelocity(coll->CalculateNormal(coll_data)); //Set as test
+						
+				}	
 
-				if (coll_data[3] > coll_data[2])
-				{
-					coll_vect.x = coll_data[3] * -1;
-				}
-				else if (coll_data[2] > coll_data[3])
-				{
-					coll_vect.x = coll_data[2];
-				}
-
-				if (coll_data[1] > coll_data[0])
-				{
-					coll_vect.y = coll_data[1];
-				}
-				else if (coll_data[0] > coll_data[1])
-				{
-					coll_vect.y = coll_data[0] * -1;
-				}
-
-				if (coll_vect != Vector2::Zero)
-				{
-					//auto debug = coll_data;
-					//auto debug1 = coll_vect;
-					phys->SetVelocity(coll_vect); //Set as test
-				}
-
-				
+				phys->ReactionForce(coll->CalculateNormal(coll_data));
+				phys->ApplyGravity(coll_data[0] == 0);
 			}
 			phys->ApplyVelocity(_GD->m_dt);
 		}
@@ -174,11 +115,11 @@ void LevelManager::Input(GameData* _GD)
 		Vector2 force = Vector2(0, -300);
 		if (_GD->m_KBS.D)
 		{
-			force.x = 300;
+			force.x = 200;
 		}
 		else if (_GD->m_KBS.A)
 		{
-			force.x = -300;
+			force.x = -200;
 		}
 
 		worm->GetPhysComp()->AddForce(force);
@@ -195,4 +136,14 @@ void LevelManager::Input(GameData* _GD)
 		m_active[1] += 1;
 		m_active[1] %= 4;
 	}
+}
+
+void LevelManager::DebugRender(DrawData2D* _GD)
+{	
+	m_objects.push_back(debug_text);
+
+	Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
+
+	debug_text->SetText(std::to_string(vel.x) + ", " + std::to_string(vel.y));
+	debug_text->SetColour(m_teams[m_active[0]].team_colour);
 }

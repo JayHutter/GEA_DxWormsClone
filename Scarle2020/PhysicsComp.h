@@ -12,26 +12,33 @@ public:
 	~PhysicsComp() = default;
 
 	void ApplyVelocity(float _gt);
-	void AddForce(Vector2 _force);
+	void ApplyGravity(bool _falling);
+
 	void SetVelocity(Vector2 _force);
 	void SetVelocityX(float _force);
 	void SetVelocutyY(float _force);
-	void ResultantForce();
-	void MultiplyVelocity(Vector2 _force);
+	void SetVelocityDir(Vector2 _velocity);
+	void SetSpeed(float _speed);
 
-	void ApplyGravity(bool _falling);
-	
+	void AddForce(Vector2 _force);
+	void MultiplyVelocity(Vector2 _force);
+	void MultiplyVelocity(float _power);
+	void ResultantForce();
+	void ReactionForce(Vector2 _normal);
+	void Impulse(Vector2 _force);
+
 	bool MovingRight();
 	bool MovingLeft();
 	bool MovingDown();
 	bool MovingUp();
 
-	void ReactionForce(Vector2 _collider);
+	Vector2 GetVel() { return velocity; }
 
 private:
 	bool applyGrav = false;
-	float gravity = 10.0f;
+	float gravity = 10;
 	Vector2 velocity = Vector2::Zero;
+	bool aerial = true;
 
 	Vector2* pos = nullptr;
 };
