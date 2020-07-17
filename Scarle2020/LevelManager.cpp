@@ -29,6 +29,14 @@ LevelManager::~LevelManager()
 	{
 		t.worms.clear();
 	}
+
+	for (auto d : destruction)
+	{
+		delete d;
+		d = nullptr;
+	}
+
+	destruction.clear();
 	
 	m_teams.clear();
 }
@@ -60,6 +68,14 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 	}
 }
 
+void LevelManager::RenderDestruction(DrawData2D* _DD)
+{
+	for (auto mask : destruction)
+	{
+		mask->Draw(_DD);
+	}
+}
+
 void LevelManager::Update(GameData* _GD)
 {
 	ShowFrames(_GD->m_dt);
@@ -74,9 +90,9 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		PhysicsComp* phys = obj->GetPhysComp();
 		CollisionComp* coll = obj->GetCollider();
 
-		if (phys)
+		if (coll)
 		{
-			if (coll)
+			if (phys)
 			{				
 				std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
 
@@ -94,14 +110,22 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 					}
 				}	
 				phys->ApplyGravity(coll_data[0] < 4); 
-			}
-			phys->ApplyVelocity(_GD->m_dt);
+				phys->ApplyVelocity(_GD->m_dt);
+			}		
 		}
 	}
 
 	DebugRender();
 
 	_terrain->Unmap(_context);
+}
+
+void LevelManager::DestroyStage(ID3D11Device* _DD, GameData* _GD)
+{
+	if (_GD->m_MS.rightButton)
+	{
+		destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y)));
+	}
 }
 
 Stage* LevelManager::GetStage()

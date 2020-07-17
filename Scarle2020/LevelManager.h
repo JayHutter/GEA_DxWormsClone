@@ -8,6 +8,7 @@
 #include "GameObject2D.h"
 #include "ImageGO2D.h"
 #include "TextGO2D.h"
+#include "DestructionMask.h"
 
 
 struct Team
@@ -25,8 +26,10 @@ public:
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
 
 	void RenderObjects(DrawData2D* _DD);
+	void RenderDestruction(DrawData2D* _DD);
 	void Update(GameData* _GD);
 	void UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD);
+	void DestroyStage(ID3D11Device* _DD, GameData* _GD);
 	void Input(GameData* _GD);
 
 	Stage* GetStage();
@@ -42,5 +45,7 @@ private:
 	int m_active[2] = { 1, 0 }; //{Team, Worm}
 	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
 	TextGO2D *frame_text = new TextGO2D("0");
+
+	std::vector<DestructionMask*> destruction;
 };
 

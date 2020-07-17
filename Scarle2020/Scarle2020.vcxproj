@@ -169,6 +169,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="CMOGO.h" />
     <ClInclude Include="CollisionComp.h" />
+    <ClInclude Include="DestructionMask.h" />
     <ClInclude Include="DrawData.h" />
     <ClInclude Include="DrawData2D.h" />
     <ClInclude Include="fileVBGO.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="CollisionComp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="DestructionMask.cpp" />
     <ClCompile Include="fileVBGO.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameobject.cpp" />

@@ -178,6 +178,9 @@
     <ClInclude Include="LevelManager.h">
       <Filter>GameObjects\Mangers\Header</Filter>
     </ClInclude>
+    <ClInclude Include="DestructionMask.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="LevelManager.cpp">
       <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DestructionMask.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

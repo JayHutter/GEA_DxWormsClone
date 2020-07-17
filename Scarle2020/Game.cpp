@@ -192,6 +192,7 @@ void Game::Update(DX::StepTimer const& _timer)
     {
         m_level->Update(m_GD);
         m_level->UpdatePhysics(m_terrain, m_d3dContext.Get(), m_GD);
+        m_level->DestroyStage(m_d3dDevice.Get(), m_GD);
         m_level->Input(m_GD);
     }
 
@@ -265,7 +266,7 @@ void Game::Render()
         m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
         m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
         //Draw Destruction here
-        alpha->Draw(m_DD2D);
+        m_level->RenderDestruction(m_DD2D);
         m_DD2D->m_Sprites->End();
         m_terrain->End(m_d3dContext.Get());
 
