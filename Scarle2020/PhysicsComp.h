@@ -46,5 +46,6 @@ private:
 	float max_speed = 1000;
 	float min_speed = 11;
 	float mu = 0.3f; //Coefficient of friction
+	float bounce_multiplier = 0;
 };
 

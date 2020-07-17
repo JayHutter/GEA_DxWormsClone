@@ -96,6 +96,8 @@ void PhysicsComp::ReactionForce(Vector2 _normal)
 		_normal.y = 0;
 	}
 
+	_normal += _normal * bounce_multiplier;
+
 	AddForce(_normal);
 	velocity *= mag;
 }
