@@ -49,7 +49,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 		}
 	}
 
-	m_stage = new Stage(_GD);
+	m_stage = new Stage(_GD, _name);
 }
 
 void LevelManager::RenderObjects(DrawData2D* _DD)
@@ -108,30 +108,33 @@ void LevelManager::Input(GameData* _GD)
 	auto key = _GD->m_KBS_tracker;
 	auto worm = m_teams[m_active[0]].worms[m_active[1]];
 
-	if (_GD->m_KBS.D)
+	if (worm->GetPhysComp()->AirTime() < 0.15f)
 	{
-		//worm->GetPhysComp()->AddForce(Vector2(11, 0));
-		worm->GetPhysComp()->SetVelocityX(50);
-	}
-	else if (_GD->m_KBS.A)
-	{
-		//worm->GetPhysComp()->AddForce(Vector2(-11, 0));
-		worm->GetPhysComp()->SetVelocityX(-50);
-	}
-
-	if (key.IsKeyReleased(Keyboard::Space))
-	{
-		Vector2 force = Vector2(0, -300);
 		if (_GD->m_KBS.D)
 		{
-			force.x = 300;
+			//worm->GetPhysComp()->AddForce(Vector2(11, 0));
+			worm->GetPhysComp()->SetVelocityX(50);
 		}
 		else if (_GD->m_KBS.A)
 		{
-			force.x = -300;
+			//worm->GetPhysComp()->AddForce(Vector2(-11, 0));
+			worm->GetPhysComp()->SetVelocityX(-50);
 		}
 
-		worm->GetPhysComp()->AddForce(force);
+		if (key.IsKeyReleased(Keyboard::Space))
+		{
+			Vector2 force = Vector2(0, -300);
+			if (_GD->m_KBS.D)
+			{
+				force.x = 300;
+			}
+			else if (_GD->m_KBS.A)
+			{
+				force.x = -300;
+			}
+
+			worm->GetPhysComp()->AddForce(force);
+		}
 	}
 	
 	//DEBUG : Worm swap
@@ -157,5 +160,5 @@ void LevelManager::DebugRender()
 
 void LevelManager::ShowFrames(float _gt)
 {
-	frame_text->SetText(std::to_string(1/_gt));
+	frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
 }

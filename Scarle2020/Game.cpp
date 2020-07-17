@@ -130,10 +130,9 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
     m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
-    test_stage = new Stage(m_d3dDevice.Get());
 
     m_level = new LevelManager();
-    m_level->SetupLevel("test_stage", 4, m_d3dDevice.Get());
+    m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
 }
 
 // Executes the basic game loop.

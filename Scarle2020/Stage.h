@@ -4,7 +4,7 @@
 class Stage : public ImageGO2D
 {
 public:
-	Stage(ID3D11Device* _GD);
+	Stage(ID3D11Device* _GD, string _name);
 	~Stage() = default;
 private:
 	

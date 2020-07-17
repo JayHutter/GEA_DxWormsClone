@@ -121,20 +121,12 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 	
 }
 
-//void CollisionComp::UpdateHitbox(Vector2 _pos)
-//{
-//	float half_width = (hitbox.right - hitbox.left) / 2;
-//	float half_height = (hitbox.bottom - hitbox.top) / 2;
-//
-//	hitbox.left = _pos.x - half_width;
-//	hitbox.right = _pos.x + half_width;
-//	hitbox.top = _pos.y + half_height;
-//	hitbox.bottom = _pos.y - half_height;
-//}
-
 Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
 {
 	Vector2 normal = Vector2::Zero;
+
+	float half_height = (hitbox.bottom - hitbox.top) / 2;
+	float half_width = (hitbox.right - hitbox.left) / 2;
 
 	if (_collisions[3] > _collisions[2])
 	{
@@ -154,9 +146,21 @@ Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
 		normal.y = _collisions[0] * -1;
 	}
 
-	if (_collisions[1] == _collisions[0])
+	//if the object is stuck in the terrain, shoot them upwards
+	if (_collisions[0] > half_width && _collisions[1] > half_width &&
+		_collisions[2] > half_height && _collisions[3] > half_height)
 	{
-		normal.y = _collisions[1] * -1;
+		normal.x = 0;
+		normal.y = -2 * (hitbox.bottom - hitbox.top);
+	}
+	//Prevent worms from climbing walls
+	else if (_collisions[3] == hitbox.bottom - hitbox.top)
+	{
+		normal.x = _collisions[3] * -5;
+	}
+	else if (_collisions[2] == hitbox.bottom - hitbox.top)
+	{
+		normal.x = _collisions[2] * 5;
 	}
 
 	return normal;

@@ -120,7 +120,4 @@ private:
 
     LevelManager* m_level = nullptr;
 
-    //Test Vars
-    Stage* test_stage = nullptr; // new Stage(m_d3dDevice.Get());
-
 };

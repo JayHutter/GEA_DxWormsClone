@@ -13,6 +13,7 @@ public:
 
 	void ApplyVelocity(float _gt);
 	void ApplyGravity(bool _falling);
+	void ApplyGravity(bool _falling, float _gt);
 
 	void SetVelocity(Vector2 _force);
 	void SetVelocityX(float _force);
@@ -30,6 +31,8 @@ public:
 	bool MovingDown();
 	bool MovingUp();
 
+	float AirTime() { return air_time; }
+
 	Vector2 GetVel() { return velocity; }
 
 private:
@@ -44,8 +47,10 @@ private:
 
 	Vector2* pos = nullptr;
 	float max_speed = 1000;
-	float min_speed = 11;
+	float min_speed = 10;
 	float mu = 0.3f; //Coefficient of friction
 	float bounce_multiplier = 0;
+
+	float air_time = 0;
 };
 

@@ -2,6 +2,6 @@
 #include "Stage.h"
 
 
-Stage::Stage(ID3D11Device* _GD) : ImageGO2D("test_stage", _GD)
+Stage::Stage(ID3D11Device* _GD, string _name) : ImageGO2D(_name, _GD)
 {
 }	
