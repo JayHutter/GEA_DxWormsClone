@@ -25,15 +25,16 @@ LevelManager::~LevelManager()
 
 	m_objects.clear();
 
-	for (auto t : m_teams)
-	{
-		t.worms.clear();
-	}
+	m_teams.clear();
 
 	for (auto d : destruction)
 	{
-		delete d;
-		d = nullptr;
+		if (d)
+		{
+			delete d;
+			d = nullptr;
+		}
+		
 	}
 
 	destruction.clear();
@@ -45,16 +46,15 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 {
 	for (int i=0; i<_teams; i++)
 	{
-		m_teams.push_back(Team());
-		m_teams.back().team_colour = default_colors[i];
-		for (int j = 0; j < 4; j++)
-		{
-			Worm* w = new Worm(_GD, m_teams.back().team_colour, "Worm " + std::to_string(j+1));
-			w->SetColour(m_teams.back().team_colour);
-			w->SetPos(Vector2(50 + (j * 50) + (300*i), 200)); //Test Tint : will use hud instead
-			m_teams.back().worms.push_back(w);
-			m_objects.push_back(w);	
-		}
+		m_teams.push_back(Team(_GD, 4, default_colors[i], m_objects));
+		//for (int j = 0; j < 4; j++)
+		//{
+		//	Worm* w = new Worm(_GD, m_teams.back().team_colour, "Worm " + std::to_string(j+1));
+		//	w->SetColour(m_teams.back().team_colour);
+		//	w->SetPos(Vector2(50 + (j * 50) + (300*i), 200)); //Test Tint : will use hud instead
+		//	m_teams.back().worms.push_back(w);
+		//	m_objects.push_back(w);	
+		//}
 	}
 
 	m_stage = new Stage(_GD, _name);
@@ -67,7 +67,8 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		obj->Draw(_DD);
 	}
 
-	m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
+	m_teams[m_active].GetWorm()->DrawHUD(_DD);
+	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 
 void LevelManager::RenderDestruction(DrawData2D* _DD)
@@ -143,7 +144,7 @@ Stage* LevelManager::GetStage()
 void LevelManager::Input(GameData* _GD)
 {
 	auto key = _GD->m_KBS_tracker;
-	auto worm = m_teams[m_active[0]].worms[m_active[1]];
+	auto worm = m_teams[m_active].GetWorm();
 
 	if (worm->GetPhysComp()->AirTime() < 0.15f)
 	{
@@ -168,25 +169,24 @@ void LevelManager::Input(GameData* _GD)
 	//DEBUG : Worm swap
 	if (key.IsKeyPressed(Keyboard::Tab))
 	{
-		if (m_active[1] == 3)
-		{
-			m_active[0] += 1;
-			m_active[0] %= 4;
-		}
-		m_active[1] += 1;
-		m_active[1] %= 4;
+		m_teams[m_active].CycleWorm();
+	}
+	if (key.IsKeyPressed(Keyboard::LeftShift))
+	{
+		m_active++;
+		m_active %= m_teams.size();
 	}
 }
 
 void LevelManager::DebugRender()
 {	
-	Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
-
-	debug_text->SetText("[" + std::to_string(m_active[1]) + "] - " + std::to_string(vel.x) + ", " + std::to_string(vel.y));
-	debug_text->SetColour(m_teams[m_active[0]].team_colour);
+	//Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
+	//
+	//debug_text->SetText("[" + std::to_string(m_active[1]) + "] - " + std::to_string(vel.x) + ", " + std::to_string(vel.y));
+	//debug_text->SetColour(m_teams[m_active[0]].team_colour);
 }
 
 void LevelManager::ShowFrames(float _gt)
 {
-	frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
+	//frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
 }

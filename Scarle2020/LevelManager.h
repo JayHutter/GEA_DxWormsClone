@@ -9,13 +9,8 @@
 #include "ImageGO2D.h"
 #include "TextGO2D.h"
 #include "DestructionMask.h"
+#include "Team.h"
 
-
-struct Team
-{
-	std::vector<Worm*> worms;
-	Color team_colour = Colors::Red;
-};
 
 class LevelManager
 {
@@ -45,7 +40,7 @@ private:
 	std::vector<DestructionMask*> destruction;
 
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
-	int m_active[2] = { 0, 0 }; //{Team, Worm}
+	int m_active = 0;
 
 	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
 	TextGO2D *frame_text = new TextGO2D("0");	
