@@ -8,7 +8,7 @@ using namespace SimpleMath;
 class PhysicsComp
 {
 public:
-	PhysicsComp(Vector2* _position);
+	PhysicsComp(Vector2* _position, float _mu, float _bounce, bool _gravity);
 	~PhysicsComp() = default;
 
 	void ApplyVelocity(float _gt);

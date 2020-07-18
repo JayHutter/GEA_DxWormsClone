@@ -154,11 +154,11 @@ Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
 		normal.y = -2 * (hitbox.bottom - hitbox.top);
 	}
 	//Prevent worms from climbing walls
-	else if (_collisions[3] == hitbox.bottom - hitbox.top)
+	else if (_collisions[3] >= half_height)
 	{
 		normal.x = _collisions[3] * -5;
 	}
-	else if (_collisions[2] == hitbox.bottom - hitbox.top)
+	else if (_collisions[2] >= half_height)
 	{
 		normal.x = _collisions[2] * 5;
 	}

@@ -3,8 +3,9 @@
 
 Worm::Worm(ID3D11Device* _GD) : ImageGO2D("worm", _GD)
 {
-	c_phys = new PhysicsComp(&m_pos);
+	c_phys = new PhysicsComp(&m_pos, 0.5f, 0, true);
 	c_collider = new CollisionComp(20, 24);
+
 }
 
 void Worm::Tick(GameData* _GD)

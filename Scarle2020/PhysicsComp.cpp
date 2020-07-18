@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "PhysicsComp.h"
 
-PhysicsComp::PhysicsComp(Vector2* _position)
+PhysicsComp::PhysicsComp(Vector2* _position, float _mu, float _bounce, bool _gravity)
 {
 	pos = _position;
+	mu = _mu;
+	bounce_multiplier = _bounce;
+	applyGrav = _gravity;
 }
 
 void PhysicsComp::ApplyVelocity(float _gt)
