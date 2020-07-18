@@ -191,6 +191,7 @@
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageObject.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestSound.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageObject.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="TextGO2D.cpp" />

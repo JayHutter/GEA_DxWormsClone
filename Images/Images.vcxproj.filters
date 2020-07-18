@@ -7,5 +7,6 @@
     <ImageContentTask Include="test_stage.png" />
     <ImageContentTask Include="test_stage2.png" />
     <ImageContentTask Include="alpha_test.png" />
+    <ImageContentTask Include="enclosure.png" />
   </ItemGroup>
 </Project>

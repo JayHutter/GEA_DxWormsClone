@@ -249,24 +249,26 @@ void Game::Render()
 
     if (m_level)
     {
-        //Code potentially for drawing into the Terrain RenderTarget
-        //Draw stuff to the render texture
+        //Draw Terrain to render target
         m_terrain->Begin(m_d3dContext.Get());
         m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
         m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //draw background stuff to begin with (probably only need to do this at the start of a level
-        m_DD2D->m_Sprites->Draw(m_level->GetStage()->GetTexture(), XMFLOAT2(0.0f, 0.0f));
+        m_level->GetStage()->Draw(m_DD2D);
         m_DD2D->m_Sprites->End();
         m_terrain->End(m_d3dContext.Get());
 
-        //Code potentially for digging from the Terrain
-        //Destruction of the terrain
-
+        //Terrain Destruction
         m_terrain->Begin(m_d3dContext.Get());
         m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
         m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
-        //Draw Destruction here
         m_level->RenderDestruction(m_DD2D);
+        m_DD2D->m_Sprites->End();
+        m_terrain->End(m_d3dContext.Get());
+        
+        //Draw invincible parts of the terrain
+        m_terrain->Begin(m_d3dContext.Get());
+        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        m_level->GetStage()->RenderSolids(m_DD2D);
         m_DD2D->m_Sprites->End();
         m_terrain->End(m_d3dContext.Get());
 

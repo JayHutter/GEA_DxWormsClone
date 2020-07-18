@@ -164,6 +164,9 @@
   <ItemGroup>
     <ImageContentTask Include="alpha_test.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="enclosure.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
