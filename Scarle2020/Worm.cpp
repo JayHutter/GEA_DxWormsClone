@@ -10,9 +10,15 @@ Worm::Worm(ID3D11Device* _GD, Color _colour, string _name) : ImageGO2D("worm", _
 	m_colour = _colour;
 	m_name = _name;
 
-	m_hud = new TextGO2D("HUD");
-	m_hud->SetScale(0.25f);
-	m_hud->SetColour(m_colour);
+	//m_hud = new TextGO2D("HUD");
+
+	m_health_display = new TextGO2D("HEALTH");
+	m_health_display->SetScale(0.25f);
+	m_health_display->SetColour(m_colour);
+
+	m_name_display = new TextGO2D("NAME");
+	m_name_display->SetScale(0.25f);
+	m_name_display->SetColour(m_colour);
 }
 
 void Worm::Tick(GameData* _GD)
@@ -30,23 +36,35 @@ void Worm::Move(float _dir)
 
 void Worm::DrawHUD(DrawData2D* _DD)
 {
-	if (m_hud)
-	{
-		m_hud->Draw(_DD);
-	}
+	//REMOVE
 }
 
 
 //Private
-
 void Worm::UpdateHUD()
 {
-	if (m_hud)
+	if (m_health_display)
 	{
-		string hud_text = m_name + "\n" + std::to_string(m_health);
-		m_hud->SetText(hud_text);
+		m_health_display->SetText(std::to_string(m_health));
+		Vector2 pos = m_pos;
+		pos.y -= 40;
+		m_health_display->SetPos(pos);
+	}
+	if (m_name_display)
+	{
+		m_name_display->SetText(m_name);
 		Vector2 pos = m_pos;
 		pos.y -= 50;
-		m_hud->SetPos(pos);
+		m_name_display->SetPos(pos);
 	}
+}
+
+void Worm::DrawHealth(DrawData2D* _DD)
+{
+	m_health_display->Draw(_DD);
+}
+
+void Worm::DrawName(DrawData2D* _DD)
+{
+	m_name_display->Draw(_DD);
 }

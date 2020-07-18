@@ -67,7 +67,11 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		obj->Draw(_DD);
 	}
 
-	m_teams[m_active].GetWorm()->DrawHUD(_DD);
+	for (auto t : m_teams)
+	{
+		t.GetWorm()->DrawHealth(_DD);
+	}
+	m_teams[m_active].GetWorm()->DrawName(_DD);
 	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 

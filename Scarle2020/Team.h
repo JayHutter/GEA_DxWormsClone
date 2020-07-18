@@ -12,6 +12,8 @@ public:
 	Worm* GetWorm();
 	void CycleWorm();
 
+	void RenderHUD(DrawData2D* _DD);
+
 private:
 	std::vector<Worm*>  m_worms;
 

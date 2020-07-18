@@ -35,3 +35,15 @@ void Team::CycleWorm()
 	m_current++;
 	m_current %= m_worms.size();
 }
+
+void Team::RenderHUD(DrawData2D* _DD)
+{
+	for (int i = 0; i < m_worms.size(); i++)
+	{
+		if (i == m_current)
+		{
+			m_worms[m_current]->DrawName(_DD);
+		}
+		m_worms[i]->DrawHealth(_DD);
+	}
+}

@@ -16,6 +16,8 @@ public:
 	void Move(float _dir);
 
 	void DrawHUD(DrawData2D* _DD);
+	void DrawHealth(DrawData2D* _DD);
+	void DrawName(DrawData2D* _DD);
 
 private:
 	void UpdateHUD();
@@ -23,6 +25,7 @@ private:
 	bool m_move = true;
 	string m_name = "Worm";
 	int m_health = 100;
-	TextGO2D* m_hud = nullptr;
+	TextGO2D* m_health_display = nullptr;
+	TextGO2D* m_name_display = nullptr;
 	Color m_colour = Colors::Red;
 };
