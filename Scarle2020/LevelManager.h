@@ -35,17 +35,19 @@ public:
 	Stage* GetStage();
 
 private:
-	std::vector<Team> m_teams;
-	std::vector<GameObject2D*> m_objects;
 	void DebugRender();
 	void ShowFrames(float _gt);
 
 	Stage* m_stage = nullptr;
-	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Yellow };
-	int m_active[2] = { 1, 0 }; //{Team, Worm}
-	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
-	TextGO2D *frame_text = new TextGO2D("0");
 
+	std::vector<Team> m_teams;
+	std::vector<GameObject2D*> m_objects;
 	std::vector<DestructionMask*> destruction;
+
+	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
+	int m_active[2] = { 0, 0 }; //{Team, Worm}
+
+	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
+	TextGO2D *frame_text = new TextGO2D("0");	
 };
 

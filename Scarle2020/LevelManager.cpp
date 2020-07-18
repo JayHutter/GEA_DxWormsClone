@@ -8,8 +8,8 @@ LevelManager::LevelManager()
 	frame_text->SetPos(Vector2(1000, 100));
 	frame_text->SetColour(Color(Colors::HotPink));
 
-	m_objects.push_back(debug_text);
-	m_objects.push_back(frame_text);
+	//m_objects.push_back(debug_text);
+	//m_objects.push_back(frame_text);
 }
 
 LevelManager::~LevelManager()
@@ -49,7 +49,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 		m_teams.back().team_colour = default_colors[i];
 		for (int j = 0; j < 4; j++)
 		{
-			Worm* w = new Worm(_GD);
+			Worm* w = new Worm(_GD, m_teams.back().team_colour, "Worm " + std::to_string(j+1));
 			w->SetColour(m_teams.back().team_colour);
 			w->SetPos(Vector2(50 + (j * 50) + (300*i), 200)); //Test Tint : will use hud instead
 			m_teams.back().worms.push_back(w);
@@ -66,6 +66,8 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 	{
 		obj->Draw(_DD);
 	}
+
+	m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 
 void LevelManager::RenderDestruction(DrawData2D* _DD)
@@ -78,7 +80,11 @@ void LevelManager::RenderDestruction(DrawData2D* _DD)
 
 void LevelManager::Update(GameData* _GD)
 {
-	ShowFrames(_GD->m_dt);
+	//ShowFrames(_GD->m_dt);
+	for (auto obj : m_objects)
+	{
+		obj->Tick(_GD);
+	}
 }
 
 void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD)
@@ -115,7 +121,7 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 		}
 	}
 
-	DebugRender();
+	//DebugRender();
 
 	_terrain->Unmap(_context);
 }
@@ -133,6 +139,7 @@ Stage* LevelManager::GetStage()
 	return m_stage;
 }
 
+//Refactor
 void LevelManager::Input(GameData* _GD)
 {
 	auto key = _GD->m_KBS_tracker;
@@ -140,16 +147,7 @@ void LevelManager::Input(GameData* _GD)
 
 	if (worm->GetPhysComp()->AirTime() < 0.15f)
 	{
-		if (_GD->m_KBS.D)
-		{
-			//worm->GetPhysComp()->AddForce(Vector2(11, 0));
-			worm->GetPhysComp()->SetVelocityX(50);
-		}
-		else if (_GD->m_KBS.A)
-		{
-			//worm->GetPhysComp()->AddForce(Vector2(-11, 0));
-			worm->GetPhysComp()->SetVelocityX(-50);
-		}
+		worm->Move(_GD->m_KBS.D + (_GD->m_KBS.A * -1));
 
 		if (key.IsKeyReleased(Keyboard::Space))
 		{
