@@ -124,7 +124,7 @@ void LevelManager::DestroyStage(ID3D11Device* _DD, GameData* _GD)
 {
 	if (_GD->m_MS.rightButton)
 	{
-		destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y)));
+		destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y), Vector2(1, 1)));
 	}
 }
 
