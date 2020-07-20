@@ -1,7 +1,9 @@
 #pragma once
 #include <d3d11_1.h>
-#include "Worm.h"
 #include <vector>
+#include "Worm.h"
+#include "Weapon.h"
+
 
 class Team
 {
@@ -15,9 +17,17 @@ public:
 	void RenderHUD(DrawData2D* _DD);
 
 private:
-	std::vector<Worm*>  m_worms;
-
-	int m_current = 0;
+	//Team Info
 	Color m_colour = Colors::Red;
+
+	//Worms
+	std::vector<Worm*>  m_worms;
+	int m_current = 0;
+
+	//Weapons
+	int m_selection = 0;
+	static const int weapon_count = 5;
+	std::array<Weapon*, weapon_count> m_weapons; //All available weapons to the team - Clone to spawn
+	std::array<int, weapon_count> m_available; //-1 is infinite
 };
 

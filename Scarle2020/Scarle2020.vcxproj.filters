@@ -187,6 +187,9 @@
     <ClInclude Include="Team.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -283,6 +286,9 @@
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Team.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
   </ItemGroup>
