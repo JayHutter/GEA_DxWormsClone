@@ -89,6 +89,11 @@ void LevelManager::Update(GameData* _GD)
 	for (auto obj : m_objects)
 	{
 		obj->Tick(_GD);
+		
+		if (obj->GetCollider())
+		{
+			obj->GetCollider()->UpdateHitbox(obj->GetPos());
+		}
 	}
 }
 

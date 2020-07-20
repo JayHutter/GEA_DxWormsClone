@@ -39,6 +39,8 @@ public:
 	std::array<int, 4> TerrainCollsionV(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pos);
 	Vector2 CalculateNormal(std::array<int, 4> _collisions);
 
+	void UpdateHitbox(Vector2 _pos);
+
 private:
 	RECT hitbox;
 

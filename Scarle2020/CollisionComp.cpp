@@ -87,31 +87,31 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 	_pos.y *= -1;
 
 	//for (int x = _pos.x + hitbox.left; x++; x < )
-	for (int x = _pos.x + hitbox.left; x < _pos.x + hitbox.right; x++)
+	for (int x = hitbox.left; x < hitbox.right; x++)
 	{
-		auto alpha = _render_target->GetPixel(x, _pos.y + hitbox.top + collision_offset, _GD)->A();
+		auto alpha = _render_target->GetPixel(x, (-hitbox.bottom) + collision_offset, _GD)->A();
 		if (alpha > 0.0f)
 		{
 			pixels[0] ++;
 		}
 	
-		alpha = _render_target->GetPixel(x, _pos.y + hitbox.bottom + collision_offset, _GD)->A();
+		alpha = _render_target->GetPixel(x, (-hitbox.top) + collision_offset, _GD)->A();
 		if (alpha > 0.0f)
 		{
 			pixels[1] ++;
 		}
 	}
 
-	for (int y = _pos.y + hitbox.top; y < _pos.y + hitbox.bottom; y++)
+	for (int y = hitbox.bottom; y > hitbox.top; y--)
 	{
-		auto alpha = _render_target->GetPixel(_pos.x + hitbox.left, y + collision_offset, _GD)->A();
+		auto alpha = _render_target->GetPixel(hitbox.left, (-y) + collision_offset, _GD)->A();
 
 		if (alpha > 0.0f)
 		{
 			pixels[2] ++;
 		}
 	
-		alpha = _render_target->GetPixel(_pos.x + hitbox.right, y + collision_offset, _GD)->A();
+		alpha = _render_target->GetPixel(hitbox.right, (-y) + collision_offset, _GD)->A();
 		if (alpha > 0.0f)
 		{
 			pixels[3] ++;
@@ -164,4 +164,16 @@ Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
 	}
 
 	return normal;
+}
+
+void CollisionComp::UpdateHitbox(Vector2 _pos)
+{
+	float half_height = (hitbox.bottom - hitbox.top) / 2;
+	float half_width = (hitbox.right - hitbox.left) / 2;
+
+	hitbox.top = _pos.y - half_height;
+	hitbox.bottom = _pos.y + half_height;
+
+	hitbox.left = _pos.x - half_width;
+	hitbox.right = _pos.x + half_width;
 }
