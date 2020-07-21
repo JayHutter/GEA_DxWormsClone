@@ -16,6 +16,7 @@ void PhysicsComp::ApplyVelocity(float _gt)
 	*pos += velocity * _gt;
 
 	air_time = aerial *( air_time + _gt);
+	ApplyGravity();
 }
 
 void PhysicsComp::ApplyGravity(bool _falling)
@@ -27,10 +28,18 @@ void PhysicsComp::ApplyGravity(bool _falling)
 
 	aerial = _falling;
 }
-//apply gravity and update time in air
-void PhysicsComp::ApplyGravity(bool _falling, float _gt)
+
+void PhysicsComp::ApplyGravity()
 {
-	ApplyGravity(_falling);
+	if (aerial)
+	{
+		AddForce(Vector2(0, gravity));
+	}
+}
+
+void PhysicsComp::InAir(bool _aerial)
+{
+	aerial = _aerial;
 }
 
 void PhysicsComp::SetVelocity(Vector2 _force)

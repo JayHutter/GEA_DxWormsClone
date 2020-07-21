@@ -177,3 +177,48 @@ void CollisionComp::UpdateHitbox(Vector2 _pos)
 	hitbox.left = _pos.x - half_width;
 	hitbox.right = _pos.x + half_width;
 }
+
+bool CollisionComp::Collided(RECT _other)
+{
+	if (hitbox.left < _other.right && hitbox.right > _other.left &&
+		hitbox.top < _other.bottom && hitbox.bottom > _other.top)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+RECT CollisionComp::Hitbox()
+{
+	return hitbox;
+}
+
+Vector2 CollisionComp::CalculateNormal(RECT _other)
+{	
+	Vector2 other_pos = Vector2(_other.left + ((_other.right - _other.left) / 2),
+		_other.top + ((_other.bottom - _other.top) / 2));
+	
+	Vector2 pos = Vector2(hitbox.left + ((hitbox.right - hitbox.left) / 2),
+		hitbox.top + ((hitbox.bottom - hitbox.top) / 2));
+
+	Vector2 normal = pos - other_pos;	
+	if (normal == Vector2::Zero)
+	{
+		return Vector2(0, -1);
+	}
+
+	return normal;
+}
+
+float CollisionComp::HitboxWidth()
+{
+	return hitbox.right - hitbox.left;
+}
+
+float CollisionComp::HitboxHeight()
+{
+	return hitbox.bottom - hitbox.top;
+}
+
+
