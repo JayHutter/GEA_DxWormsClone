@@ -28,6 +28,8 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, std::vector<GameObject2
 		}
 	}
 
+	SetupWeapons(_GD);
+
 	m_colour = _colour;
 }
 
@@ -41,6 +43,10 @@ Team::~Team()
 	m_worms.clear();
 }
 
+void Team::Tick(GameData* _GD)
+{
+}
+
 Worm* Team::GetWorm()
 {
 	return m_worms[m_current];
@@ -50,6 +56,31 @@ void Team::CycleWorm()
 {
 	m_current++;
 	m_current %= m_worms.size();
+}
+
+void Team::SetupWeapons(ID3D11Device* _GD)
+{
+	m_weapons[0] = new Homerun(_GD);
+	m_available[0] = -1;
+}
+
+void Team::CycleWeapon(int _dir)
+{
+	m_selection += _dir;
+	if (m_selection < 0)
+	{
+		m_selection += weapon_count;
+	}
+	m_selection %= weapon_count;
+}
+
+void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
+{
+	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
+	{
+		_objects.push_back(m_weapons[m_selection]);
+		m_weapons[m_selection]->Use(_GD, m_worms[m_current]);
+	}
 }
 
 void Team::RenderHUD(DrawData2D* _DD)

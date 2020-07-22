@@ -42,6 +42,10 @@ LevelManager::~LevelManager()
 	m_teams.clear();
 }
 
+void LevelManager::Tick(GameData* _GD)
+{
+}
+
 void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 {
 	for (int i=0; i<_teams; i++)
@@ -209,6 +213,11 @@ void LevelManager::Input(GameData* _GD)
 
 			worm->GetPhysComp()->AddForce(force);
 		}
+	}
+
+	if (_GD->m_MS.leftButton)
+	{
+		m_teams[m_active].UseWeapon(_GD, m_objects);
 	}
 	
 	//DEBUG : Worm swap

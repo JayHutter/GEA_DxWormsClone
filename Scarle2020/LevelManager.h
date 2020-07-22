@@ -18,6 +18,8 @@ public:
 	LevelManager();
 	~LevelManager();
 
+	virtual void Tick(GameData* _GD);
+
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
 
 	void RenderObjects(DrawData2D* _DD);

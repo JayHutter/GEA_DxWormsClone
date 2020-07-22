@@ -39,6 +39,7 @@ public:
 	PhysicsComp* GetPhysComp();
 	Vector2 GetPos() { return m_pos; }
 	CollisionComp* GetCollider() { return c_collider; }
+	int Direction() { return m_dir; }
 
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other) = 0;
 	
@@ -48,6 +49,8 @@ protected:
 	Vector2 m_scale;
 	Color m_colour;
 	Vector2 m_origin;
+
+	int m_dir = 1;
 
 	PhysicsComp *c_phys = nullptr;
 	CollisionComp* c_collider = nullptr;
