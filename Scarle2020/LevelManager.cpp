@@ -165,6 +165,8 @@ void LevelManager::ManageCollisions(GameData* _GD)
 					//obj->GetPhysComp()->InAir(false);
 				}
 				*/
+
+				obj->OnCollision(_GD);
 			}
 		}
 	}

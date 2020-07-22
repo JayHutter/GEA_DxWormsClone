@@ -26,6 +26,10 @@ void Worm::Tick(GameData* _GD)
 	UpdateHUD();
 }
 
+void Worm::OnCollision(GameData* _GD, GameObject2D* _other)
+{
+}
+
 void Worm::Move(float _dir)
 {
 	if (m_move)

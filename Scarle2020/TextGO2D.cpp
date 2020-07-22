@@ -24,3 +24,8 @@ void TextGO2D::SetText(string _text)
 {
 	m_text = _text;
 }
+
+void TextGO2D::OnCollision(GameData* _GD, GameObject2D* _other)
+{
+
+}
