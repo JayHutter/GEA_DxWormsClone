@@ -89,6 +89,11 @@ void LevelManager::Update(GameData* _GD)
 	for (auto obj : m_objects)
 	{
 		obj->Tick(_GD);
+		
+		if (obj->GetCollider())
+		{
+			obj->GetCollider()->UpdateHitbox(obj->GetPos());
+		}
 	}
 }
 
@@ -121,6 +126,8 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 					}
 				}	
 				phys->ApplyGravity(coll_data[0] < 4); 
+				//phys->InAir(coll_data[0] < 4);
+				//phys->ApplyGravity();
 				phys->ApplyVelocity(_GD->m_dt);
 			}		
 		}
@@ -129,6 +136,40 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 	//DebugRender();
 
 	_terrain->Unmap(_context);
+}
+
+void LevelManager::ManageCollisions(GameData* _GD)
+{
+	for (auto obj : m_objects)
+	{
+		auto coll = obj->GetCollider();
+		if (!coll)
+		{
+			continue;
+		}
+	
+		for (auto other : m_objects)
+		{
+			auto other_coll = other->GetCollider();
+			if (other == obj || !other_coll)
+			{
+				continue;
+			}
+	
+			if (coll->Collided(other_coll->Hitbox()))
+			{ 
+				/* Objects get stuck inside each other 
+				if (obj->GetPhysComp())
+				{
+					obj->GetPhysComp()->ReactionForce(coll->CalculateNormal(other_coll->Hitbox()));
+					//obj->GetPhysComp()->InAir(false);
+				}
+				*/
+
+				obj->OnCollision(_GD);
+			}
+		}
+	}
 }
 
 void LevelManager::DestroyStage(ID3D11Device* _DD, GameData* _GD)

@@ -17,6 +17,7 @@ public:
 
 	virtual void Tick(GameData* _GD);
 	virtual void Draw(DrawData2D* _DD);
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
 
 	ID3D11ShaderResourceView* GetTexture() { return m_pTextureRV; }
 

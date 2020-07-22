@@ -39,6 +39,8 @@ public:
 	PhysicsComp* GetPhysComp();
 	Vector2 GetPos() { return m_pos; }
 	CollisionComp* GetCollider() { return c_collider; }
+
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other) = 0;
 	
 protected:
 	Vector2 m_pos;

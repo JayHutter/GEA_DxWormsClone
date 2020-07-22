@@ -13,7 +13,8 @@ public:
 
 	void ApplyVelocity(float _gt);
 	void ApplyGravity(bool _falling);
-	void ApplyGravity(bool _falling, float _gt);
+	void ApplyGravity();
+	void InAir(bool _aerial);
 
 	void SetVelocity(Vector2 _force);
 	void SetVelocityX(float _force);
@@ -40,7 +41,7 @@ private:
 	float Speed();
 	void ApplyFriction(Vector2 _normal);
 
-	bool applyGrav = false;
+	bool applyGrav = true;
 	float gravity = 10;
 	Vector2 velocity = Vector2::Zero;
 	bool aerial = true;

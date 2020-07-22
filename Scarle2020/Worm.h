@@ -13,6 +13,8 @@ public:
 	~Worm() = default;
 
 	virtual void Tick(GameData* _GD);
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
+	
 	void Move(float _dir);
 
 	void DrawHUD(DrawData2D* _DD);
