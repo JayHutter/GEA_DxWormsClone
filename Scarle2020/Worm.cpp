@@ -37,6 +37,11 @@ void Worm::Move(float _dir)
 		c_phys->SetVelocityX(50 * _dir);
 	}
 }
+void Worm::AddHealth(int _health)
+{
+	m_health += _health;
+}
+
 
 void Worm::DrawHUD(DrawData2D* _DD)
 {

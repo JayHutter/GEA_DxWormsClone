@@ -179,6 +179,7 @@
     <ClInclude Include="GameObject2D.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="Homerun.h" />
     <ClInclude Include="ImageGO2D.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Light.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="GameObject2D.cpp" />
+    <ClCompile Include="Homerun.cpp" />
     <ClCompile Include="ImageGO2D.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="light.cpp" />

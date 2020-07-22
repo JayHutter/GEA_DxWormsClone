@@ -16,6 +16,7 @@ public:
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
 	
 	void Move(float _dir);
+	void AddHealth(int _health);
 
 	void DrawHUD(DrawData2D* _DD);
 	void DrawHealth(DrawData2D* _DD);

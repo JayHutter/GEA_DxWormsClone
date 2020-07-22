@@ -166,7 +166,7 @@ void LevelManager::ManageCollisions(GameData* _GD)
 				}
 				*/
 
-				obj->OnCollision(_GD);
+				obj->OnCollision(_GD, other);
 			}
 		}
 	}
