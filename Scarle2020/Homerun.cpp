@@ -28,7 +28,7 @@ void Homerun::Tick(GameData* _GD)
 	}
 }
 
-void Homerun::OnCollision(GameData* _GD, GameObject2D* _other)
+void Homerun::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
 	if (_other == m_owner || m_end == true)
 	{
@@ -42,6 +42,17 @@ void Homerun::OnCollision(GameData* _GD, GameObject2D* _other)
 		_other->GetPhysComp()->AddForce(m_knockback);
 		_other->AddHealth(-m_damage);	
 	}
+
+	m_collided.push_back(_other);
+}
+
+void Homerun::OnCollision(GameData* _GD, GameObject2D* _other)
+{
+}
+
+void Homerun::OnCollisionExit(GameData* _GD, GameObject2D* _other)
+{
+	RemoveFromCollided(_other);
 }
 
 

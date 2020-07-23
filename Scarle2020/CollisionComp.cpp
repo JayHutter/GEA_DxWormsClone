@@ -220,5 +220,3 @@ float CollisionComp::HitboxHeight()
 {
 	return hitbox.bottom - hitbox.top;
 }
-
-

@@ -13,7 +13,9 @@ public:
 	~Worm() = default;
 
 	virtual void Tick(GameData* _GD);
-	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
+	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) {}
 	
 	void Move(float _dir);
 

@@ -184,9 +184,6 @@
     <ClInclude Include="StageObject.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Team.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
@@ -198,6 +195,9 @@
     </ClInclude>
     <ClInclude Include="Explosion.h">
       <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,9 +294,6 @@
     <ClCompile Include="StageObject.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Team.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
@@ -305,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

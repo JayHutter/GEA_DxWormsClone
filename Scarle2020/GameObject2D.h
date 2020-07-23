@@ -10,7 +10,6 @@
 #include <string>
 #include "PhysicsComp.h"
 #include "CollisionComp.h"
-//#include "Explosion.h"
 
 using namespace DirectX;
 using namespace SimpleMath;
@@ -53,12 +52,17 @@ public:
 	Vector2 GetScale() { return m_scale; }
 	int Direction() { return m_dir; }
 	ExplosionData Explode() { return m_explode; }
+	bool IsCollided(GameObject2D* _obj);
 
 	void AddHealth(int _health);
 
+	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other) = 0;
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other) = 0;
+	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) = 0;
 	
 protected:
+	void RemoveFromCollided(GameObject2D* _obj);
+
 	Vector2 m_pos;
 	float m_rotation;
 	Vector2 m_scale;
@@ -72,6 +76,8 @@ protected:
 	bool m_delete = false;
 	int m_health = 100;
 	ExplosionData m_explode;
+
+	std::vector<GameObject2D*> m_collided;
 };
 
 

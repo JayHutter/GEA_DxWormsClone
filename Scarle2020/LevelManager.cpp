@@ -179,19 +179,34 @@ void LevelManager::ManageCollisions(GameData* _GD)
 			{
 				continue;
 			}
-		
-			//This doesnt trigger for every object for some reason
-			if (coll->Collided(other_coll->Hitbox()))
-			{ 
-				/* Objects get stuck inside each other 
-				if (obj->GetPhysComp())
-				{
-					obj->GetPhysComp()->ReactionForce(coll->CalculateNormal(other_coll->Hitbox()));
-					//obj->GetPhysComp()->InAir(false);
-				}
-				*/
+			
+			bool colliding = obj->IsCollided(other);
+			bool collided = coll->Collided(other_coll->Hitbox());
+
+			if (!colliding && collided)
+			{
+				obj->OnCollisionEnter(_GD, other);
+			}
+			else if (colliding && collided)
+			{
 				obj->OnCollision(_GD, other);
 			}
+			else if (colliding && !collided)
+			{
+				obj->OnCollisionExit(_GD, other);
+			}
+
+			//if ()
+			//{ 
+			//	/* Objects get stuck inside each other 
+			//	if (obj->GetPhysComp())
+			//	{
+			//		obj->GetPhysComp()->ReactionForce(coll->CalculateNormal(other_coll->Hitbox()));
+			//		//obj->GetPhysComp()->InAir(false);
+			//	}
+			//	*/
+			//
+			//}
 		}
 	}
 }

@@ -13,7 +13,9 @@ public:
 	void SetData(ExplosionData _data);
 
 	virtual void Tick(GameData* _GD);
+	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other);
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
+	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other);
 private:
 	Worm* m_owner = nullptr;
 	float m_damage = 0;

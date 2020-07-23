@@ -28,16 +28,28 @@ void Explosion::SetData(ExplosionData _data)
 }
 	
 
-void Explosion::OnCollision(GameData* _GD, GameObject2D* _other)
+void Explosion::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
 	_other->AddHealth(-m_damage);
-	//auto phys = _other->GetPhysComp();
-	//if (phys)
-	//{
-	//	Vector2 force = _other->GetPos() - m_pos;
-	//	force *= m_knockback;
-	//	phys->AddForce(force);
-	//}
+	auto phys = _other->GetPhysComp();
+	if (phys)
+	{
+		Vector2 force = _other->GetPos() - m_pos;
+		force.Normalize();
+		force *= m_knockback;
+		phys->AddForce(force);
+	}
+
+	m_collided.push_back(_other);
+}
+
+void Explosion::OnCollision(GameData* _GD, GameObject2D* _other)
+{
+}
+
+void Explosion::OnCollisionExit(GameData* _GD, GameObject2D* _other)
+{
+	RemoveFromCollided(_other);
 }
 
 void Explosion::Tick(GameData* _GD)

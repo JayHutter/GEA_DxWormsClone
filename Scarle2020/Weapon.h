@@ -11,7 +11,10 @@ public:
 	Weapon(const Weapon& orig);
 
 	virtual void Tick(GameData* _GD);
-	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
+
+	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) {}
 	virtual Weapon* Clone(ID3D11Device* _GD) = 0;
 
 	virtual void Use(GameData* _GD, Worm* _owner) = 0;
