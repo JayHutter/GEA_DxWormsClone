@@ -37,8 +37,6 @@ void Homerun::OnCollision(GameData* _GD, GameObject2D* _other)
 
 	if (dynamic_cast<Worm*>(_other))
 	{
-		m_end = true;
-		m_delete = true;
 		m_knockback.x *= m_owner->Direction();
 
 		_other->GetPhysComp()->AddForce(m_knockback);

@@ -99,11 +99,6 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 			obj->GetCollider()->UpdateHitbox(obj->GetPos());
 		}
 
-		if (obj->Delete())
-		{
-			DeleteObject(obj);
-		}
-
 		if (obj->Explode().explode)
 		{
 			Explosion* explosion = new Explosion(dynamic_cast<Worm*>(obj), _DD);
@@ -115,6 +110,13 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 			{
 				dynamic_cast<Worm*>(obj)->StopExplosion();
 			}
+
+			DeleteObject(obj);
+		}
+
+		if (obj->Delete())
+		{
+			DeleteObject(obj);
 		}
 	}
 }
@@ -169,7 +171,7 @@ void LevelManager::ManageCollisions(GameData* _GD)
 		{
 			continue;
 		}
-	
+
 		for (auto other : m_objects)
 		{
 			auto other_coll = other->GetCollider();
@@ -177,7 +179,8 @@ void LevelManager::ManageCollisions(GameData* _GD)
 			{
 				continue;
 			}
-	
+		
+			//This doesnt trigger for every object for some reason
 			if (coll->Collided(other_coll->Hitbox()))
 			{ 
 				/* Objects get stuck inside each other 
@@ -187,7 +190,6 @@ void LevelManager::ManageCollisions(GameData* _GD)
 					//obj->GetPhysComp()->InAir(false);
 				}
 				*/
-
 				obj->OnCollision(_GD, other);
 			}
 		}
@@ -268,14 +270,11 @@ void LevelManager::ShowFrames(float _gt)
 	//frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
 }
 
+//Potential leak - refactor
 void LevelManager::DeleteObject(GameObject2D* _obj)
 {
 	if (dynamic_cast<Worm*>(_obj))
 	{
-		for (auto t : m_teams)
-		{
-			t.DeleteWorm(dynamic_cast<Worm*>(_obj));
-		}
 		return;
 	}
 

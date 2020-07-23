@@ -185,13 +185,8 @@ void CollisionComp::UpdateHitbox(Vector2 _pos)
 
 bool CollisionComp::Collided(RECT _other)
 {
-	if (hitbox.left < _other.right && hitbox.right > _other.left &&
-		hitbox.top < _other.bottom && hitbox.bottom > _other.top)
-	{
-		return true;
-	}
-
-	return false;
+	return (hitbox.left < _other.right&& hitbox.right > _other.left &&
+		hitbox.top < _other.bottom&& hitbox.bottom > _other.top);
 }
 
 RECT CollisionComp::Hitbox()
