@@ -122,3 +122,10 @@ void Team::RenderHUD(DrawData2D* _DD)
 		m_worms[i]->DrawHealth(_DD);
 	}
 }
+
+void Team::DeleteWorm(Worm* _worm)
+{
+	auto end = m_worms.end();
+	auto result = std::remove(m_worms.begin(), end, _worm);
+	m_worms.erase(result, end);
+}

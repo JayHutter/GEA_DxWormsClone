@@ -255,12 +255,16 @@ void LevelManager::ShowFrames(float _gt)
 
 void LevelManager::DeleteObject(GameObject2D* _obj)
 {
+	if (dynamic_cast<Worm*>(_obj))
+	{
+		for (auto t : m_teams)
+		{
+			t.DeleteWorm(dynamic_cast<Worm*>(_obj));
+		}
+		return;
+	}
+
 	auto end = m_objects.end();
 	auto result = std::remove(m_objects.begin(), end, _obj);
-	//if (end != result)
-	//{
-	//	m_objects.pop_back();
-	//}
-
 	m_objects.erase(result, end);
 }
