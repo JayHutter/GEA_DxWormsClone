@@ -21,6 +21,6 @@ private:
 	float m_damage = 0;
 	float m_knockback = 0;
 	float m_time = 0;
-	const float m_exist = 1;
+	const float m_exist = 0.2f;
 };
 
