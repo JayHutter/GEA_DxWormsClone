@@ -285,15 +285,22 @@ void LevelManager::ShowFrames(float _gt)
 	//frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
 }
 
-//Potential leak - refactor
 void LevelManager::DeleteObject(GameObject2D* _obj)
 {
+	//Dont delete worms
 	if (dynamic_cast<Worm*>(_obj))
 	{
 		return;
 	}
 
-	auto end = m_objects.end();
-	auto result = std::remove(m_objects.begin(), end, _obj);
-	m_objects.erase(result, end);
+	//Delete the data before removing it
+	auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
+	if (it != m_objects.end())
+	{
+		delete (*it);
+
+		auto end = m_objects.end();
+		auto result = std::remove(m_objects.begin(), end, _obj);
+		m_objects.erase(result, end);
+	}
 }
