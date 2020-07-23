@@ -21,6 +21,7 @@ public:
 	void SetupWeapons(ID3D11Device* _GD);
 	void CycleWeapon(int _dir);
 	void UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
+	void TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 
 	void RenderHUD(DrawData2D* _DD);
 
@@ -39,5 +40,6 @@ private:
 	std::array<int, weapon_count> m_available; //-1 is infinite
 
 	Weapon* m_tracker = nullptr;
+	Weapon* le_test = nullptr;
 };
 

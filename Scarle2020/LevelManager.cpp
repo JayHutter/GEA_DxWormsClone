@@ -90,6 +90,9 @@ void LevelManager::RenderDestruction(DrawData2D* _DD)
 void LevelManager::Update(GameData* _GD)
 {
 	//ShowFrames(_GD->m_dt);
+	m_teams[m_active].Tick(_GD);
+	m_teams[m_active].TrackWeapon(_GD, m_objects);
+
 	for (auto obj : m_objects)
 	{
 		obj->Tick(_GD);
