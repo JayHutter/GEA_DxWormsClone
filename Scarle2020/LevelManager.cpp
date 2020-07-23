@@ -5,11 +5,8 @@
 
 LevelManager::LevelManager()
 {
-	frame_text->SetPos(Vector2(1000, 100));
-	frame_text->SetColour(Color(Colors::HotPink));
-
-	//m_objects.push_back(debug_text);
-	//m_objects.push_back(frame_text);
+	m_objects.reserve(100);
+	m_destruction.reserve(100);
 }
 
 LevelManager::~LevelManager()
