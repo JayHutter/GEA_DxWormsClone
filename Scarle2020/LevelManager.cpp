@@ -27,7 +27,7 @@ LevelManager::~LevelManager()
 
 	m_teams.clear();
 
-	for (auto d : destruction)
+	for (auto d : m_destruction)
 	{
 		if (d)
 		{
@@ -37,7 +37,7 @@ LevelManager::~LevelManager()
 		
 	}
 
-	destruction.clear();
+	m_destruction.clear();
 	
 	m_teams.clear();
 }
@@ -81,13 +81,13 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 
 void LevelManager::RenderDestruction(DrawData2D* _DD)
 {
-	for (auto mask : destruction)
+	for (auto mask : m_destruction)
 	{
 		mask->Draw(_DD);
 	}
 }
 
-void LevelManager::Update(GameData* _GD)
+void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 {
 	//ShowFrames(_GD->m_dt);
 	m_teams[m_active].Tick(_GD);
@@ -105,6 +105,19 @@ void LevelManager::Update(GameData* _GD)
 		if (obj->Delete())
 		{
 			DeleteObject(obj);
+		}
+
+		if (obj->Explode().explode)
+		{
+			Explosion* explosion = new Explosion(dynamic_cast<Worm*>(obj), _DD);
+			explosion->SetData(obj->Explode());
+			m_objects.push_back(explosion);
+			m_destruction.push_back(new DestructionMask(_DD, explosion->GetPos(), explosion->GetScale()));
+
+			if (dynamic_cast<Worm*>(obj))
+			{
+				dynamic_cast<Worm*>(obj)->StopExplosion();
+			}
 		}
 	}
 }
@@ -188,7 +201,7 @@ void LevelManager::DestroyStage(ID3D11Device* _DD, GameData* _GD)
 {
 	if (_GD->m_MS.rightButton)
 	{
-		destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y), Vector2(1, 1)));
+		m_destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y), Vector2(1, 1)));
 	}
 }
 
@@ -237,6 +250,11 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 	{
 		m_active++;
 		m_active %= m_teams.size();
+	}
+	//Test explosion
+	if (key.IsKeyPressed(Keyboard::Enter))
+	{
+		m_teams[m_active].GetWorm()->TriggerExplosion();
 	}
 }
 

@@ -30,10 +30,12 @@ public:
 	CollisionComp(float _width, float _height);
 	~CollisionComp() = default;
 
+	void SetHitbox(float _width, float _height);
+
 	bool TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pixel);
 	//bool TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pos, Side _side);
 	bool TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pos, Side _vertical, Side _horizontal);
-	
+
 	//void UpdateHitbox(Vector2 _pos);
 
 	std::array<int, 4> TerrainCollsionV(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pos);

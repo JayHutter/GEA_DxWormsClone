@@ -35,13 +35,9 @@ void Worm::Move(float _dir)
 	if (m_move)
 	{
 		c_phys->SetVelocityX(50 * _dir);
-		
+
 		m_dir = _dir;
 	}
-}
-void Worm::AddHealth(int _health)
-{
-	m_health += _health;
 }
 
 

@@ -9,5 +9,6 @@
     <ImageContentTask Include="alpha_test.png" />
     <ImageContentTask Include="enclosure.png" />
     <ImageContentTask Include="destruction_mask.png" />
+    <ImageContentTask Include="explosion.png" />
   </ItemGroup>
 </Project>

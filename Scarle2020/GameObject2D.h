@@ -10,6 +10,7 @@
 #include <string>
 #include "PhysicsComp.h"
 #include "CollisionComp.h"
+//#include "Explosion.h"
 
 using namespace DirectX;
 using namespace SimpleMath;
@@ -17,6 +18,15 @@ using namespace std;
 
 struct GameData;
 struct DrawData2D;
+
+struct ExplosionData
+{
+	bool explode = false;
+	float damage = 0;
+	float scale = 1;
+	Vector2 pos = Vector2::Zero;
+	float knockback = 0;
+};
 
 class GameObject2D
 {
@@ -35,12 +45,16 @@ public:
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
 	void SetScale(float _scale) { m_scale = _scale * Vector2::One; }
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
-	
+
 	bool Delete() { return m_delete; }
 	PhysicsComp* GetPhysComp();
 	Vector2 GetPos() { return m_pos; }
 	CollisionComp* GetCollider() { return c_collider; }
+	Vector2 GetScale() { return m_scale; }
 	int Direction() { return m_dir; }
+	ExplosionData Explode() { return m_explode; }
+
+	void AddHealth(int _health);
 
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other) = 0;
 	
@@ -54,8 +68,10 @@ protected:
 	int m_dir = 1;
 
 	PhysicsComp *c_phys = nullptr;
-	CollisionComp* c_collider = nullptr;
+	CollisionComp* c_collider = nullptr; 
 	bool m_delete = false;
+	int m_health = 100;
+	ExplosionData m_explode;
 };
 
 

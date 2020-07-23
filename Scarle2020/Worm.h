@@ -16,18 +16,19 @@ public:
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
 	
 	void Move(float _dir);
-	void AddHealth(int _health);
 
 	void DrawHUD(DrawData2D* _DD);
 	void DrawHealth(DrawData2D* _DD);
 	void DrawName(DrawData2D* _DD);
+	//Test Explosion - Objects will delete when they explode so this is unneccesarry 
+	void TriggerExplosion() { m_explode = ExplosionData{true, 35, 1, m_pos, 300}; }
+	void StopExplosion() { m_explode.explode = false; }
 
 private:
 	void UpdateHUD();
 
 	bool m_move = true;
 	string m_name = "Worm";
-	int m_health = 100;
 	TextGO2D* m_health_display = nullptr;
 	TextGO2D* m_name_display = nullptr;
 	Color m_colour = Colors::Red;

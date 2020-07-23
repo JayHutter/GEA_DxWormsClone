@@ -42,7 +42,7 @@ void Homerun::OnCollision(GameData* _GD, GameObject2D* _other)
 		m_knockback.x *= m_owner->Direction();
 
 		_other->GetPhysComp()->AddForce(m_knockback);
-		dynamic_cast<Worm*>(_other)->AddHealth(-m_damage);	
+		_other->AddHealth(-m_damage);	
 	}
 }
 

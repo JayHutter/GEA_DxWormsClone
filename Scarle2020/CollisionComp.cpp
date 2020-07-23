@@ -3,6 +3,11 @@
 
 CollisionComp::CollisionComp(float _width, float _height)
 {
+	SetHitbox(_width, _height);
+}
+
+void CollisionComp::SetHitbox(float _width, float _height)
+{
 	hitbox.top = -(_height / 2);
 	hitbox.bottom = _height / 2;
 	hitbox.left = -(_width / 2);

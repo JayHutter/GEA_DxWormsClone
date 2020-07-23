@@ -18,3 +18,8 @@ PhysicsComp* GameObject2D::GetPhysComp()
 {
 	return c_phys;
 }
+
+void GameObject2D::AddHealth(int _health)
+{
+	m_health += _health;
+}

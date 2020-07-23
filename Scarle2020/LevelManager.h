@@ -10,6 +10,7 @@
 #include "TextGO2D.h"
 #include "DestructionMask.h"
 #include "Team.h"
+#include "Explosion.h"
 
 
 class LevelManager
@@ -24,7 +25,7 @@ public:
 
 	void RenderObjects(DrawData2D* _DD);
 	void RenderDestruction(DrawData2D* _DD);
-	void Update(GameData* _GD);
+	void Update(GameData* _GD, ID3D11Device* _DD);
 	void UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD);
 	void ManageCollisions(GameData* _GD);
 	void DestroyStage(ID3D11Device* _DD, GameData* _GD);
@@ -41,7 +42,7 @@ private:
 
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
-	std::vector<DestructionMask*> destruction;
+	std::vector<DestructionMask*> m_destruction;
 
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
 	int m_active = 0;
