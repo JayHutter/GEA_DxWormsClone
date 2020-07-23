@@ -194,7 +194,7 @@ void Game::Update(DX::StepTimer const& _timer)
         m_level->UpdatePhysics(m_terrain, m_d3dContext.Get(), m_GD);
         m_level->ManageCollisions(m_GD);
         m_level->DestroyStage(m_d3dDevice.Get(), m_GD);
-        m_level->Input(m_GD);
+        m_level->Input(m_GD, m_d3dDevice.Get());
     }
 
     //Test object deletion

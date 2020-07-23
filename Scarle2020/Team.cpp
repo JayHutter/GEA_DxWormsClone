@@ -75,7 +75,7 @@ void Team::CycleWeapon(int _dir)
 	m_selection %= weapon_count;
 }
 
-void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
+void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
 {
 	//Dont use a weapon if currently using one
 	if (m_tracker)
@@ -85,7 +85,7 @@ void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
 
 	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
 	{
-		m_tracker = m_weapons[m_selection];
+		m_tracker = m_weapons[m_selection]->Clone(_DD);
 		_objects.push_back(m_tracker);
 		m_tracker->Use(_GD, m_worms[m_current]);
 	}

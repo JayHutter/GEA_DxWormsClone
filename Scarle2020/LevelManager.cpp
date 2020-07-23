@@ -193,7 +193,7 @@ Stage* LevelManager::GetStage()
 }
 
 //Refactor
-void LevelManager::Input(GameData* _GD)
+void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 {
 	auto key = _GD->m_KBS_tracker;
 	auto worm = m_teams[m_active].GetWorm();
@@ -220,7 +220,7 @@ void LevelManager::Input(GameData* _GD)
 
 	if (_GD->m_MS.leftButton)
 	{
-		m_teams[m_active].UseWeapon(_GD, m_objects);
+		m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
 	}
 	
 	//DEBUG : Worm swap

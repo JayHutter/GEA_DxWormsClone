@@ -7,6 +7,17 @@ Homerun::Homerun(ID3D11Device* _GD) : Weapon("bat", _GD)
 	m_knockback = Vector2(1000, 0);
 }
 
+Homerun::Homerun(const Homerun& orig) : Weapon(orig)
+{
+}
+
+Homerun* Homerun::Clone(ID3D11Device* _GD)
+{
+	Homerun* clone = new Homerun(*this);
+	clone->SetSprite(clone->GetFileName(), _GD);
+	return clone;
+}
+
 void Homerun::Tick(GameData* _GD)
 {
 	m_time += _GD->m_dt;

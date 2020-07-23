@@ -7,7 +7,28 @@
 
 ImageGO2D::ImageGO2D(string _fileName, ID3D11Device* _GD) :m_pTextureRV(nullptr)
 {
-	string fullfilename = "../Images/"+ _fileName + ".dds";
+	SetSprite(_fileName, _GD);
+}
+
+ImageGO2D::ImageGO2D(const ImageGO2D& orig)
+{
+	m_filename = orig.m_filename;
+}
+
+ImageGO2D::~ImageGO2D()
+{
+	if (m_pTextureRV)
+	{
+		m_pTextureRV->Release();
+		m_pTextureRV = nullptr;
+	}
+}
+
+void ImageGO2D::SetSprite(string _fileName, ID3D11Device* _GD)
+{
+	m_filename = _fileName;
+
+	string fullfilename = "../Images/" + _fileName + ".dds";
 	HRESULT hr = CreateDDSTextureFromFile(_GD, Helper::charToWChar(fullfilename.c_str()), nullptr, &m_pTextureRV);
 
 	//Load default texture if texture fails to load
@@ -23,17 +44,7 @@ ImageGO2D::ImageGO2D(string _fileName, ID3D11Device* _GD) :m_pTextureRV(nullptr)
 	m_pTextureRV->GetResource(&pResource);
 	((ID3D11Texture2D*)pResource)->GetDesc(&Desc);
 
-	m_origin = 0.5f*Vector2((float)Desc.Width, (float)Desc.Height);//around which rotation and scaing is done
-
-}
-
-ImageGO2D::~ImageGO2D()
-{
-	if (m_pTextureRV)
-	{
-		m_pTextureRV->Release();
-		m_pTextureRV = nullptr;
-	}
+	m_origin = 0.5f * Vector2((float)Desc.Width, (float)Desc.Height);//around which rotation and scaing is done
 }
 
 void ImageGO2D::Tick(GameData* _GD)

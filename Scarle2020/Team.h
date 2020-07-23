@@ -20,7 +20,7 @@ public:
 	//Weapons
 	void SetupWeapons(ID3D11Device* _GD);
 	void CycleWeapon(int _dir);
-	void UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
+	void UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
 	void TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 
 	void RenderHUD(DrawData2D* _DD);

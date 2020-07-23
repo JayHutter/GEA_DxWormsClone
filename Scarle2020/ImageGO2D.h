@@ -14,16 +14,21 @@ class ImageGO2D :public GameObject2D
 public:
 	ImageGO2D(string _fileName, ID3D11Device* _GD);
 	virtual ~ImageGO2D();
+	ImageGO2D(const ImageGO2D& orig);
 
 	virtual void Tick(GameData* _GD);
 	virtual void Draw(DrawData2D* _DD);
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
 
+	void SetSprite(string _fileName, ID3D11Device* _GD);
+
 	ID3D11ShaderResourceView* GetTexture() { return m_pTextureRV; }
+	string GetFileName() { return m_filename; }
 
 protected:
 
 	ID3D11ShaderResourceView* m_pTextureRV;
+	string m_filename; //for cloning
 };
 
 #endif

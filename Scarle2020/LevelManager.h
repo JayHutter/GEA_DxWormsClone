@@ -28,7 +28,7 @@ public:
 	void UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD);
 	void ManageCollisions(GameData* _GD);
 	void DestroyStage(ID3D11Device* _DD, GameData* _GD);
-	void Input(GameData* _GD);
+	void Input(GameData* _GD, ID3D11Device* _DD);
 
 	Stage* GetStage();
 
