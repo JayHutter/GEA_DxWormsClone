@@ -101,6 +101,11 @@ void LevelManager::Update(GameData* _GD)
 		{
 			obj->GetCollider()->UpdateHitbox(obj->GetPos());
 		}
+
+		if (obj->Delete())
+		{
+			DeleteObject(obj);
+		}
 	}
 }
 
@@ -246,4 +251,16 @@ void LevelManager::DebugRender()
 void LevelManager::ShowFrames(float _gt)
 {
 	//frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
+}
+
+void LevelManager::DeleteObject(GameObject2D* _obj)
+{
+	auto end = m_objects.end();
+	auto result = std::remove(m_objects.begin(), end, _obj);
+	//if (end != result)
+	//{
+	//	m_objects.pop_back();
+	//}
+
+	m_objects.erase(result, end);
 }

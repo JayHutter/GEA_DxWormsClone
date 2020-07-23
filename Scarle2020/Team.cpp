@@ -80,7 +80,7 @@ void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11
 	//Dont use a weapon if currently using one
 	if (m_tracker)
 	{
-		return;
+		//return;
 	}
 
 	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
@@ -93,20 +93,22 @@ void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11
 
 void Team::TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
 {
-	if (m_tracker)
-	{
-		if (m_tracker->EndTurn())
-		{
-			auto end = _objects.end();
-			auto result = std::remove(_objects.begin(), _objects.end(), m_tracker);
-			if (result != end)
-			{
-				_objects.pop_back();
-				delete m_tracker;
-				m_tracker = nullptr;
-			}
-		}
-	}
+	//if (m_tracker)
+	//{
+	//	if (m_tracker->Delete())
+	//	{
+	//		auto end = _objects.end();
+	//		auto result = std::remove(_objects.begin(), _objects.end(), m_tracker);
+	//		if (result != end)
+	//		{
+	//			_objects.pop_back();
+	//			delete m_tracker;
+	//			m_tracker = nullptr;
+	//		}
+	//	}
+	//	if (m_tracker->EndTurn())
+	//		 
+	//}
 }
 
 void Team::RenderHUD(DrawData2D* _DD)

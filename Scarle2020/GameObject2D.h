@@ -35,7 +35,8 @@ public:
 	void SetScale(Vector2 _scale) { m_scale = _scale; }
 	void SetScale(float _scale) { m_scale = _scale * Vector2::One; }
 	void SetOrigin(Vector2 _origin) { m_origin = _origin; }
-
+	
+	bool Delete() { return m_delete; }
 	PhysicsComp* GetPhysComp();
 	Vector2 GetPos() { return m_pos; }
 	CollisionComp* GetCollider() { return c_collider; }
@@ -54,6 +55,7 @@ protected:
 
 	PhysicsComp *c_phys = nullptr;
 	CollisionComp* c_collider = nullptr;
+	bool m_delete = false;
 };
 
 

@@ -35,6 +35,7 @@ public:
 private:
 	void DebugRender();
 	void ShowFrames(float _gt);
+	void DeleteObject(GameObject2D* _obj);
 
 	Stage* m_stage = nullptr;
 
