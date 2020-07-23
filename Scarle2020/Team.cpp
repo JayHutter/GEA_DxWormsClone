@@ -31,7 +31,6 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, std::vector<GameObject2
 	SetupWeapons(_GD);
 
 	m_colour = _colour;
-	le_test = new Homerun(_GD);
 }
 
 Team::~Team()
@@ -77,48 +76,23 @@ void Team::CycleWeapon(int _dir)
 
 void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
 {
-	//Dont use a weapon if currently using one
-	if (m_tracker)
-	{
-		//return;
-	}
-
 	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
 	{
-		m_tracker = m_weapons[m_selection]->Clone(_DD);
-		_objects.push_back(m_tracker);
-		m_tracker->Use(_GD, m_worms[m_current]);
+		auto weapon = m_weapons[m_selection]->Clone(_DD);
+		_objects.push_back(weapon);
+		weapon->Use(_GD, m_worms[m_current]);
 	}
 }
 
 void Team::TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
 {
-	//if (m_tracker)
-	//{
-	//	if (m_tracker->Delete())
-	//	{
-	//		auto end = _objects.end();
-	//		auto result = std::remove(_objects.begin(), _objects.end(), m_tracker);
-	//		if (result != end)
-	//		{
-	//			_objects.pop_back();
-	//			delete m_tracker;
-	//			m_tracker = nullptr;
-	//		}
-	//	}
-	//	if (m_tracker->EndTurn())
-	//		 
-	//}
+
 }
 
 void Team::RenderHUD(DrawData2D* _DD)
 {
 	for (int i = 0; i < m_worms.size(); i++)
 	{
-		if (i == m_current)
-		{
-			m_worms[m_current]->DrawName(_DD);
-		}
 		m_worms[i]->DrawHealth(_DD);
 	}
 }

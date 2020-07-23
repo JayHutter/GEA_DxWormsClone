@@ -39,8 +39,5 @@ private:
 	static const int weapon_count = 1;
 	std::array<Weapon*, weapon_count> m_weapons; //All available weapons to the team - Clone to spawn
 	std::array<int, weapon_count> m_available; //-1 is infinite
-
-	Weapon* m_tracker = nullptr;
-	Weapon* le_test = nullptr;
 };
 
