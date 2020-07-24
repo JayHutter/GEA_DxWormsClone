@@ -293,14 +293,8 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 		return;
 	}
 
-	//Delete the data before removing it
-	auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
-	if (it != m_objects.end())
-	{
-		delete (*it);
-
-		auto end = m_objects.end();
-		auto result = std::remove(m_objects.begin(), end, _obj);
-		m_objects.erase(result, end);
-	}
+	//auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
+	auto end = m_objects.end();
+	auto result = std::remove(m_objects.begin(), end, _obj);
+	m_objects.erase(result, end);
 }
