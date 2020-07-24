@@ -20,7 +20,7 @@ public:
 	virtual void Use(GameData* _GD, Worm* _owner);
 
 private:
-	const float m_active = 0.2f;
+	const float m_active = 0.05f;
 	float m_time = 0;
 };
 

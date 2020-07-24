@@ -4,7 +4,7 @@
 Homerun::Homerun(ID3D11Device* _GD) : Weapon("bat", _GD)
 {
 	m_damage = 25;
-	m_knockback = Vector2(1000, 0);
+	m_knockback = Vector2(500, 0);
 }
 
 Homerun::Homerun(const Homerun& orig) : Weapon(orig)
@@ -30,15 +30,13 @@ void Homerun::Tick(GameData* _GD)
 
 void Homerun::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
-	if (_other == m_owner || m_end == true)
+	if (_other == m_owner || m_end == true || !m_owner)
 	{
 		return;
 	}
 
 	if (dynamic_cast<Worm*>(_other))
 	{
-		m_knockback.x *= m_owner->Direction();
-
 		_other->GetPhysComp()->AddForce(m_knockback);
 		_other->AddHealth(-m_damage);	
 	}
@@ -69,4 +67,9 @@ void Homerun::Use(GameData* _GD, Worm* _owner)
 
 	m_owner = _owner;
 	m_pos = _owner->GetPos();
+
+	if (_owner->Direction() < 0)
+	{
+		m_knockback.x = -500;
+	}
 }

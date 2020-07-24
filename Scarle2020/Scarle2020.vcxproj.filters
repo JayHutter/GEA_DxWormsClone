@@ -62,6 +62,15 @@
     <Filter Include="GameObjects\Mangers\Header">
       <UniqueIdentifier>{8bc0b96b-8c14-4683-8464-02f2a9b4d80c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Weapons">
+      <UniqueIdentifier>{c76be566-4924-46d7-8c84-a8154e51706e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Source">
+      <UniqueIdentifier>{02c3741c-10b6-4b9c-a971-f90c8468e03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Headers">
+      <UniqueIdentifier>{10d05fe6-cec9-4ab6-b951-e0b0377598d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -187,9 +196,6 @@
     <ClInclude Include="Weapon.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Homerun.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="AllWeapons.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
@@ -198,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="Team.h">
       <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Homerun.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,14 +306,14 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Homerun.cpp">
-      <Filter>GameObjects\2D\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>GameObjects\2D\Source</Filter>
     </ClCompile>
     <ClCompile Include="Team.cpp">
       <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Homerun.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
