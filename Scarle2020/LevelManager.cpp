@@ -117,6 +117,7 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 		if (obj->Delete())
 		{
 			DeleteObject(obj);
+			return; //Break out of loop as data no longer exists
 		}
 	}
 }
@@ -296,5 +297,12 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 	//auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
 	auto end = m_objects.end();
 	auto result = std::remove(m_objects.begin(), end, _obj);
-	m_objects.erase(result, end);
+	
+	if (result != end)
+	{
+		m_objects.erase(result, end);
+		delete _obj;
+		_obj = nullptr;
+	}
+	
 }
