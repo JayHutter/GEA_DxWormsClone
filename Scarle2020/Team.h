@@ -21,8 +21,9 @@ public:
 	void SetupWeapons(ID3D11Device* _GD);
 	void CycleWeapon(int _dir);
 	void UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
-	void TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
+	void SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 	void DeleteWorm(Worm* _worm);
+	void AimWeapon(GameData* _GD);
 
 	void RenderHUD(DrawData2D* _DD);
 
@@ -39,5 +40,7 @@ private:
 	static const int weapon_count = 1;
 	std::array<Weapon*, weapon_count> m_weapons; //All available weapons to the team - Clone to spawn
 	std::array<int, weapon_count> m_available; //-1 is infinite
+	Weapon* m_selected_weapon = nullptr;
+	bool m_charging = false;
 };
 

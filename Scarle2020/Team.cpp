@@ -45,6 +45,7 @@ Team::~Team()
 
 void Team::Tick(GameData* _GD)
 {
+	m_weapons[m_selection]->SetPos(m_worms[m_current]->GetPos());
 }
 
 Worm* Team::GetWorm()
@@ -79,14 +80,22 @@ void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11
 	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
 	{
 		auto weapon = m_weapons[m_selection]->Clone(_DD);
-		_objects.push_back(weapon);
 		weapon->Use(_GD, m_worms[m_current]);
+		m_available[m_selection] -= (m_available[m_selection] != -1);
+		_objects.push_back(weapon);
+
+		//[m_selection]->Use(_GD, m_worms[m_current]);
 	}
 }
 
-void Team::TrackWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
+void Team::SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)
 {
+	//m_selected_weapon = m_weapons[m_selection];
+}
 
+void Team::AimWeapon(GameData* _GD)
+{
+	m_weapons[m_selection]->Aim(_GD);
 }
 
 void Team::RenderHUD(DrawData2D* _DD)
@@ -95,6 +104,8 @@ void Team::RenderHUD(DrawData2D* _DD)
 	{
 		m_worms[i]->DrawHealth(_DD);
 	}
+
+	m_weapons[m_selection]->Draw(_DD);
 }
 
 void Team::DeleteWorm(Worm* _worm)

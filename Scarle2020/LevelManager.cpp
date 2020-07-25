@@ -88,7 +88,7 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 {
 	//ShowFrames(_GD->m_dt);
 	m_teams[m_active].Tick(_GD);
-	m_teams[m_active].TrackWeapon(_GD, m_objects);
+	m_teams[m_active].AimWeapon(_GD);
 
 	for (auto obj : m_objects)
 	{
@@ -97,6 +97,11 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 		if (obj->GetCollider())
 		{
 			obj->GetCollider()->UpdateHitbox(obj->GetPos());
+		}
+
+		if (dynamic_cast<Weapon*>(obj))
+		{
+			dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects);
 		}
 
 		if (obj->Explode().explode)
@@ -266,6 +271,9 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 		m_active++;
 		m_active %= m_teams.size();
 	}
+
+	m_teams[m_active].CycleWeapon(key.IsKeyPressed(Keyboard::E) + (-1 * key.IsKeyPressed(Keyboard::Q)));
+
 	//Test explosion
 	if (key.IsKeyPressed(Keyboard::Enter))
 	{

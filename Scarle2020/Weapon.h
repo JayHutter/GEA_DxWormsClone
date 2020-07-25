@@ -17,7 +17,10 @@ public:
 	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) {}
 	virtual Weapon* Clone(ID3D11Device* _GD) = 0;
 
+	void SetOwner(Worm* _owner);
+	virtual void Aim(GameData* _GD) = 0;
 	virtual void Use(GameData* _GD, Worm* _owner) = 0;
+	virtual void Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects) = 0;
 
 	float Damage();
 	Vector2 Knockback();

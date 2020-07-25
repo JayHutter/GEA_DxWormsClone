@@ -17,7 +17,9 @@ public:
 
 	virtual Homerun* Clone(ID3D11Device* _GD) override;
 
+	virtual void Aim(GameData* _GD);
 	virtual void Use(GameData* _GD, Worm* _owner);
+	virtual void Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects) {}
 
 private:
 	const float m_active = 0.05f;

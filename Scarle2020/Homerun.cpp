@@ -56,9 +56,10 @@ void Homerun::OnCollisionExit(GameData* _GD, GameObject2D* _other)
 
 void Homerun::Use(GameData* _GD, Worm* _owner)
 {
-	m_end = false;
-	m_time = 0;
-	m_knockback = Vector2(1000, 0);
+	//Vector2 dir = Vector2(_GD->m_MS.x, _GD->m_MS.y) - _owner->GetPos();
+	//dir.Normalize();
+	//m_knockback = Vector2(1000, 0);
+	//m_knockback = dir * 1000;
 
 	if (!c_collider)
 	{
@@ -67,9 +68,14 @@ void Homerun::Use(GameData* _GD, Worm* _owner)
 
 	m_owner = _owner;
 	m_pos = _owner->GetPos();
+}
 
-	if (_owner->Direction() < 0)
-	{
-		m_knockback.x = -500;
-	}
+void Homerun::Aim(GameData* _GD)
+{
+	Vector2 direction = Vector2(_GD->m_MS.x, _GD->m_MS.y);
+	direction -= m_pos;
+	direction.Normalize();
+
+	direction *= 500;
+	m_knockback = direction;
 }

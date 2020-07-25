@@ -30,3 +30,8 @@ DestructionMask* Weapon::Destruction()
 {
 	return m_destruction;
 }
+
+void Weapon::SetOwner(Worm* _owner)
+{
+	m_owner = _owner;
+}
