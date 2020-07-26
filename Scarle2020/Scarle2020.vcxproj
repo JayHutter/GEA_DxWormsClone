@@ -180,6 +180,7 @@
     <ClInclude Include="gameobject.h" />
     <ClInclude Include="GameObject2D.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Grenade.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Homerun.h" />
     <ClInclude Include="ImageGO2D.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="GameObject2D.cpp" />
+    <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="Homerun.cpp" />
     <ClCompile Include="ImageGO2D.cpp" />
     <ClCompile Include="LevelManager.cpp" />

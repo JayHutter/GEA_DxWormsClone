@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Weapon.h"
 
-Weapon::Weapon(const Weapon& orig) : ImageGO2D(orig)
+Weapon::Weapon(const Weapon& _orig) : ImageGO2D(_orig)
 {
-	m_damage = orig.m_damage;
-	m_knockback = orig.m_knockback;
+	m_damage = _orig.m_damage;
+	m_knockback = _orig.m_knockback;
 }
 
 void Weapon::Tick(GameData* _GD)

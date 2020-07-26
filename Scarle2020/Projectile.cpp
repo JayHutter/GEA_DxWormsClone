@@ -2,7 +2,7 @@
 #include "Projectile.h"
 #include "GameData.h"
 
-Projectile::Projectile(string _sprite, Vector2 _pos, float _width, float _height, bool _bounce, bool _gravity, float _damage, Vector2 _knockback,  float _explosion_rad, float _time, Worm* _owner, ID3D11Device* _DD) : ImageGO2D(_sprite, _DD)
+Projectile::Projectile(string _sprite, Vector2 _pos, float _width, float _height, float _bounce, bool _gravity, float _damage, Vector2 _knockback,  float _explosion_rad, float _time, Worm* _owner, ID3D11Device* _DD) : ImageGO2D(_sprite, _DD)
 {
 	m_pos = _pos;
 	m_active = _time;

@@ -8,7 +8,7 @@ class Weapon :public ImageGO2D
 public:
 	Weapon(string _fileName, ID3D11Device* _GD) : ImageGO2D(_fileName, _GD) {}
 	~Weapon() = default;
-	Weapon(const Weapon& orig);
+	Weapon(const Weapon& _orig);
 
 	virtual void Tick(GameData* _GD);
 

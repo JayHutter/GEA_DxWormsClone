@@ -63,9 +63,11 @@ void Team::SetupWeapons(ID3D11Device* _GD)
 {
 	m_weapons.push_back(new MissileLauncher(_GD));
 	m_weapons.push_back(new Homerun(_GD));
+	m_weapons.push_back(new Grenade(1, 0.5f, 5, 25, 200, 0, "Grenade", _GD));
 
 	m_available.push_back(-1);
 	m_available.push_back(5);
+	m_available.push_back(10);
 	weapon_count = m_weapons.size();
 }
 
