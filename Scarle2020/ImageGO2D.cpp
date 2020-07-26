@@ -12,6 +12,12 @@ ImageGO2D::ImageGO2D(string _fileName, ID3D11Device* _GD) :m_pTextureRV(nullptr)
 
 ImageGO2D::ImageGO2D(const ImageGO2D& orig)
 {
+	m_pos = orig.m_pos;
+	m_colour = orig.m_colour;
+	m_dir = orig.m_dir;
+	m_health = orig.m_health;
+	m_rotation = orig.m_rotation;
+	m_scale = orig.m_scale;
 	m_filename = orig.m_filename;
 }
 

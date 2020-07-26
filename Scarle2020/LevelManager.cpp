@@ -101,7 +101,10 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 
 		if (dynamic_cast<Weapon*>(obj))
 		{
-			dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects);
+			if (dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects, _DD))
+			{
+				return;
+			}
 		}
 
 		if (obj->Explode().explode)
@@ -117,6 +120,7 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 			}
 
 			DeleteObject(obj);
+			return;
 		}
 
 		if (obj->Delete())
@@ -138,12 +142,29 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 
 		if (coll)
 		{
+			std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());
+
+			bool colliding = obj->IsCollided(m_stage);
+			bool collided = coll_data != std::array<int, 4>{0, 0, 0, 0};
+
+			if (!colliding && collided)
+			{
+				obj->OnCollisionEnter(_GD, m_stage);
+			}
+			else if (colliding && collided)
+			{
+				obj->OnCollision(_GD, m_stage);
+			}
+			else if (colliding && !collided)
+			{
+				obj->OnCollisionExit(_GD, m_stage);
+			}
+
+
 			if (phys)
 			{				
-				std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());				
-
 				//Calculate normal to collision
-				if (coll_data != std::array<int, 4>{0, 0, 0, 0})
+				if (collided)
 				{
 					//Move object if stuck in wall
 					if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
@@ -256,7 +277,8 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 		}
 	}
 
-	if (_GD->m_MS.leftButton)
+	//if (_GD->m_MS.leftButton)
+	if (key.IsKeyPressed(Keyboard::F))
 	{
 		m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
 	}
@@ -312,5 +334,4 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 		delete _obj;
 		_obj = nullptr;
 	}
-	
 }

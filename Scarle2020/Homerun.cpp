@@ -14,7 +14,7 @@ Homerun::Homerun(const Homerun& orig) : Weapon(orig)
 Homerun* Homerun::Clone(ID3D11Device* _GD)
 {
 	Homerun* clone = new Homerun(*this);
-	clone->SetSprite(clone->GetFileName(), _GD);
+	clone->SetSprite(m_filename, _GD);
 	return clone;
 }
 

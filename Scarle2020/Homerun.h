@@ -19,7 +19,7 @@ public:
 
 	virtual void Aim(GameData* _GD);
 	virtual void Use(GameData* _GD, Worm* _owner);
-	virtual void Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects) {}
+	virtual bool Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD) { return false; }
 
 private:
 	const float m_active = 0.05f;

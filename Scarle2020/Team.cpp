@@ -61,8 +61,12 @@ void Team::CycleWorm()
 
 void Team::SetupWeapons(ID3D11Device* _GD)
 {
-	m_weapons[0] = new Homerun(_GD);
-	m_available[0] = -1;
+	m_weapons.push_back(new MissileLauncher(_GD));
+	m_weapons.push_back(new Homerun(_GD));
+
+	m_available.push_back(-1);
+	m_available.push_back(5);
+	weapon_count = m_weapons.size();
 }
 
 void Team::CycleWeapon(int _dir)
