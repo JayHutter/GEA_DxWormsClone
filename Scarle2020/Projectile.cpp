@@ -26,7 +26,7 @@ void Projectile::Tick(GameData* _GD)
 
 	if (m_time > m_active)
 	{
-		//m_delete = true;
+		m_delete = true;
 		m_explode.explode = m_explode.scale > 0;
 	}
 }
