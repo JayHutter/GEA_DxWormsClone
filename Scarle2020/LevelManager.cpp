@@ -170,7 +170,7 @@ void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _c
 					//Move object if stuck in wall
 					if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
 					{		
-						phys->SetVelocity(coll->CalculateNormal(coll_data));
+						phys->SetVelocityDir(coll->CalculateNormal(coll_data));						
 					}
 					else //apply resistive forces
 					{
