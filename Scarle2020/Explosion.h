@@ -17,6 +17,8 @@ public:
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other);
 	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other);
 private:
+	void Damage(GameObject2D* _other);
+
 	Worm* m_owner = nullptr;
 	float m_damage = 0;
 	float m_knockback = 0;

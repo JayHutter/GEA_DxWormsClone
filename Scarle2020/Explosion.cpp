@@ -48,7 +48,7 @@ void Explosion::SetData(ExplosionData _data)
 
 void Explosion::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
-	_other->AddHealth(-m_damage);
+	Damage(_other);
 	auto phys = _other->GetPhysComp();
 	if (phys)
 	{
@@ -77,4 +77,19 @@ void Explosion::Tick(GameData* _GD)
 	{
 		m_delete = true;
 	}
+}
+
+void Explosion::Damage(GameObject2D* _other)
+{
+	Vector2 vect = _other->GetPos() - m_pos;
+	float distance = sqrt((vect.x * vect.x) + (vect.y + vect.y));
+
+	float max = 64 * m_scale.x;
+	float damage_percent = (max - distance) / max;
+	if (damage_percent < 0.1f)
+	{
+		damage_percent = 0.1f;
+	}
+
+	_other->AddHealth(-(m_damage * damage_percent));
 }
