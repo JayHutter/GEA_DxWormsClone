@@ -86,9 +86,9 @@ void Explosion::Damage(GameObject2D* _other)
 
 	float max = 64 * m_scale.x;
 	float damage_percent = (max - distance) / max;
-	if (damage_percent < 0.1f)
+	if (damage_percent < 0.25f)
 	{
-		damage_percent = 0.1f;
+		damage_percent = 0.25f;
 	}
 
 	_other->AddHealth(-(m_damage * damage_percent));
