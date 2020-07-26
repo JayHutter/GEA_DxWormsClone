@@ -60,7 +60,7 @@ bool MissileLauncher::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects,
 	Vector2 force = Vector2(_GD->m_MS.x, _GD->m_MS.y);
 	force -= m_pos;
 	force.Normalize();
-	force *= 500 * m_charge;
+	force *= Vector2(500, 700) * m_charge;
 
 	//Vector2 force = Vector2(500 * m_owner->Direction() * m_charge, -500 * m_charge);
 	missile->GetPhysComp()->AddForce(force);
