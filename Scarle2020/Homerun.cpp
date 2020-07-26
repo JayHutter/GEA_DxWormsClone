@@ -61,13 +61,13 @@ void Homerun::Use(GameData* _GD, Worm* _owner)
 	//m_knockback = Vector2(1000, 0);
 	//m_knockback = dir * 1000;
 
-	if (!c_collider)
-	{
-		c_collider = new CollisionComp(40, 30);
-	}
-
 	m_owner = _owner;
 	m_pos = _owner->GetPos();
+
+	if (!c_collider)
+	{
+		c_collider = new CollisionComp(40, 30, m_pos);
+	}
 }
 
 void Homerun::Aim(GameData* _GD)

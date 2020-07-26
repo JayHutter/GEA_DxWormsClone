@@ -49,9 +49,7 @@ bool MissileLauncher::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects,
 		return false;
 	}
 
-	Projectile* missile = new Projectile("Missile", 16, 16, false, true, 30, Vector2(200, 0), 1, 100, m_owner, _DD);
-	//missile->SetPos(m_pos + Vector2(50, -50));
-	missile->SetPos(Vector2(700, 200));
+	Projectile* missile = new Projectile("Missile", Vector2(700, 200), 16, 16, false, true, 30, Vector2(200, 0), 1, 100, m_owner, _DD);
 	_objects.push_back(missile);
 	//missile->GetPhysComp()->AddForce(Vector2(200, -500));
 

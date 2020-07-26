@@ -27,9 +27,11 @@ enum class Side
 class CollisionComp
 {
 public:
+	CollisionComp(float _width, float _height, Vector2 _pos);
 	CollisionComp(float _width, float _height);
 	~CollisionComp() = default;
 
+	void SetHitbox(float _width, float _height, Vector2 _pos);
 	void SetHitbox(float _width, float _height);
 
 	bool TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pixel);

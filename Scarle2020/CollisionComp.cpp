@@ -1,9 +1,22 @@
 #include "pch.h"
 #include "CollisionComp.h"
 
+CollisionComp::CollisionComp(float _width, float _height, Vector2 _pos)
+{
+	SetHitbox(_width, _height, _pos);
+}
+
 CollisionComp::CollisionComp(float _width, float _height)
 {
 	SetHitbox(_width, _height);
+}
+
+void CollisionComp::SetHitbox(float _width, float _height, Vector2 _pos)
+{
+	hitbox.top = _pos.y -(_height / 2);
+	hitbox.bottom = _pos.y + _height / 2;
+	hitbox.left = _pos.x -(_width / 2);
+	hitbox.right = _pos.x + _width / 2;
 }
 
 void CollisionComp::SetHitbox(float _width, float _height)

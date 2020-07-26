@@ -5,7 +5,7 @@
 Explosion::Explosion(Worm* _owner, ID3D11Device* _GD) : ImageGO2D("explosion", _GD)
 {
 	m_owner = _owner;
-	c_collider = new CollisionComp(128, 128);
+	//c_collider = new CollisionComp(128, 128);
 }
 
 
@@ -15,7 +15,17 @@ void Explosion::SetData(float _size, Vector2 _pos, float _damage, float _knockba
 	m_pos = _pos;
 	m_damage = _damage;
 	m_knockback = _knockback;
-	c_collider->SetHitbox(128 * _size, 128 * _size);
+
+	if (c_collider)
+	{
+		c_collider->SetHitbox(128 * _size, 128 * _size, m_pos);
+	}
+	else
+	{
+		c_collider = new CollisionComp(128 * _size, 128 * _size, m_pos);
+	}
+
+	
 }
 
 void Explosion::SetData(ExplosionData _data)
@@ -24,7 +34,15 @@ void Explosion::SetData(ExplosionData _data)
 	m_pos = _data.pos;
 	m_damage = _data.damage;
 	m_knockback = _data.knockback;
-	c_collider->SetHitbox(128 * _data.scale, 128 * _data.scale);
+
+	if (c_collider)
+	{
+		c_collider->SetHitbox(128 * _data.scale, 128 * _data.scale, m_pos);
+	}
+	else
+	{
+		c_collider = new CollisionComp(128 * _data.scale, 128 * _data.scale, m_pos);
+	}
 }
 	
 
