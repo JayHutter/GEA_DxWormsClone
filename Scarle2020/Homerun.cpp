@@ -54,7 +54,7 @@ void Homerun::OnCollisionExit(GameData* _GD, GameObject2D* _other)
 }
 
 
-void Homerun::Use(GameData* _GD, Worm* _owner)
+void Homerun::Use(GameData* _GD, Worm* _owner, float _charge)
 {
 	//Vector2 dir = Vector2(_GD->m_MS.x, _GD->m_MS.y) - _owner->GetPos();
 	//dir.Normalize();

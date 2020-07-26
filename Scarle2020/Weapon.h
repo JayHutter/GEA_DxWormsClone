@@ -19,11 +19,11 @@ public:
 
 	void SetOwner(Worm* _owner);
 	virtual void Aim(GameData* _GD) = 0;
-	virtual void Use(GameData* _GD, Worm* _owner) = 0;
+	virtual void Use(GameData* _GD, Worm* _owner, float _charge) = 0;
 	virtual bool Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD) = 0;
 
-	float Damage();
-	Vector2 Knockback();
+	bool Chargeable();
+
 	bool EndTurn();
 
 	DestructionMask* Destruction();
@@ -31,6 +31,9 @@ public:
 protected:
 	float m_damage = 0;
 	Vector2 m_knockback = Vector2::Zero;
+	
+	bool m_chargeable = false;
+	float m_charge = 0;
 
 	Worm* m_owner = nullptr;
 

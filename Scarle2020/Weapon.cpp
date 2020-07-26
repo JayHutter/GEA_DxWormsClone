@@ -11,14 +11,9 @@ void Weapon::Tick(GameData* _GD)
 {
 }
 
-float Weapon::Damage()
+bool Weapon::Chargeable()
 {
-	return m_damage;
-}
-
-Vector2 Weapon::Knockback()
-{
-	return m_knockback;
+	return m_chargeable;
 }
 
 bool Weapon::EndTurn()

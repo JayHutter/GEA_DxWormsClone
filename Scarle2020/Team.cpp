@@ -81,14 +81,24 @@ void Team::CycleWeapon(int _dir)
 
 void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
 {
-	if (m_available[m_selection] > 0 || m_available[m_selection] == -1)
-	{
-		auto weapon = m_weapons[m_selection]->Clone(_DD);
-		weapon->Use(_GD, m_worms[m_current]);
-		m_available[m_selection] -= (m_available[m_selection] != -1);
-		_objects.push_back(weapon);
 
-		//[m_selection]->Use(_GD, m_worms[m_current]);
+	if ((m_available[m_selection] > 0 || m_available[m_selection] == -1) && m_can_attack)
+	{
+		if (m_weapons[m_selection]->Chargeable() && _GD->m_MS.leftButton)
+		{
+			m_charging = true;
+			m_charge += _GD->m_dt;
+		}
+		else if (_GD->m_MS.leftButton || m_charging)
+		{
+			auto weapon = m_weapons[m_selection]->Clone(_DD);
+			m_available[m_selection] -= (m_available[m_selection] != -1);
+			_objects.push_back(weapon);
+			weapon->Use(_GD, m_worms[m_current], m_charge);
+			m_charging = false;
+			m_can_attack = false;
+			m_charge = false;
+		}
 	}
 }
 

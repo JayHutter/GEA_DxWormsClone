@@ -7,6 +7,7 @@ MissileLauncher::MissileLauncher(ID3D11Device* _GD) : Weapon("MLauncher", _GD)
 {
 	//FOR DEBUG WHILE NO SPRITE
 	m_colour = Colors::Red;
+	m_chargeable = true;
 }
 
 MissileLauncher::MissileLauncher(const MissileLauncher& _orig) : Weapon(_orig)
@@ -37,9 +38,10 @@ void MissileLauncher::Aim(GameData* _GD)
 
 }
 
-void MissileLauncher::Use(GameData* _GD, Worm* _owner)
+void MissileLauncher::Use(GameData* _GD, Worm* _owner, float _charge)
 {
 	m_owner = _owner;
+	m_charge = _charge;
 }
 
 bool MissileLauncher::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
@@ -55,7 +57,7 @@ bool MissileLauncher::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects,
 	Projectile* missile = new Projectile("Missile", pos, 16, 16, false, true, 30, Vector2(200, 0), 1, 100, m_owner, _DD);
 	_objects.push_back(missile);
 
-	Vector2 force = Vector2(500 * m_owner->Direction(), -500);
+	Vector2 force = Vector2(500 * m_owner->Direction() * m_charge, -500 * m_charge);
 	missile->GetPhysComp()->AddForce(force);
 
 	m_fired = true;

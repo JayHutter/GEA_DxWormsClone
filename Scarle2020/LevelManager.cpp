@@ -89,6 +89,7 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 	//ShowFrames(_GD->m_dt);
 	m_teams[m_active].Tick(_GD);
 	m_teams[m_active].AimWeapon(_GD);
+	m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
 
 	for (auto obj : m_objects)
 	{
@@ -278,10 +279,10 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 	}
 
 	//if (_GD->m_MS.leftButton)
-	if (key.IsKeyPressed(Keyboard::F))
-	{
-		m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
-	}
+	//if (_GD->m_MS.leftButton || _GD->m_KBS.F)
+	//{
+	//	m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
+	//}
 	
 	//DEBUG : Worm swap
 	if (key.IsKeyPressed(Keyboard::Tab))

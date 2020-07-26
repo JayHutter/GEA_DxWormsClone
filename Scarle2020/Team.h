@@ -42,5 +42,7 @@ private:
 	std::vector<int> m_available; //-1 is infinite
 	Weapon* m_selected_weapon = nullptr;
 	bool m_charging = false;
+	bool m_can_attack = true;
+	float m_charge = 0;
 };
 
