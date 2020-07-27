@@ -63,17 +63,25 @@ void Team::SetupWeapons(ID3D11Device* _GD)
 {
 	m_weapons.push_back(new MissileLauncher(_GD));
 	m_weapons.push_back(new Homerun(_GD));
+
 	m_weapons.push_back(new Grenade(1, 0.5f, 5, 25, 200, 0, "Grenade", _GD));
-	m_weapons.push_back(new Grenade(3, 0.25f, 3, 50, 700, 0, "Holy", _GD));
+	m_weapons.push_back(new Grenade(4, 0.25f, 3, 50, 700, 0, "Holy", _GD));
 	m_weapons.push_back(new Grenade(1, 0.5f, 5, 20, 200, 10, "Frag", _GD));
 	m_weapons.push_back(new Grenade(1, 1, 8, 30, 300, 4, "Banana", _GD));
 
+	m_weapons.push_back(new Dropper(3, 0, false, 2, 40, 350, 7, "TNT", _GD));
+	m_weapons.push_back(new Dropper(5, 0, true, 0, 0, 0, 4, "Bowling", _GD));
+
 	m_available.push_back(-1);
 	m_available.push_back(5);
+
 	m_available.push_back(10);
 	m_available.push_back(2);
 	m_available.push_back(5);
 	m_available.push_back(3);
+
+	m_available.push_back(3);
+	m_available.push_back(1);
 	weapon_count = m_weapons.size();
 }
 

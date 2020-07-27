@@ -5,6 +5,7 @@ Homerun::Homerun(ID3D11Device* _GD) : Weapon("bat", _GD)
 {
 	m_damage = 25;
 	m_knockback = Vector2(500, 0);
+	m_active = 0.05f;
 }
 
 Homerun::Homerun(const Homerun& orig) : Weapon(orig)

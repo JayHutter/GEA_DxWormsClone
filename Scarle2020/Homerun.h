@@ -22,7 +22,5 @@ public:
 	virtual bool Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD) { return false; }
 
 private:
-	const float m_active = 0.05f;
-	float m_time = 0;
 };
 

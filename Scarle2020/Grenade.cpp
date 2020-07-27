@@ -23,8 +23,6 @@ Grenade::Grenade(float _radius, float _bounce, float _time, float _damage, float
 
 Grenade::Grenade(const Grenade& _orig) : Weapon(_orig)
 {
-	m_active = _orig.m_active;
-	m_explode = _orig.m_explode;
 	m_frags = _orig.m_frags;
 	m_bounce = _orig.m_bounce;
 }
@@ -47,7 +45,8 @@ void Grenade::Tick(GameData* _GD)
 
 void Grenade::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
-
+	_other->AddHealth(-m_damage);
+	m_collided.push_back(_other);
 }
 
 void Grenade::OnCollision(GameData* _GD, GameObject2D* _other)
@@ -57,7 +56,7 @@ void Grenade::OnCollision(GameData* _GD, GameObject2D* _other)
 
 void Grenade::OnCollisionExit(GameData* _GD, GameObject2D* _other)
 {
-
+	RemoveFromCollided(_other);
 }
 
 Grenade* Grenade::Clone(ID3D11Device* _GD)

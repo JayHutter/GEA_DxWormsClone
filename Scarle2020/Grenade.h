@@ -19,8 +19,6 @@ public:
 	virtual void Use(GameData * _GD, Worm * _owner, float _charge);
 	virtual bool Spawn(GameData * _GD, std::vector<GameObject2D*> & _objects, ID3D11Device * _DD);
 private:
-	float m_time = 0;
-	float m_active = 100;
 	int m_frags = 0;
 	
 	enum class State

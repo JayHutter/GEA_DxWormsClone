@@ -173,6 +173,7 @@
     <ClInclude Include="DestructionMask.h" />
     <ClInclude Include="DrawData.h" />
     <ClInclude Include="DrawData2D.h" />
+    <ClInclude Include="Dropper.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="fileVBGO.h" />
     <ClInclude Include="Game.h" />
@@ -222,6 +223,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DestructionMask.cpp" />
+    <ClCompile Include="Dropper.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="fileVBGO.cpp" />
     <ClCompile Include="Game.cpp" />

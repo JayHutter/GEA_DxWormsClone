@@ -19,6 +19,7 @@ ImageGO2D::ImageGO2D(const ImageGO2D& orig)
 	m_rotation = orig.m_rotation;
 	m_scale = orig.m_scale;
 	m_filename = orig.m_filename;
+	m_explode = orig.m_explode;
 }
 
 ImageGO2D::~ImageGO2D()

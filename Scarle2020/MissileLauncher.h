@@ -19,9 +19,6 @@ public:
 	virtual void Use(GameData* _GD, Worm* _owner, float _charge);
 	virtual bool Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
 private:
-	const float m_active = 0.2f;
-	float m_time = 0;
-
 	bool m_fired = false;
 };
 

@@ -29,6 +29,9 @@ public:
 	DestructionMask* Destruction();
 
 protected:
+	float m_active = 1;
+	float m_time = 0;
+
 	float m_damage = 0;
 	Vector2 m_knockback = Vector2::Zero;
 	

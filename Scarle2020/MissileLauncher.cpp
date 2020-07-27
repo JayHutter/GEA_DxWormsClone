@@ -8,6 +8,7 @@ MissileLauncher::MissileLauncher(ID3D11Device* _GD) : Weapon("MLauncher", _GD)
 	//FOR DEBUG WHILE NO SPRITE
 	m_colour = Colors::Red;
 	m_chargeable = true;
+	m_active = 0.25f;
 }
 
 MissileLauncher::MissileLauncher(const MissileLauncher& _orig) : Weapon(_orig)

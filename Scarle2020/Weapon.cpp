@@ -5,6 +5,7 @@ Weapon::Weapon(const Weapon& _orig) : ImageGO2D(_orig)
 {
 	m_damage = _orig.m_damage;
 	m_knockback = _orig.m_knockback;
+	m_active = _orig.m_active;
 }
 
 void Weapon::Tick(GameData* _GD)
