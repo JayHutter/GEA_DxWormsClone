@@ -220,6 +220,9 @@
     <ClInclude Include="Dropper.h">
       <Filter>GameObjects\Weapons\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -337,6 +340,9 @@
       <Filter>GameObjects\Weapons\Source</Filter>
     </ClCompile>
     <ClCompile Include="Dropper.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
       <Filter>GameObjects\Weapons\Source</Filter>
     </ClCompile>
   </ItemGroup>

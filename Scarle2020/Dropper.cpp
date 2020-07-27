@@ -34,6 +34,11 @@ void Dropper::Tick(GameData* _GD)
 			m_explode.explode = true;
 		}
 	}
+
+	if (m_scale_damage)
+	{
+		m_damage *= (c_phys->GetVel().y / 10);
+	}
 }
 
 void Dropper::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
@@ -41,11 +46,6 @@ void Dropper::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 	if (m_bounce < 0.1 && dynamic_cast<Stage*>(_other) && c_phys->GetVel().y > 0)
 	{
 		c_phys->SetVelocutyY(0);
-	}
-
-	if (m_scale_damage)
-	{
-		m_damage *= (c_phys->GetVel().y / 10);
 	}
 
 	_other->AddHealth(-m_damage);
