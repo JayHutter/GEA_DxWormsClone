@@ -106,8 +106,8 @@ bool Grenade::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11D
 		{
 			for (int i = 0; i < m_frags; i++)
 			{
-				int x_pos = (std::rand() % 30) - 15;
-				int y_pos = -1 * (std::rand() % 15);
+				int x_pos = (std::rand() % 100) - 50;
+				int y_pos = -1 * (std::rand() % 30);
 
 				Vector2 pos = m_pos + Vector2(x_pos, y_pos);
 				Vector2 force = (pos - m_pos);
