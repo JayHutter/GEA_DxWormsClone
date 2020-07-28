@@ -14,7 +14,8 @@ Mine::Mine(int _fake_percent, ID3D11Device* _GD) : Weapon("Mine", _GD)
 	m_explode.damage = 25;
 	m_explode.knockback = 200;
 	m_explode.scale = 0.6f;
-	m_active = 2; //How long it takes to explode once triggered
+	m_active = 3; //How long it takes to explode once triggered
+	m_chargeable = true;
 	
 	c_phys = new PhysicsComp(&m_pos, 0.3f, 0.2f, true);
 	c_collider = new CollisionComp(16, 16);
@@ -29,6 +30,12 @@ Mine::Mine(const Mine& _orig) : Weapon(_orig)
 
 void Mine::Tick(GameData* _GD)
 {
+	//Dont let it explode if its moving
+	if (c_phys->GetVel().x > 0 || c_phys->GetVel().y > 0)
+	{
+		m_triggered = false;
+	}
+
 	if (m_triggered)
 	{
 		m_time += _GD->m_dt;
@@ -76,7 +83,19 @@ void Mine::Aim(GameData* _GD)
 
 void Mine::Use(GameData* _GD, Worm* _owner, float _charge)
 {
+	Vector2 force = Vector2(_GD->m_MS.x, _GD->m_MS.y);
+	force -= _owner->GetPos();
+	force.Normalize();
 
+	m_pos = _owner->GetPos();
+	m_pos.x += (force.x * 15);
+
+	force.x *= _charge * 500;
+	force.y *= _charge * 700;
+
+	c_phys->AddForce(force);
+
+	m_owner = _owner;
 }
 
 bool Mine::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)

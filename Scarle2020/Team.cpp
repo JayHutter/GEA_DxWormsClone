@@ -71,6 +71,7 @@ void Team::SetupWeapons(ID3D11Device* _GD)
 
 	m_weapons.push_back(new Dropper(3, 0, false, 2, 40, 350, 7, "TNT", _GD));
 	m_weapons.push_back(new Dropper(5, 0, true, 0, 0, 0, 4, "Bowling", _GD));
+	m_weapons.push_back(new Mine(0, _GD));
 
 	m_weapons.push_back(new Teleport(_GD));
 
@@ -84,6 +85,7 @@ void Team::SetupWeapons(ID3D11Device* _GD)
 
 	m_available.push_back(3);
 	m_available.push_back(1);
+	m_available.push_back(5);
 
 	m_available.push_back(5);
 
