@@ -4,3 +4,4 @@
 #include "Grenade.h"
 #include "Dropper.h"
 #include "Teleport.h"
+#include "Mine.h"

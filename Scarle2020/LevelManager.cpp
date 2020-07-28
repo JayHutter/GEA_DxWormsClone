@@ -48,15 +48,11 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	for (int i=0; i<_teams; i++)
 	{
 		m_teams.push_back(Team(_GD, 4, default_colors[i], m_objects));
-		//for (int j = 0; j < 4; j++)
-		//{
-		//	Worm* w = new Worm(_GD, m_teams.back().team_colour, "Worm " + std::to_string(j+1));
-		//	w->SetColour(m_teams.back().team_colour);
-		//	w->SetPos(Vector2(50 + (j * 50) + (300*i), 200)); //Test Tint : will use hud instead
-		//	m_teams.back().worms.push_back(w);
-		//	m_objects.push_back(w);	
-		//}
 	}
+
+	auto mine = new Mine(50, _GD);
+	mine->SetPos(Vector2(600, 500));
+	m_objects.push_back(mine);
 
 	m_stage = new Stage(_GD, _name);
 }
