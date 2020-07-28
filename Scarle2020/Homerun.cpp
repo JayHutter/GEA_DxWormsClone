@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Homerun.h"
 
-Homerun::Homerun(ID3D11Device* _GD) : Weapon("bat", _GD)
+Homerun::Homerun(ID3D11Device* _GD) : Weapon("Bat", _GD)
 {
 	m_damage = 25;
 	m_knockback = Vector2(500, 0);

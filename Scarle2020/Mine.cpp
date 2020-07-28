@@ -31,13 +31,14 @@ Mine::Mine(const Mine& _orig) : Weapon(_orig)
 void Mine::Tick(GameData* _GD)
 {
 	//Dont let it explode if its moving
-	if (c_phys->GetVel().x > 0 || c_phys->GetVel().y > 0)
+	if (c_phys->GetVel().x > 10 || c_phys->GetVel().y > 10)
 	{
 		m_triggered = false;
 	}
 
 	if (m_triggered)
 	{
+		m_colour = Colors::Red;
 		m_time += _GD->m_dt;
 		
 		if (m_time > m_active)
@@ -46,6 +47,10 @@ void Mine::Tick(GameData* _GD)
 			{
 				m_explode.pos = m_pos;
 				m_explode.explode = true;
+			}
+			else
+			{
+				m_colour = Colors::Gray;
 			}
 		}
 	}

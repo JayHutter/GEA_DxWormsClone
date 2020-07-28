@@ -45,7 +45,11 @@ Team::~Team()
 
 void Team::Tick(GameData* _GD)
 {
-	m_weapons[m_selection]->SetPos(m_worms[m_current]->GetPos());
+	//m_weapons[m_selection]->SetPos(m_worms[m_current]->GetPos());
+	for (auto w : m_weapons)
+	{
+		w->SetPos(m_worms[m_current]->GetPos());
+	}
 }
 
 Worm* Team::GetWorm()

@@ -10,5 +10,14 @@
     <ImageContentTask Include="enclosure.png" />
     <ImageContentTask Include="destruction_mask.png" />
     <ImageContentTask Include="explosion.png" />
+    <ImageContentTask Include="Banana.png" />
+    <ImageContentTask Include="Frag.png" />
+    <ImageContentTask Include="Grenade.png" />
+    <ImageContentTask Include="Holy.png" />
+    <ImageContentTask Include="Mine.png" />
+    <ImageContentTask Include="Missile.png" />
+    <ImageContentTask Include="TNT.png" />
+    <ImageContentTask Include="Teleport.png" />
+    <ImageContentTask Include="Bowling.png" />
   </ItemGroup>
 </Project>

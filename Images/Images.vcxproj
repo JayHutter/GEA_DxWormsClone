@@ -173,6 +173,21 @@
   <ItemGroup>
     <ImageContentTask Include="explosion.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Banana.png" />
+    <ImageContentTask Include="Frag.png" />
+    <ImageContentTask Include="Grenade.png" />
+    <ImageContentTask Include="Holy.png" />
+    <ImageContentTask Include="Mine.png" />
+    <ImageContentTask Include="Missile.png" />
+    <ImageContentTask Include="TNT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Teleport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Bowling.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
