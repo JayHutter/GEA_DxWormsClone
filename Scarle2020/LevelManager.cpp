@@ -61,6 +61,8 @@ void LevelManager::Tick(GameData* _GD)
 	m_teams[m_active].Tick(_GD);
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
+
+	WinCondition();
 }
 
 //Render
@@ -293,4 +295,43 @@ void LevelManager::Input(GameData* _GD)
 Stage* LevelManager::GetStage()
 {
 	return m_stage;
+}
+
+void LevelManager::WinCondition()
+{
+	std::vector<int> values;
+	std::vector<int> indices;
+
+	for (int i=0; i<m_teams.size(); i++)
+	{
+		values.push_back(m_teams[i].Health());
+		indices.push_back(i);
+	}
+
+	bool swapped = true;
+	while (swapped)
+	{
+		swapped = false;
+		for (int i = 0; i < values.size() -1; i++)
+		{
+			if (values[i] < values[i + 1])
+			{
+				int temp_val = values[i];
+				int temp_ind = indices[i];
+
+				values[i] = values[i + 1];
+				indices[i] = indices[i + 1];
+				
+				values[i + 1] = temp_val;
+				indices[i + 1] = temp_ind;
+				swapped = true;
+			}
+		}
+	}
+
+	for (int i = 0; i < indices.size(); i++)
+	{
+		m_teams[indices[i]].SetPlacing(i+1);
+
+	}
 }

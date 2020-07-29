@@ -36,6 +36,8 @@ private:
 	void SpawnExplosion(GameObject2D* _object);
 	void DeleteObject(GameObject2D* _obj);
 
+	void WinCondition();
+
 	Stage* m_stage = nullptr;
 
 	std::vector<Team> m_teams;

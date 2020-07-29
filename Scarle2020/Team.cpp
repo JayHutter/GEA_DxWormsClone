@@ -206,3 +206,9 @@ void Team::UpdateHealth()
 
 	m_total_health = health;
 }
+
+void Team::SetPlacing(int _placing)
+{
+	m_placing = _placing;
+	m_hud->SetPosition(_placing);
+}

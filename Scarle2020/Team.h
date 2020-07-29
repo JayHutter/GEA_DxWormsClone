@@ -29,6 +29,9 @@ public:
 	void RenderHUD(DrawData2D* _DD);
 	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
 
+	void SetPlacing(int _placing);
+	int Health() { return m_total_health; }
+
 private:
 	void UpdateHealth();
 
@@ -50,7 +53,7 @@ private:
 	float m_charge = 0;
 
 	int m_total_health = 0;
-
+	int m_placing = 0;
 	Healthbar* m_hud = nullptr;
 };
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "ImageGO2D.h"
+#include "TextGO2D.h"
+
 class Healthbar : public ImageGO2D
 {
 public:
@@ -10,6 +12,7 @@ public:
 
 	void SetHealth(int _health);
 	void SetPercent(float _percent);
+	void SetPosition(int _pos);
 
 private:
 	float m_max = 100;
@@ -17,5 +20,7 @@ private:
 	float m_percent = 1;
 
 	ImageGO2D* m_meter = nullptr;
+	TextGO2D* m_text = nullptr;
+	int m_position = 0;
 };
 
