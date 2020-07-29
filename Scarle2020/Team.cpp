@@ -185,10 +185,9 @@ void Team::ChangeWormSprite(GameData* _GD, ID3D11Device* _DD)
 	{
 		if (worm->IsDead())
 		{
-			continue;
+			worm->SetSprite("Grave", _DD);
 		}
-		
-		if (worm != m_worms[m_current] || !m_can_attack)
+		else if (worm != m_worms[m_current] || !m_can_attack)
 		{
 			worm->SetSprite("Worm", _DD);
 		}
@@ -205,6 +204,11 @@ void Team::OnEndTurn(ID3D11Device* _DD)
 	//Reset all sprites
 	for (auto worm : m_worms)
 	{
+		if (worm->IsDead())
+		{
+			worm->SetSprite("Grave", _DD);
+			continue;
+		}
 		worm->SetSprite("Worm", _DD);
 	}
 }

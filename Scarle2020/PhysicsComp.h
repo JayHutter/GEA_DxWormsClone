@@ -21,6 +21,7 @@ public:
 	void SetVelocutyY(float _force);
 	void SetVelocityDir(Vector2 _velocity);
 	void SetSpeed(float _speed);
+	void SetFrictionVal(float _mu);
 
 	void AddForce(Vector2 _force);
 	void MultiplyVelocity(Vector2 _force);

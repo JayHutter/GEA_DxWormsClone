@@ -86,6 +86,7 @@ void Worm::Kill(ID3D11Device* _GD)
 	SetSprite("Grave", _GD);
 	m_colour = Colors::White + m_team_colour;
 	m_dead = true;
+	c_phys->SetFrictionVal(1);
 }
 bool Worm::IsDead()
 {

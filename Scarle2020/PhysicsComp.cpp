@@ -70,6 +70,12 @@ void PhysicsComp::SetSpeed(float _speed)
 	velocity *= _speed;
 }
 
+void PhysicsComp::SetFrictionVal(float _mu)
+{
+	mu = _mu;
+}
+
+
 
 void PhysicsComp::AddForce(Vector2 _force)
 {
