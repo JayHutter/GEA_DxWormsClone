@@ -42,7 +42,6 @@ protected:
 
 	Worm* m_owner = nullptr;
 
-	bool m_end = false;
 	DestructionMask* m_destruction = nullptr;
 	string m_aim_sprite = "Worm";
 };

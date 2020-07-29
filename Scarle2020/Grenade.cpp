@@ -40,6 +40,7 @@ void Grenade::Tick(GameData* _GD)
 		m_explode.pos = m_pos;
 		m_explode.explode = true;
 		m_delete = true;
+		m_end = true;
 	}
 }
 

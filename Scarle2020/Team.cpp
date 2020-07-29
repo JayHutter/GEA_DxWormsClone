@@ -188,15 +188,13 @@ void Team::ChangeWormSprite(GameData* _GD, ID3D11Device* _DD)
 }
 
 //For changing value at the end of a turn
-void Team::EndTurn(GameData* _GD, ID3D11Device* _DD)
+void Team::OnEndTurn(ID3D11Device* _DD)
 {
 	//Reset all sprites
 	for (auto worm : m_worms)
 	{
 		worm->SetSprite("Worm", _DD);
 	}
-
-	m_can_attack = true;
 }
 
 void Team::UpdateHealth()
@@ -214,4 +212,15 @@ void Team::SetPlacing(int _placing)
 {
 	m_placing = _placing;
 	m_hud->SetPosition(_placing);
+}
+
+void Team::TriggerEndTurn(bool _end)
+{
+	m_end = _end;
+}
+
+void Team::OnStartTrun()
+{
+	m_end = false;
+	m_can_attack = true;
 }

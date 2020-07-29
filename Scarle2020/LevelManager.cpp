@@ -67,6 +67,12 @@ void LevelManager::Tick(GameData* _GD)
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
 
+	m_timer -= _GD->m_dt;
+	if (m_teams[m_active].EndTurn() || m_timer <= 0)
+	{
+		CycleTeam();
+	}
+
 	//HudOcclusion();
 	//WinCondition();
 }
@@ -120,6 +126,8 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 				break;
 			}
 		}
+
+		m_teams[m_active].TriggerEndTurn(obj->TriggerEndTurn());
 
 		if (obj->Explode().explode)
 		{
@@ -285,15 +293,15 @@ void LevelManager::Input(GameData* _GD)
 	}
 	
 	//DEBUG : Worm swap
-	if (key.IsKeyPressed(Keyboard::Tab))
-	{
-		m_teams[m_active].CycleWorm();
-	}
-	if (key.IsKeyPressed(Keyboard::LeftShift))
-	{
-		m_active++;
-		m_active %= m_teams.size();
-	}
+	//if (key.IsKeyPressed(Keyboard::Tab))
+	//{
+	//	m_teams[m_active].CycleWorm();
+	//}
+	//if (key.IsKeyPressed(Keyboard::LeftShift))
+	//{
+	//	m_active++;
+	//	m_active %= m_teams.size();
+	//}
 
 	m_teams[m_active].CycleWeapon(key.IsKeyPressed(Keyboard::E) + (-1 * key.IsKeyPressed(Keyboard::Q)));
 }
@@ -353,4 +361,20 @@ void LevelManager::HudOcclusion()
 			hud->Occlusion(worm->GetCollider(), m_d3d11device);
 		}
 	}
+}
+
+void LevelManager::CycleTeam()
+{
+	m_teams[m_active].OnEndTurn(m_d3d11device);
+	m_active++;
+	m_active %= m_teams.size();
+
+	if (m_teams[m_active].Health() <= 0)
+	{
+		CycleTeam();
+	}
+
+	m_timer = 20;
+	m_teams[m_active].OnStartTrun();
+	//On start
 }

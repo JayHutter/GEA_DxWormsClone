@@ -25,7 +25,8 @@ public:
 	void SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 	void DeleteWorm(Worm* _worm);
 	void AimWeapon(GameData* _GD);
-	void EndTurn(GameData* _GD, ID3D11Device* _DD);
+	void OnEndTurn(ID3D11Device* _DD);
+	void OnStartTrun();
 
 	void RenderHUD(DrawData2D* _DD);
 	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
@@ -34,6 +35,8 @@ public:
 	int Health() { return m_total_health; }
 	std::vector<Worm*> Worms() { return m_worms; }
 	Healthbar* HUD() { return m_hud; }
+	bool EndTurn() { return m_end; }
+	void TriggerEndTurn(bool _end);
 
 private:
 	void UpdateHealth();
@@ -58,5 +61,6 @@ private:
 	int m_total_health = 0;
 	int m_placing = 0;
 	Healthbar* m_hud = nullptr;
+	bool m_end = false;
 };
 

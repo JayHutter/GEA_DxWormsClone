@@ -29,6 +29,7 @@ void Dropper::Tick(GameData* _GD)
 	m_time += _GD->m_dt;
 	if (m_time > m_active)
 	{
+		m_end = true;
 		m_delete = true;
 		if (m_explode.scale > 0)
 		{

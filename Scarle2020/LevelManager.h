@@ -36,6 +36,7 @@ private:
 	void SpawnExplosion(GameObject2D* _object);
 	void DeleteObject(GameObject2D* _obj);
 	void HudOcclusion();
+	void CycleTeam();
 
 	void WinCondition();
 
@@ -49,5 +50,7 @@ private:
 	int m_active = 0;
 
 	ID3D11Device* m_d3d11device = nullptr;
+
+	float m_timer = 0;
 };
 

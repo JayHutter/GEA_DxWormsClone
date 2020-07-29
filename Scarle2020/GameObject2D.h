@@ -61,6 +61,7 @@ public:
 	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other) = 0;
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other) = 0;
 	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) = 0;
+	bool TriggerEndTurn() { return m_end; }
 	
 protected:
 	void RemoveFromCollided(GameObject2D* _obj);
@@ -82,7 +83,7 @@ protected:
 	bool m_invincible = true;
 
 	float m_death_timer = 0;
-
+	bool m_end = false;
 	std::vector<GameObject2D*> m_collided;
 };
 

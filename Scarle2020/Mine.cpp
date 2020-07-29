@@ -57,6 +57,11 @@ void Mine::Tick(GameData* _GD)
 				m_colour = Colors::Gray;
 			}
 		}
+
+		if (m_owner != nullptr)
+		{
+			m_end = true;
+		}
 	}
 }
 
