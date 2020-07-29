@@ -111,10 +111,8 @@ bool Grenade::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11D
 				Vector2 pos = m_pos + Vector2(x_pos, y_pos);
 				Vector2 force = (pos - m_pos);
 				force.Normalize();
-				force *= 100;
 
-				//Projectile* frag = new Projectile(m_filename, pos, 16, 16, true, true, m_explode.damage, Vector2(m_explode.knockback, 0), m_explode.scale, m_active / 2, m_owner, _DD);
-				auto frag = new Grenade(m_explode.scale, m_bounce/2, m_active / 4, m_explode.damage, m_explode.knockback, 0, m_filename, _DD);
+				auto frag = new Grenade(m_explode.scale, m_bounce/4, m_active / 4, m_explode.damage, m_explode.knockback, 0, m_filename + "Fragment", _DD);
 				frag->Use(_GD, m_owner, 1);
 				frag->SetPos(pos);
 				frag->GetPhysComp()->AddForce(force);

@@ -29,5 +29,7 @@
     <ImageContentTask Include="WormMissile.png" />
     <ImageContentTask Include="WormTNT.png" />
     <ImageContentTask Include="WormTeleport.png" />
+    <ImageContentTask Include="BananaFragment.png" />
+    <ImageContentTask Include="FragFragment.png" />
   </ItemGroup>
 </Project>

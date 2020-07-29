@@ -204,6 +204,10 @@
   <ItemGroup>
     <ImageContentTask Include="WormTeleport.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="BananaFragment.png" />
+    <ImageContentTask Include="FragFragment.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
