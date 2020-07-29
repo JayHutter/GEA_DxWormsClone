@@ -67,7 +67,7 @@ void LevelManager::Tick(GameData* _GD)
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
 
-	HudOcclusion();
+	//HudOcclusion();
 	//WinCondition();
 }
 

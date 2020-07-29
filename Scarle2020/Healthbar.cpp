@@ -2,14 +2,14 @@
 #include "Healthbar.h"
 #include "Worm.h"
 
-Healthbar::Healthbar(int _maximum, Color _colour, Vector2 _pos, ID3D11Device* _GD) : ImageGO2D("Healthbar", _GD)
+Healthbar::Healthbar(int _maximum, Color _colour, Vector2 _pos, ID3D11Device* _GD) : ImageGO2D("HealthbarTrans", _GD)
 {
 	m_max = _maximum;
 	m_colour = _colour;
 	m_pos = _pos;
 	m_origin = Vector2(0, 0);
 
-	m_meter = new ImageGO2D("Health", _GD);
+	m_meter = new ImageGO2D("HealthTrans", _GD);
 	m_meter->SetColour(_colour);
 	m_meter->SetPos(_pos + Vector2(37, 4));
 	m_meter->SetOrigin(Vector2(0, 0));
