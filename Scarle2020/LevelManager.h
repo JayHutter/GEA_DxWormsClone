@@ -12,7 +12,6 @@
 #include "Team.h"
 #include "Explosion.h"
 
-
 class LevelManager
 {
 public:

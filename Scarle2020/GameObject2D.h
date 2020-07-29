@@ -54,6 +54,7 @@ public:
 	ExplosionData Explode() { return m_explode; }
 	bool IsCollided(GameObject2D* _obj);
 	void CheckHealth(float _gt);
+	int Health() { return m_health; }
 
 	void AddHealth(int _health);
 

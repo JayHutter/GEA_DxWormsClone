@@ -32,5 +32,7 @@
     <ImageContentTask Include="BananaFragment.png" />
     <ImageContentTask Include="FragFragment.png" />
     <ImageContentTask Include="Grave.png" />
+    <ImageContentTask Include="Health.png" />
+    <ImageContentTask Include="Healthbar.png" />
   </ItemGroup>
 </Project>

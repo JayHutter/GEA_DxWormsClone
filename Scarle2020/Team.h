@@ -4,12 +4,12 @@
 #include "Worm.h"
 #include "Weapon.h"
 #include "AllWeapons.h"
-
+#include "Healthbar.h"
 
 class Team
 {
 public:
-	Team(ID3D11Device* _GD, int _worms, Color _colour, std::vector<GameObject2D*> &_objects);
+	Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<GameObject2D*> &_objects);
 	~Team();
 
 	virtual void Tick(GameData* _GD);
@@ -30,6 +30,8 @@ public:
 	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
 
 private:
+	void UpdateHealth();
+
 	//Team Info
 	Color m_colour = Colors::Red;
 
@@ -46,5 +48,9 @@ private:
 	bool m_charging = false;
 	bool m_can_attack = true;
 	float m_charge = 0;
+
+	int m_total_health = 0;
+
+	Healthbar* m_hud = nullptr;
 };
 

@@ -45,7 +45,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 {
 	for (int i = 0; i < _teams; i++)
 	{
-		m_teams.push_back(Team(_GD, 4, default_colors[i], m_objects));
+		m_teams.push_back(Team(_GD, 4, default_colors[i], i, m_objects));
 	}
 
 	auto mine = new Mine(50, _GD);

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Team.h"
 
-Team::Team(ID3D11Device* _GD, int _worms, Color _colour, std::vector<GameObject2D*> &_objects)
+Team::Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<GameObject2D*> &_objects)
 {
 	for (int i = 0; i < _worms; i++)
 	{
@@ -31,6 +31,11 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, std::vector<GameObject2
 	SetupWeapons(_GD);
 
 	m_colour = _colour;
+
+	UpdateHealth();
+
+	Vector2 hud_pos = Vector2(20, 550 + (34 * _port));
+	m_hud = new Healthbar(m_total_health, m_colour, hud_pos, _GD);
 }
 
 Team::~Team()
@@ -50,6 +55,9 @@ void Team::Tick(GameData* _GD)
 	{
 		weapon->SetPos(m_worms[m_current]->GetPos());
 	}
+
+	UpdateHealth();
+	m_hud->SetHealth(m_total_health);
 }
 
 Worm* Team::GetWorm()
@@ -146,7 +154,7 @@ void Team::RenderHUD(DrawData2D* _DD)
 		m_worms[i]->DrawHealth(_DD);
 	}
 
-	//m_weapons[m_selection]->Draw(_DD);
+	m_hud->Draw(_DD);
 }
 
 void Team::DeleteWorm(Worm* _worm)
@@ -186,4 +194,15 @@ void Team::EndTurn(GameData* _GD, ID3D11Device* _DD)
 	}
 
 	m_can_attack = true;
+}
+
+void Team::UpdateHealth()
+{
+	float health = 0;
+	for (auto worm : m_worms)
+	{
+		health += worm->Health();
+	}
+
+	m_total_health = health;
 }

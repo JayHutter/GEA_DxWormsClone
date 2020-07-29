@@ -211,6 +211,10 @@
   <ItemGroup>
     <ImageContentTask Include="Grave.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Health.png" />
+    <ImageContentTask Include="Healthbar.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
