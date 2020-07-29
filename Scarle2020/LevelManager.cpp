@@ -51,7 +51,8 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	auto mine = new Mine(50, _GD);
 	mine->SetPos(Vector2(600, 500));
 	m_objects.push_back(mine);
-
+	m_time_display = new TextGO2D("0");
+	m_time_display->SetPos(Vector2(300, 625));
 	m_stage = new Stage(_GD, _name);
 }
 
@@ -67,7 +68,7 @@ void LevelManager::Tick(GameData* _GD)
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
 
-	m_timer -= _GD->m_dt;
+	Timer(_GD->m_dt);
 	if (m_teams[m_active].EndTurn() || m_timer <= 0)
 	{
 		CycleTeam();
@@ -90,6 +91,7 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		t.RenderHUD(_DD);
 	}
 	m_teams[m_active].GetWorm()->DrawName(_DD);
+	m_time_display->Draw(_DD);
 	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 
@@ -377,4 +379,11 @@ void LevelManager::CycleTeam()
 	m_timer = 20;
 	m_teams[m_active].OnStartTrun();
 	//On start
+}
+
+void LevelManager::Timer(float _gt)
+{
+	m_timer -= _gt;
+	m_time_display->SetText(std::to_string(int(m_timer)));
+	m_time_display->SetColour(m_teams[m_active].Colour());
 }

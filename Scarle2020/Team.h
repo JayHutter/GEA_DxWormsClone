@@ -37,6 +37,7 @@ public:
 	Healthbar* HUD() { return m_hud; }
 	bool EndTurn() { return m_end; }
 	void TriggerEndTurn(bool _end);
+	Color Colour() { return m_colour; }
 
 private:
 	void UpdateHealth();

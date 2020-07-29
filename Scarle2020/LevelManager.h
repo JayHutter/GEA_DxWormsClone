@@ -37,6 +37,7 @@ private:
 	void DeleteObject(GameObject2D* _obj);
 	void HudOcclusion();
 	void CycleTeam();
+	void Timer(float _gt);
 
 	void WinCondition();
 
@@ -50,6 +51,7 @@ private:
 	int m_active = 0;
 
 	ID3D11Device* m_d3d11device = nullptr;
+	TextGO2D* m_time_display = nullptr;
 
 	float m_timer = 0;
 };
