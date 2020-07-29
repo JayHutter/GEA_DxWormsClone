@@ -117,7 +117,7 @@ void Team::CycleWeapon(int _dir)
 	m_selection %= weapon_count;
 }
 
-void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
+bool Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
 {
 
 	if ((m_available[m_selection] > 0 || m_available[m_selection] == -1) && m_can_attack)
@@ -136,8 +136,11 @@ void Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11
 			m_charging = false;
 			m_can_attack = false;
 			m_charge = false;
+			return true;
 		}
 	}
+
+	return false;
 }
 
 void Team::SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects)

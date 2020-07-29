@@ -63,19 +63,88 @@ void LevelManager::Tick(GameData* _GD)
 	{
 		team.Update(_GD);
 	}
-
-	m_teams[m_active].Tick(_GD);
-	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
-	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
-
-	Timer(_GD->m_dt);
-	if (m_teams[m_active].EndTurn() || m_timer <= 0)
-	{
-		CycleTeam();
-	}
+	
+	//if (m_teams[m_active].EndTurn() || m_timer <= 0)
+	//{
+	//	CycleTeam();
+	//}
 
 	//HudOcclusion();
 	//WinCondition();
+}
+
+void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	switch (m_state)
+	{
+	case GameState::PLAYING:
+		Play(_GD, _terrain, _context);
+		break;
+	case GameState::PAUSED:
+		break;
+	case GameState::TEAMCHANGE:
+		ChangeTeam(_GD, _terrain, _context);
+		break;
+	case GameState::USINGWEAPON:
+		UsingWeapon(_GD, _terrain, _context);
+		break;
+	case GameState::RESULTS:
+		break;
+	case GameState::SETUP:
+		break;
+	}
+}
+
+//Game States
+void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	ManageObjects(_GD, _terrain, _context);
+	Input(_GD);
+	if (Timer(_GD->m_dt))
+	{
+		m_timer = 3;
+		m_state = GameState::TEAMCHANGE;
+	}
+
+	m_teams[m_active].Tick(_GD);
+	if (m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device))
+	{
+		m_timer = 5;
+		m_state = GameState::USINGWEAPON;
+	}
+	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
+}
+
+void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	ManageObjects(_GD, _terrain, _context);
+	if (!Timer(_GD->m_dt))
+	{
+		Input(_GD);
+	}
+	else// if (m_teams[m_active].EndTurn())
+	{
+		m_state = GameState::TEAMCHANGE;
+		m_timer = 3;
+	}
+}
+
+void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	ManageObjects(_GD, _terrain, _context);
+	//Dont change team if an object prevents it
+	if (!m_continue)
+	{
+		m_timer = 3;
+		m_time_display->SetColour(Color(Colors::White));
+		return;
+	}
+
+	if (Timer(_GD->m_dt))
+	{
+		CycleTeam();
+		m_state = GameState::PLAYING;
+	}
 }
 
 //Render
@@ -109,6 +178,8 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 {
 	_terrain->Map(_context);
 
+	m_continue = true;
+
 	for (auto obj : m_objects)
 	{
 		obj->Tick(_GD);
@@ -129,7 +200,11 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 			}
 		}
 
-		m_teams[m_active].TriggerEndTurn(obj->TriggerEndTurn());
+		//m_teams[m_active].TriggerEndTurn(obj->TriggerEndTurn());
+		if (obj->StopTurnEnd())
+		{
+			m_continue = false;
+		}
 
 		if (obj->Explode().explode)
 		{
@@ -381,9 +456,16 @@ void LevelManager::CycleTeam()
 	//On start
 }
 
-void LevelManager::Timer(float _gt)
+bool LevelManager::Timer(float _gt)
 {
 	m_timer -= _gt;
 	m_time_display->SetText(std::to_string(int(m_timer)));
 	m_time_display->SetColour(m_teams[m_active].Colour());
+
+	if (m_timer <= 0)
+	{
+		m_timer = 0;
+		return true;
+	}
+	return false; 
 }

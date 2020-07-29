@@ -8,6 +8,7 @@ MissileLauncher::MissileLauncher(ID3D11Device* _GD) : Weapon("MLauncher", _GD)
 	m_chargeable = true;
 	m_active = 0.25f;
 	m_aim_sprite = "WormMissile";
+	m_prevent_swap = true;
 }
 
 MissileLauncher::MissileLauncher(const MissileLauncher& _orig) : Weapon(_orig)

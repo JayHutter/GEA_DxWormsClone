@@ -18,6 +18,7 @@ Projectile::Projectile(string _sprite, Vector2 _pos, float _width, float _height
 	m_explode.knockback = _knockback.x;
 
 	m_owner = _owner;
+	m_prevent_swap = true;
 }
 
 void Projectile::Tick(GameData* _GD)

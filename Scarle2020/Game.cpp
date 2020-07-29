@@ -191,8 +191,9 @@ void Game::Update(DX::StepTimer const& _timer)
     if (m_level)
     {
         m_level->Tick(m_GD);
-        m_level->ManageObjects(m_GD, m_terrain, m_d3dContext.Get());
-        m_level->Input(m_GD);
+        m_level->Update(m_GD, m_terrain, m_d3dContext.Get());
+        //m_level->ManageObjects(m_GD, m_terrain, m_d3dContext.Get());
+        //m_level->Input(m_GD);
     }
 
     //Test object deletion

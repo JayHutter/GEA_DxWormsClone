@@ -21,7 +21,7 @@ public:
 	//Weapons
 	void SetupWeapons(ID3D11Device* _GD);
 	void CycleWeapon(int _dir);
-	void UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
+	bool UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
 	void SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 	void DeleteWorm(Worm* _worm);
 	void AimWeapon(GameData* _GD);

@@ -42,11 +42,13 @@ void Mine::Tick(GameData* _GD)
 
 	if (m_triggered)
 	{
+		m_prevent_swap = true;
 		m_colour = Colors::Red;
 		m_time += _GD->m_dt;
 		
 		if (m_time > m_active)
 		{
+			m_prevent_swap = false;
 			if (!m_fake)
 			{
 				m_explode.pos = m_pos;
@@ -56,11 +58,6 @@ void Mine::Tick(GameData* _GD)
 			{
 				m_colour = Colors::Gray;
 			}
-		}
-
-		if (m_owner != nullptr)
-		{
-			m_end = true;
 		}
 	}
 }
@@ -110,6 +107,7 @@ void Mine::Use(GameData* _GD, Worm* _owner, float _charge)
 	c_phys->AddForce(force);
 
 	m_owner = _owner;
+	m_end = true;
 }
 
 bool Mine::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)

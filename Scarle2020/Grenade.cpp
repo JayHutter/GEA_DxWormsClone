@@ -19,6 +19,8 @@ Grenade::Grenade(float _radius, float _bounce, float _time, float _damage, float
 
 	m_aim_sprite = "Worm" + _sprite;
 	m_chargeable = true;
+
+	m_prevent_swap = true;
 }
 
 Grenade::Grenade(const Grenade& _orig) : Weapon(_orig)
@@ -46,8 +48,8 @@ void Grenade::Tick(GameData* _GD)
 
 void Grenade::OnCollisionEnter(GameData* _GD, GameObject2D* _other)
 {
-	_other->AddHealth(-m_damage);
-	m_collided.push_back(_other);
+	//_other->AddHealth(-m_damage);
+	//m_collided.push_back(_other);
 }
 
 void Grenade::OnCollision(GameData* _GD, GameObject2D* _other)
@@ -57,7 +59,7 @@ void Grenade::OnCollision(GameData* _GD, GameObject2D* _other)
 
 void Grenade::OnCollisionExit(GameData* _GD, GameObject2D* _other)
 {
-	RemoveFromCollided(_other);
+	//RemoveFromCollided(_other);
 }
 
 Grenade* Grenade::Clone(ID3D11Device* _GD)

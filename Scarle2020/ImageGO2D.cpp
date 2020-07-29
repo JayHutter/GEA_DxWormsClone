@@ -20,6 +20,7 @@ ImageGO2D::ImageGO2D(const ImageGO2D& orig)
 	m_scale = orig.m_scale;
 	m_filename = orig.m_filename;
 	m_explode = orig.m_explode;
+	m_prevent_swap = orig.m_prevent_swap;
 }
 
 ImageGO2D::~ImageGO2D()

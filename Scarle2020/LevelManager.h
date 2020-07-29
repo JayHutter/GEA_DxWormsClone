@@ -21,6 +21,7 @@ public:
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
 
 	void Tick(GameData* _GD);
+	void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 
 	void RenderObjects(DrawData2D* _DD);
 	void RenderDestruction(DrawData2D* _DD);
@@ -31,13 +32,17 @@ public:
 	Stage* GetStage();
 
 private:
+	void Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+
 	void TestCollisions(GameData* _GD, GameObject2D* _object);
 	void ManageTerrainCollision(GameObject2D* _object, GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 	void SpawnExplosion(GameObject2D* _object);
 	void DeleteObject(GameObject2D* _obj);
 	void HudOcclusion();
 	void CycleTeam();
-	void Timer(float _gt);
+	bool Timer(float _gt);
 
 	void WinCondition();
 
@@ -54,5 +59,18 @@ private:
 	TextGO2D* m_time_display = nullptr;
 
 	float m_timer = 0;
+	bool m_continue = true;
+
+	enum class GameState
+	{
+		PLAYING = 0,
+		PAUSED, 
+		TEAMCHANGE,
+		USINGWEAPON,
+		RESULTS,
+		SETUP
+	};
+
+	GameState m_state = GameState::PLAYING;
 };
 

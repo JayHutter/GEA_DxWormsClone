@@ -7,6 +7,8 @@ Homerun::Homerun(ID3D11Device* _GD) : Weapon("Bat", _GD)
 	m_knockback = Vector2(500, 0);
 	m_active = 0.05f;
 	m_aim_sprite = "WormBat";
+
+	m_prevent_swap = true;
 }
 
 Homerun::Homerun(const Homerun& orig) : Weapon(orig)
