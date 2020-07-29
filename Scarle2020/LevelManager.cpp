@@ -41,13 +41,9 @@ LevelManager::~LevelManager()
 	m_teams.clear();
 }
 
-void LevelManager::Tick(GameData* _GD)
-{
-}
-
 void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 {
-	for (int i=0; i<_teams; i++)
+	for (int i = 0; i < _teams; i++)
 	{
 		m_teams.push_back(Team(_GD, 4, default_colors[i], m_objects));
 	}
@@ -59,6 +55,15 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	m_stage = new Stage(_GD, _name);
 }
 
+
+void LevelManager::Tick(GameData* _GD)
+{
+	m_teams[m_active].Tick(_GD);
+	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
+	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
+}
+
+//Render
 void LevelManager::RenderObjects(DrawData2D* _DD)
 {
 	for (auto obj : m_objects)
@@ -82,178 +87,171 @@ void LevelManager::RenderDestruction(DrawData2D* _DD)
 	}
 }
 
-void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
-{
-	//ShowFrames(_GD->m_dt);
-	m_teams[m_active].Tick(_GD);
-	m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
-	m_teams[m_active].ChangeWormSprite(_GD, _DD);
 
-
-	for (auto obj : m_objects)
-	{
-		obj->Tick(_GD);
-		obj->CheckHealth(_GD->m_dt);
-		
-		if (obj->GetCollider())
-		{
-			obj->GetCollider()->UpdateHitbox(obj->GetPos());
-		}
-
-		if (dynamic_cast<Weapon*>(obj))
-		{
-			if (dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects, _DD))
-			{
-				return;
-			}
-		}
-
-		if (obj->Explode().explode)
-		{
-			Explosion* explosion = new Explosion(dynamic_cast<Worm*>(obj), _DD);
-			explosion->SetData(obj->Explode());
-			m_objects.push_back(explosion);
-			m_destruction.push_back(new DestructionMask(_DD, explosion->GetPos(), explosion->GetScale()));
-
-			if (dynamic_cast<Worm*>(obj))
-			{
-				dynamic_cast<Worm*>(obj)->StopExplosion();
-			}
-
-			DeleteObject(obj);
-			return;
-		}
-
-		if (obj->Delete())
-		{
-			DeleteObject(obj);
-			return; //Break out of loop as data no longer exists
-		}
-	}
-}
-
-void LevelManager::UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD)
+//Objects
+void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	_terrain->Map(_context);
 
 	for (auto obj : m_objects)
 	{
-		PhysicsComp* phys = obj->GetPhysComp();
-		CollisionComp* coll = obj->GetCollider();
+		obj->Tick(_GD);
+		obj->CheckHealth(_GD->m_dt);
 
-		if (coll)
+		if (obj->GetCollider())
 		{
-			std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, obj->GetPos());
+			obj->GetCollider()->UpdateHitbox(obj->GetPos());
+			ManageTerrainCollision(obj, _GD, _terrain, _context);
+			TestCollisions(_GD, obj);
+		}
 
-			bool colliding = obj->IsCollided(m_stage);
-			bool collided = coll_data != std::array<int, 4>{0, 0, 0, 0};
-
-			if (!colliding && collided)
+		if (dynamic_cast<Weapon*>(obj))
+		{
+			if (dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects, m_d3d11device))
 			{
-				obj->OnCollisionEnter(_GD, m_stage);
+				break;
 			}
-			else if (colliding && collided)
-			{
-				obj->OnCollision(_GD, m_stage);
-			}
-			else if (colliding && !collided)
-			{
-				obj->OnCollisionExit(_GD, m_stage);
-			}
+		}
 
+		if (obj->Explode().explode)
+		{
+			SpawnExplosion(obj);
+			break;
+		}
 
-			if (phys)
-			{				
-				//Calculate normal to collision
-				if (collided)
-				{
-					//Move object if stuck in wall
-					if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
-					{		
-						phys->SetVelocityDir(coll->CalculateNormal(coll_data));						
-					}
-					else //apply resistive forces
-					{
-						phys->ReactionForce(coll->CalculateNormal(coll_data));
-					}
-				}	
-				phys->ApplyGravity(coll_data[0] < 4); 
-				//phys->InAir(coll_data[0] < 4);
-				//phys->ApplyGravity();
-				phys->ApplyVelocity(_GD->m_dt);
-			}		
+		if (obj->Delete())
+		{
+			DeleteObject(obj);
+			break; //Break out of loop as data no longer exists
 		}
 	}
-
-	//DebugRender();
 
 	_terrain->Unmap(_context);
 }
 
-void LevelManager::ManageCollisions(GameData* _GD)
+void LevelManager::TestCollisions(GameData* _GD, GameObject2D* _object)
 {
-	for (auto obj : m_objects)
+	auto coll = _object->GetCollider();
+
+	for (auto other : m_objects)
 	{
-		auto coll = obj->GetCollider();
-		if (!coll)
+		auto other_coll = other->GetCollider();
+		if (other == _object || !other_coll)
 		{
 			continue;
 		}
 
-		for (auto other : m_objects)
+		bool colliding = _object->IsCollided(other);
+		bool collided = coll->Collided(other_coll->Hitbox());
+
+		if (!colliding && collided)
 		{
-			auto other_coll = other->GetCollider();
-			if (other == obj || !other_coll)
-			{
-				continue;
-			}
-			
-			bool colliding = obj->IsCollided(other);
-			bool collided = coll->Collided(other_coll->Hitbox());
-
-			if (!colliding && collided)
-			{
-				obj->OnCollisionEnter(_GD, other);
-			}
-			else if (colliding && collided)
-			{
-				obj->OnCollision(_GD, other);
-			}
-			else if (colliding && !collided)
-			{
-				obj->OnCollisionExit(_GD, other);
-			}
-
-			//if ()
-			//{ 
-			//	/* Objects get stuck inside each other 
-			//	if (obj->GetPhysComp())
-			//	{
-			//		obj->GetPhysComp()->ReactionForce(coll->CalculateNormal(other_coll->Hitbox()));
-			//		//obj->GetPhysComp()->InAir(false);
-			//	}
-			//	*/
-			//
-			//}
+			_object->OnCollisionEnter(_GD, other);
 		}
+		else if (colliding && collided)
+		{
+			_object->OnCollision(_GD, other);
+		}
+		else if (colliding && !collided)
+		{
+			_object->OnCollisionExit(_GD, other);
+		}
+
+		//if ()
+		//{ 
+		//	/* Objects get stuck inside each other 
+		//	if (_object->GetPhysComp())
+		//	{
+		//		_object->GetPhysComp()->ReactionForce(coll->CalculateNormal(other_coll->Hitbox()));
+		//		//_object->GetPhysComp()->InAir(false);
+		//	}
+		//	*/
+		//
+		//}
 	}
 }
 
-void LevelManager::DestroyStage(ID3D11Device* _DD, GameData* _GD)
+void LevelManager::ManageTerrainCollision(GameObject2D* _object, GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
-	if (_GD->m_MS.rightButton)
+	auto coll = _object->GetCollider();
+	auto phys = _object->GetPhysComp();
+
+	std::array<int, 4> coll_data = coll->TerrainCollsionV(_terrain, _context, _GD, _object->GetPos());
+
+	bool colliding = _object->IsCollided(m_stage);
+	bool collided = coll_data != std::array<int, 4>{0, 0, 0, 0};
+
+	if (!colliding && collided)
 	{
-		m_destruction.push_back(new DestructionMask(_DD, Vector2(_GD->m_MS.x, _GD->m_MS.y), Vector2(1, 1)));
+		_object->OnCollisionEnter(_GD, m_stage);
+	}
+	else if (colliding && collided)
+	{
+		_object->OnCollision(_GD, m_stage);
+	}
+	else if (colliding && !collided)
+	{
+		_object->OnCollisionExit(_GD, m_stage);
+	}
+
+	if (phys)
+	{
+		//Calculate normal to collision
+		if (collided)
+		{
+			//Move object if stuck in wall
+			if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
+			{
+				phys->SetVelocityDir(coll->CalculateNormal(coll_data));
+			}
+			else //apply resistive forces
+			{
+				phys->ReactionForce(coll->CalculateNormal(coll_data));
+			}
+		}
+		phys->ApplyGravity(coll_data[0] < 4);
+		phys->ApplyVelocity(_GD->m_dt);
 	}
 }
 
-Stage* LevelManager::GetStage()
+void LevelManager::SpawnExplosion(GameObject2D* _object)
 {
-	return m_stage;
+	Explosion* explosion = new Explosion(dynamic_cast<Worm*>(_object), m_d3d11device);
+	explosion->SetData(_object->Explode());
+	m_objects.push_back(explosion);
+	m_destruction.push_back(new DestructionMask(m_d3d11device, explosion->GetPos(), explosion->GetScale()));
+
+	if (dynamic_cast<Worm*>(_object))
+	{
+		dynamic_cast<Worm*>(_object)->StopExplosion();
+	}
+
+	DeleteObject(_object);
+}
+
+void LevelManager::DeleteObject(GameObject2D* _obj)
+{
+	//Dont delete worms
+	if (dynamic_cast<Worm*>(_obj))
+	{
+		dynamic_cast<Worm*>(_obj)->Kill(m_d3d11device);
+		return;
+	}
+
+	//auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
+	auto end = m_objects.end();
+	auto result = std::remove(m_objects.begin(), end, _obj);
+
+	if (result != end)
+	{
+		m_objects.erase(result, end);
+		delete _obj;
+		_obj = nullptr;
+	}
 }
 
 //Refactor
-void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
+void LevelManager::Input(GameData* _GD)
 {
 	auto key = _GD->m_KBS_tracker;
 	auto worm = m_teams[m_active].GetWorm();
@@ -277,12 +275,6 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 			worm->GetPhysComp()->AddForce(force);
 		}
 	}
-
-	//if (_GD->m_MS.leftButton)
-	//if (_GD->m_MS.leftButton || _GD->m_KBS.F)
-	//{
-	//	m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
-	//}
 	
 	//DEBUG : Worm swap
 	if (key.IsKeyPressed(Keyboard::Tab))
@@ -296,44 +288,9 @@ void LevelManager::Input(GameData* _GD, ID3D11Device* _DD)
 	}
 
 	m_teams[m_active].CycleWeapon(key.IsKeyPressed(Keyboard::E) + (-1 * key.IsKeyPressed(Keyboard::Q)));
-
-	//Test explosion
-	if (key.IsKeyPressed(Keyboard::Enter))
-	{
-		m_teams[m_active].GetWorm()->TriggerExplosion();
-	}
 }
 
-void LevelManager::DebugRender()
-{	
-	//Vector2 vel = m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->GetVel();
-	//
-	//debug_text->SetText("[" + std::to_string(m_active[1]) + "] - " + std::to_string(vel.x) + ", " + std::to_string(vel.y));
-	//debug_text->SetColour(m_teams[m_active[0]].team_colour);
-}
-
-void LevelManager::ShowFrames(float _gt)
+Stage* LevelManager::GetStage()
 {
-	//frame_text->SetText(std::to_string(m_teams[m_active[0]].worms[m_active[1]]->GetPhysComp()->AirTime()));
-}
-
-void LevelManager::DeleteObject(GameObject2D* _obj)
-{
-	//Dont delete worms
-	if (dynamic_cast<Worm*>(_obj))
-	{
-		dynamic_cast<Worm*>(_obj)->Kill(m_d3d11device);
-		return;
-	}
-
-	//auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
-	auto end = m_objects.end();
-	auto result = std::remove(m_objects.begin(), end, _obj);
-	
-	if (result != end)
-	{
-		m_objects.erase(result, end);
-		delete _obj;
-		_obj = nullptr;
-	}
+	return m_stage;
 }

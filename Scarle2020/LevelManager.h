@@ -19,23 +19,22 @@ public:
 	LevelManager(ID3D11Device* _GD);
 	~LevelManager();
 
-	virtual void Tick(GameData* _GD);
-
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
+
+	void Tick(GameData* _GD);
 
 	void RenderObjects(DrawData2D* _DD);
 	void RenderDestruction(DrawData2D* _DD);
-	void Update(GameData* _GD, ID3D11Device* _DD);
-	void UpdatePhysics(RenderTarget* _terrain, ID3D11DeviceContext* _context, GameData* _GD);
-	void ManageCollisions(GameData* _GD);
-	void DestroyStage(ID3D11Device* _DD, GameData* _GD);
-	void Input(GameData* _GD, ID3D11Device* _DD);
+
+	void ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void Input(GameData* _GD);
 
 	Stage* GetStage();
 
 private:
-	void DebugRender();
-	void ShowFrames(float _gt);
+	void TestCollisions(GameData* _GD, GameObject2D* _object);
+	void ManageTerrainCollision(GameObject2D* _object, GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void SpawnExplosion(GameObject2D* _object);
 	void DeleteObject(GameObject2D* _obj);
 
 	Stage* m_stage = nullptr;
@@ -46,9 +45,6 @@ private:
 
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
 	int m_active = 0;
-
-	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
-	TextGO2D *frame_text = new TextGO2D("0");	
 
 	ID3D11Device* m_d3d11device = nullptr;
 };
