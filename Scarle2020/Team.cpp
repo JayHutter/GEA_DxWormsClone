@@ -34,8 +34,7 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<
 
 	UpdateHealth();
 
-	Vector2 hud_pos = Vector2(20, 550 + (34 * _port));
-	m_hud = new Healthbar(m_total_health, m_colour, hud_pos, _GD);
+	m_hud = new Healthbar(m_total_health, m_colour, Vector2(20, 550), _GD);
 }
 
 Team::~Team()

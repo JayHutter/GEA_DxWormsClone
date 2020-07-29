@@ -15,6 +15,8 @@ public:
 	void SetPosition(int _pos);
 
 private:
+	void UpdatePositions();
+
 	float m_max = 100;
 	float m_health = 0;
 	float m_percent = 1;
@@ -22,5 +24,6 @@ private:
 	ImageGO2D* m_meter = nullptr;
 	TextGO2D* m_text = nullptr;
 	int m_position = 0;
+	Vector2 m_region = Vector2::Zero;
 };
 
