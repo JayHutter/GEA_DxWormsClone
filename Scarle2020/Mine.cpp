@@ -19,6 +19,7 @@ Mine::Mine(int _fake_percent, ID3D11Device* _GD) : Weapon("Mine", _GD)
 	
 	c_phys = new PhysicsComp(&m_pos, 0.3f, 0.2f, true);
 	c_collider = new CollisionComp(16, 16);
+	m_aim_sprite = "WormMine";
 }
 
 Mine::Mine(const Mine& _orig) : Weapon(_orig)

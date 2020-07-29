@@ -31,3 +31,8 @@ void Weapon::SetOwner(Worm* _owner)
 {
 	m_owner = _owner;
 }
+
+string Weapon::AimSprite()
+{
+	return m_aim_sprite;
+}

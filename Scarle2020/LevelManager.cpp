@@ -84,8 +84,9 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 {
 	//ShowFrames(_GD->m_dt);
 	m_teams[m_active].Tick(_GD);
-	m_teams[m_active].AimWeapon(_GD);
 	m_teams[m_active].UseWeapon(_GD, m_objects, _DD);
+	m_teams[m_active].ChangeWormSprite(_GD, _DD);
+
 
 	for (auto obj : m_objects)
 	{

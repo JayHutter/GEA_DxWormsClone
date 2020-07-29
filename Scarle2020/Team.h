@@ -24,8 +24,10 @@ public:
 	void SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 	void DeleteWorm(Worm* _worm);
 	void AimWeapon(GameData* _GD);
+	void EndTurn(GameData* _GD, ID3D11Device* _DD);
 
 	void RenderHUD(DrawData2D* _DD);
+	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
 
 private:
 	//Team Info

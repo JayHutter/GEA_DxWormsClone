@@ -14,6 +14,7 @@ Dropper::Dropper(float _damage, float _bounce, bool _scale_damage, float _explos
 	m_bounce = _bounce;
 	m_active = _time;
 	m_scale_damage = _scale_damage;
+	m_aim_sprite = "Worm" + _sprite;
 }
 
 Dropper::Dropper(const Dropper& _orig) : Weapon(_orig)

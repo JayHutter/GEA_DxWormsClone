@@ -28,6 +28,8 @@ public:
 
 	DestructionMask* Destruction();
 
+	string AimSprite();
+
 protected:
 	float m_active = 1;
 	float m_time = 0;
@@ -42,5 +44,6 @@ protected:
 
 	bool m_end = false;
 	DestructionMask* m_destruction = nullptr;
+	string m_aim_sprite = "Worm";
 };
 

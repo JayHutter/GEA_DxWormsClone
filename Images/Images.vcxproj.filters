@@ -19,5 +19,15 @@
     <ImageContentTask Include="TNT.png" />
     <ImageContentTask Include="Teleport.png" />
     <ImageContentTask Include="Bowling.png" />
+    <ImageContentTask Include="WormBanana.png" />
+    <ImageContentTask Include="WormBat.png" />
+    <ImageContentTask Include="WormBowling.png" />
+    <ImageContentTask Include="WormFrag.png" />
+    <ImageContentTask Include="WormGrenade.png" />
+    <ImageContentTask Include="WormHoly.png" />
+    <ImageContentTask Include="WormMine.png" />
+    <ImageContentTask Include="WormMissile.png" />
+    <ImageContentTask Include="WormTNT.png" />
+    <ImageContentTask Include="WormTeleport.png" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ Grenade::Grenade(float _radius, float _bounce, float _time, float _damage, float
 	//Damage if the grenade hits a worm
 	m_damage = 3;
 
+	m_aim_sprite = "Worm" + _sprite;
 	m_chargeable = true;
 }
 

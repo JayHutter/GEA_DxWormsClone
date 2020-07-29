@@ -46,9 +46,9 @@ Team::~Team()
 void Team::Tick(GameData* _GD)
 {
 	//m_weapons[m_selection]->SetPos(m_worms[m_current]->GetPos());
-	for (auto w : m_weapons)
+	for (auto weapon : m_weapons)
 	{
-		w->SetPos(m_worms[m_current]->GetPos());
+		weapon->SetPos(m_worms[m_current]->GetPos());
 	}
 }
 
@@ -146,7 +146,7 @@ void Team::RenderHUD(DrawData2D* _DD)
 		m_worms[i]->DrawHealth(_DD);
 	}
 
-	m_weapons[m_selection]->Draw(_DD);
+	//m_weapons[m_selection]->Draw(_DD);
 }
 
 void Team::DeleteWorm(Worm* _worm)
@@ -154,4 +154,31 @@ void Team::DeleteWorm(Worm* _worm)
 	auto end = m_worms.end();
 	auto result = std::remove(m_worms.begin(), end, _worm);
 	m_worms.erase(result, end);
+}
+
+void Team::ChangeWormSprite(GameData* _GD, ID3D11Device* _DD)
+{
+	for (auto worm : m_worms)
+	{
+		if (worm != m_worms[m_current] || !m_can_attack)
+		{
+			worm->SetSprite("Worm", _DD);
+		}
+		else
+		{
+			worm->SetSprite(m_weapons[m_selection]->AimSprite(), _DD);
+		}
+	}
+}
+
+//For changing value at the end of a turn
+void Team::EndTurn(GameData* _GD, ID3D11Device* _DD)
+{
+	//Reset all sprites
+	for (auto worm : m_worms)
+	{
+		worm->SetSprite("Worm", _DD);
+	}
+
+	m_can_attack = true;
 }

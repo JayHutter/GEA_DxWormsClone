@@ -5,6 +5,7 @@
 Teleport::Teleport(ID3D11Device* _GD) : Weapon("Teleport", _GD)
 {
 	m_active = 0.3;
+	m_aim_sprite = "WormTeleport";
 }
 
 Teleport::Teleport(const Teleport& _orig) : Weapon(_orig)

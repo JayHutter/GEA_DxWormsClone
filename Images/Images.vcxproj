@@ -188,6 +188,22 @@
   <ItemGroup>
     <ImageContentTask Include="Bowling.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormBanana.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormBat.png" />
+    <ImageContentTask Include="WormBowling.png" />
+    <ImageContentTask Include="WormFrag.png" />
+    <ImageContentTask Include="WormGrenade.png" />
+    <ImageContentTask Include="WormHoly.png" />
+    <ImageContentTask Include="WormMine.png" />
+    <ImageContentTask Include="WormMissile.png" />
+    <ImageContentTask Include="WormTNT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormTeleport.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
