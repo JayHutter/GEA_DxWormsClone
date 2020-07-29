@@ -13,6 +13,7 @@ public:
 	~Team();
 
 	virtual void Tick(GameData* _GD);
+	void Update(GameData* _GD);
 
 	Worm* GetWorm();
 	void CycleWorm();

@@ -55,7 +55,10 @@ void Team::Tick(GameData* _GD)
 	{
 		weapon->SetPos(m_worms[m_current]->GetPos());
 	}
+}
 
+void Team::Update(GameData* _GD)
+{
 	UpdateHealth();
 	m_hud->SetHealth(m_total_health);
 }
