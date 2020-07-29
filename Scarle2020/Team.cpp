@@ -74,7 +74,7 @@ void Team::SetupWeapons(ID3D11Device* _GD)
 	m_weapons.push_back(new Grenade(1, 1, 8, 30, 300, 4, "Banana", _GD));
 
 	m_weapons.push_back(new Dropper(3, 0, false, 2, 40, 350, 7, "TNT", _GD));
-	m_weapons.push_back(new Dropper(5, 0, true, 0, 0, 0, 4, "Bowling", _GD));
+	m_weapons.push_back(new Dropper(1, 0, true, 0, 0, 0, 4, "Bowling", _GD));
 	m_weapons.push_back(new Mine(0, _GD));
 
 	m_weapons.push_back(new Teleport(_GD));

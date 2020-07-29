@@ -20,5 +20,6 @@ public:
 private:
 	float m_bounce = 0;
 	bool m_scale_damage = false;
+	float m_base_damage = 1;
 };
 

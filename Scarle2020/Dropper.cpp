@@ -6,6 +6,7 @@
 Dropper::Dropper(float _damage, float _bounce, bool _scale_damage, float _explosion_rad, float _exp_damage, float _exp_knockback, float _time, string _sprite, ID3D11Device* _GD) : Weapon(_sprite, _GD)
 {
 	m_damage = _damage;
+	m_base_damage = _damage;
 
 	m_explode.scale = _explosion_rad;
 	m_explode.damage = _exp_damage;
@@ -38,7 +39,7 @@ void Dropper::Tick(GameData* _GD)
 
 	if (m_scale_damage)
 	{
-		m_damage *= (c_phys->GetVel().y / 10);
+		m_damage = m_base_damage * (c_phys->GetVel().y / 20);
 	}
 }
 
