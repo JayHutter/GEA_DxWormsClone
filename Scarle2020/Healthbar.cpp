@@ -25,7 +25,7 @@ void Healthbar::Draw(DrawData2D* _DD)
 	m_meter->Draw(_DD);
 
 	ImageGO2D::Draw(_DD);
-	m_text->Draw(_DD);
+	//m_text->Draw(_DD);
 }
 
 void Healthbar::SetHealth(int _health)
