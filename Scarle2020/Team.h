@@ -13,6 +13,7 @@ public:
 	~Team();
 
 	virtual void Tick(GameData* _GD);
+	void Update(GameData* _GD); 
 
 	Worm* GetWorm();
 	void CycleWorm();
@@ -30,7 +31,7 @@ public:
 	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
 
 	void SetPlacing(int _placing);
-	int Health() { return m_total_health; }
+	int TeamHealth();
 
 private:
 	void UpdateHealth();

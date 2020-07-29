@@ -33,7 +33,6 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<
 	m_colour = _colour;
 
 	UpdateHealth();
-
 	m_hud = new Healthbar(m_total_health, m_colour, Vector2(20, 550), _GD);
 }
 
@@ -55,6 +54,12 @@ void Team::Tick(GameData* _GD)
 		weapon->SetPos(m_worms[m_current]->GetPos());
 	}
 
+	//UpdateHealth();
+	//m_hud->SetHealth(m_total_health);
+}
+
+void Team::Update(GameData* _GD)
+{
 	UpdateHealth();
 	m_hud->SetHealth(m_total_health);
 }
@@ -197,17 +202,22 @@ void Team::EndTurn(GameData* _GD, ID3D11Device* _DD)
 
 void Team::UpdateHealth()
 {
-	float health = 0;
+	m_total_health = 0;
 	for (auto worm : m_worms)
 	{
-		health += worm->Health();
+		m_total_health += worm->Health();
 	}
 
-	m_total_health = health;
+	//m_total_health = health;
 }
 
 void Team::SetPlacing(int _placing)
 {
 	m_placing = _placing;
 	m_hud->SetPosition(_placing);
+}
+
+int Team::TeamHealth()
+{
+	return m_total_health;
 }

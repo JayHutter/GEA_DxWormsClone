@@ -58,6 +58,11 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 
 void LevelManager::Tick(GameData* _GD)
 {
+	for (auto t : m_teams)
+	{
+		t.Update(_GD);
+	}
+
 	m_teams[m_active].Tick(_GD);
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
@@ -304,7 +309,7 @@ void LevelManager::WinCondition()
 
 	for (int i=0; i<m_teams.size(); i++)
 	{
-		values.push_back(m_teams[i].Health());
+		values.push_back(m_teams[i].TeamHealth());
 		indices.push_back(i);
 	}
 
@@ -334,4 +339,7 @@ void LevelManager::WinCondition()
 		m_teams[indices[i]].SetPlacing(i+1);
 
 	}
+
+	values.clear();
+	indices.clear();
 }
