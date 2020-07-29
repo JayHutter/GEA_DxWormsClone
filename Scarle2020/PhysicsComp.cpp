@@ -75,8 +75,6 @@ void PhysicsComp::SetFrictionVal(float _mu)
 	mu = _mu;
 }
 
-
-
 void PhysicsComp::AddForce(Vector2 _force)
 {
 	velocity += _force;
@@ -98,10 +96,13 @@ void PhysicsComp::ReactionForce(Vector2 _normal)
 	velocity.Normalize();
 	_normal.Normalize();
 
-	if (aerial)
+	if (false)
 	{
 		ApplyFriction(_normal);
+		
 	}
+
+	ApplyFriction(_normal);
 
 	//Dont add normal if moving away
 	if ((velocity.x > 0 && _normal.x > 0) || (velocity.x < 0 && _normal.x < 0))
