@@ -31,5 +31,6 @@
     <ImageContentTask Include="WormTeleport.png" />
     <ImageContentTask Include="BananaFragment.png" />
     <ImageContentTask Include="FragFragment.png" />
+    <ImageContentTask Include="Grave.png" />
   </ItemGroup>
 </Project>

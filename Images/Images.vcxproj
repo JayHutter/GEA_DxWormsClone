@@ -208,6 +208,9 @@
     <ImageContentTask Include="BananaFragment.png" />
     <ImageContentTask Include="FragFragment.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Grave.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

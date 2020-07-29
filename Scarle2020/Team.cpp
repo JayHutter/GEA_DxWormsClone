@@ -160,6 +160,11 @@ void Team::ChangeWormSprite(GameData* _GD, ID3D11Device* _DD)
 {
 	for (auto worm : m_worms)
 	{
+		if (worm->IsDead())
+		{
+			continue;
+		}
+		
 		if (worm != m_worms[m_current] || !m_can_attack)
 		{
 			worm->SetSprite("Worm", _DD);

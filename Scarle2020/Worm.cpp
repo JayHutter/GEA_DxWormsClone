@@ -7,18 +7,24 @@ Worm::Worm(ID3D11Device* _GD, Color _colour, string _name) : ImageGO2D("worm", _
 	c_phys = new PhysicsComp(&m_pos, 0.5f, 0, true);
 	c_collider = new CollisionComp(20, 24);
 
-	m_colour = _colour;
+	m_team_colour = _colour;
 	m_name = _name;
 
 	//m_hud = new TextGO2D("HUD");
 
 	m_health_display = new TextGO2D("HEALTH");
 	m_health_display->SetScale(0.25f);
-	m_health_display->SetColour(m_colour);
+	m_health_display->SetColour(m_team_colour);
 
 	m_name_display = new TextGO2D("NAME");
 	m_name_display->SetScale(0.25f);
-	m_name_display->SetColour(m_colour);
+	m_name_display->SetColour(m_team_colour);
+
+	m_invincible = false;
+
+	m_explode.scale = 0.5f;
+	m_explode.damage = 15;
+	m_explode.knockback = 50;
 }
 
 void Worm::Tick(GameData* _GD)
@@ -73,4 +79,15 @@ void Worm::DrawHealth(DrawData2D* _DD)
 void Worm::DrawName(DrawData2D* _DD)
 {
 	m_name_display->Draw(_DD);
+}
+
+void Worm::Kill(ID3D11Device* _GD)
+{
+	SetSprite("Grave", _GD);
+	m_colour = Colors::White + m_team_colour;
+	m_dead = true;
+}
+bool Worm::IsDead()
+{
+	return m_dead;
 }

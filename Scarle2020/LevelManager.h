@@ -16,7 +16,7 @@
 class LevelManager
 {
 public:
-	LevelManager();
+	LevelManager(ID3D11Device* _GD);
 	~LevelManager();
 
 	virtual void Tick(GameData* _GD);
@@ -49,5 +49,7 @@ private:
 
 	TextGO2D *debug_text = new TextGO2D("NO WORM SELECT");
 	TextGO2D *frame_text = new TextGO2D("0");	
+
+	ID3D11Device* m_d3d11device = nullptr;
 };
 

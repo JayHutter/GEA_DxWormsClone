@@ -3,10 +3,12 @@
 #include "DrawData2D.h"
 #include "GameData.h"
 
-LevelManager::LevelManager()
+LevelManager::LevelManager(ID3D11Device* _GD)
 {
 	m_objects.reserve(100);
 	m_destruction.reserve(100);
+
+	m_d3d11device = _GD;
 }
 
 LevelManager::~LevelManager()
@@ -91,6 +93,7 @@ void LevelManager::Update(GameData* _GD, ID3D11Device* _DD)
 	for (auto obj : m_objects)
 	{
 		obj->Tick(_GD);
+		obj->CheckHealth(_GD->m_dt);
 		
 		if (obj->GetCollider())
 		{
@@ -319,6 +322,7 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 	//Dont delete worms
 	if (dynamic_cast<Worm*>(_obj))
 	{
+		dynamic_cast<Worm*>(_obj)->Kill(m_d3d11device);
 		return;
 	}
 

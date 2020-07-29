@@ -25,6 +25,8 @@ public:
 	//Test Explosion - Objects will delete when they explode so this is unneccesarry 
 	void TriggerExplosion() { m_explode = ExplosionData{true, 35, 1, m_pos, 300}; }
 	void StopExplosion() { m_explode.explode = false; }
+	void Kill(ID3D11Device* _GD);
+	bool IsDead();
 
 private:
 	void UpdateHUD();
@@ -33,5 +35,6 @@ private:
 	string m_name = "Worm";
 	TextGO2D* m_health_display = nullptr;
 	TextGO2D* m_name_display = nullptr;
-	Color m_colour = Colors::Red;
+	Color m_team_colour = Colors::Red;
+	bool m_dead = false;
 };

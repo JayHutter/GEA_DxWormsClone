@@ -40,3 +40,27 @@ void GameObject2D::RemoveFromCollided(GameObject2D* _obj)
 	auto result = std::remove(m_collided.begin(), end, _obj);
 	m_collided.erase(result, end);
 }
+
+void GameObject2D::CheckHealth(float _gt)
+{
+	if (m_health < 0)
+	{
+		m_health = 0;
+	}
+
+	if (!m_invincible && m_health <= 0)
+	{
+		TriggerDeath(_gt);
+	}
+}
+
+void GameObject2D::TriggerDeath(float _gt)
+{
+	m_death_timer += _gt;
+	if (m_death_timer > 2)
+	{
+		m_explode.pos = m_pos;
+		m_explode.explode = true;
+		m_invincible = true;
+	}
+}

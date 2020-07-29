@@ -53,6 +53,7 @@ public:
 	int Direction() { return m_dir; }
 	ExplosionData Explode() { return m_explode; }
 	bool IsCollided(GameObject2D* _obj);
+	void CheckHealth(float _gt);
 
 	void AddHealth(int _health);
 
@@ -62,6 +63,7 @@ public:
 	
 protected:
 	void RemoveFromCollided(GameObject2D* _obj);
+	void TriggerDeath(float _gt);
 
 	Vector2 m_pos;
 	float m_rotation;
@@ -76,9 +78,11 @@ protected:
 	bool m_delete = false;
 	int m_health = 100;
 	ExplosionData m_explode;
+	bool m_invincible = true;
+
+	float m_death_timer = 0;
 
 	std::vector<GameObject2D*> m_collided;
 };
-
 
 #endif
