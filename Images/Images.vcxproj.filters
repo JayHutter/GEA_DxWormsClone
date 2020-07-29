@@ -34,5 +34,7 @@
     <ImageContentTask Include="Grave.png" />
     <ImageContentTask Include="Health.png" />
     <ImageContentTask Include="Healthbar.png" />
+    <ImageContentTask Include="HealthbarTrans.png" />
+    <ImageContentTask Include="HealthTrans.png" />
   </ItemGroup>
 </Project>

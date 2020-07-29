@@ -14,6 +14,8 @@ public:
 	void SetPercent(float _percent);
 	void SetPosition(int _pos);
 
+	void Occlusion(CollisionComp* _collider, ID3D11Device* _GD);
+
 private:
 	float m_max = 100;
 	float m_health = 0;
@@ -22,5 +24,6 @@ private:
 	ImageGO2D* m_meter = nullptr;
 	TextGO2D* m_text = nullptr;
 	int m_position = 0;
+	RECT m_occlusion;
 };
 

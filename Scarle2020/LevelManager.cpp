@@ -67,6 +67,7 @@ void LevelManager::Tick(GameData* _GD)
 	m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device);
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
 
+	HudOcclusion();
 	//WinCondition();
 }
 
@@ -337,6 +338,19 @@ void LevelManager::WinCondition()
 	for (int i = 0; i < indices.size(); i++)
 	{
 		m_teams[indices[i]].SetPlacing(i+1);
+	}
+}
 
+void LevelManager::HudOcclusion()
+{
+
+	for (auto team : m_teams)
+	{
+		auto hud = team.HUD();
+		auto worms = team.Worms();
+		for (auto worm : worms)
+		{
+			hud->Occlusion(worm->GetCollider(), m_d3d11device);
+		}
 	}
 }

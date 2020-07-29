@@ -35,6 +35,7 @@ private:
 	void ManageTerrainCollision(GameObject2D* _object, GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 	void SpawnExplosion(GameObject2D* _object);
 	void DeleteObject(GameObject2D* _obj);
+	void HudOcclusion();
 
 	void WinCondition();
 

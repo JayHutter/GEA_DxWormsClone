@@ -9,7 +9,7 @@
 class Team
 {
 public:
-	Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<GameObject2D*> &_objects);
+	Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<GameObject2D*>& _objects);
 	~Team();
 
 	virtual void Tick(GameData* _GD);
@@ -32,6 +32,8 @@ public:
 
 	void SetPlacing(int _placing);
 	int Health() { return m_total_health; }
+	std::vector<Worm*> Worms() { return m_worms; }
+	Healthbar* HUD() { return m_hud; }
 
 private:
 	void UpdateHealth();
