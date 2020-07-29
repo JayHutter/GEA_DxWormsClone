@@ -52,7 +52,10 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	mine->SetPos(Vector2(600, 500));
 	m_objects.push_back(mine);
 	m_time_display = new TextGO2D("0");
-	m_time_display->SetPos(Vector2(300, 625));
+	m_time_display->SetPos(Vector2(280, 600));
+	m_game_timer = new TextGO2D("15:00");
+	m_game_timer->SetPos(Vector2(275, 650));
+	m_game_timer->SetScale(0.5f);
 	m_stage = new Stage(_GD, _name);
 }
 
@@ -92,6 +95,8 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		break;
 	case GameState::SETUP:
 		break;
+	case GameState::RISING:
+		break;
 	}
 }
 
@@ -100,10 +105,16 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 {
 	ManageObjects(_GD, _terrain, _context);
 	m_teams[m_active].Control(_GD, m_d3d11device);
-	if (Timer(_GD->m_dt))
+	if (Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
 		m_timer = 3;
 		m_state = GameState::TEAMCHANGE;
+	}
+
+	if (GameTimer(_GD->m_dt))
+	{
+		m_game_time = 30;
+		m_state = GameState::RISING;
 	}
 
 	m_teams[m_active].Tick(_GD);
@@ -118,7 +129,7 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	ManageObjects(_GD, _terrain, _context);
-	if (!Timer(_GD->m_dt))
+	if (!Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
 		m_teams[m_active].Control(_GD, m_d3d11device);
 	}
@@ -126,6 +137,12 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 	{
 		m_state = GameState::TEAMCHANGE;
 		m_timer = 3;
+	}
+
+	if (GameTimer(_GD->m_dt))
+	{
+		m_game_time = 30;
+		m_state = GameState::RISING;
 	}
 }
 
@@ -135,12 +152,12 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 	//Dont change team if an object prevents it
 	if (!m_continue)
 	{
+		GameTimer(_GD->m_dt);
 		m_timer = 3;
-		m_time_display->SetColour(Color(Colors::White));
 		return;
 	}
 
-	if (Timer(_GD->m_dt))
+	if (Timer(_GD->m_dt, Color(Colors::LightSlateGray)))
 	{
 		CycleTeam();
 		m_state = GameState::PLAYING;
@@ -160,7 +177,9 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		t.RenderHUD(_DD);
 	}
 	m_teams[m_active].RenderWormHUD(_DD);
+
 	m_time_display->Draw(_DD);
+	m_game_timer->Draw(_DD);
 	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 
@@ -416,11 +435,20 @@ void LevelManager::CycleTeam()
 	//On start
 }
 
-bool LevelManager::Timer(float _gt)
+bool LevelManager::Timer(float _gt, Color _col)
 {
 	m_timer -= _gt;
-	m_time_display->SetText(std::to_string(int(m_timer)));
-	m_time_display->SetColour(m_teams[m_active].Colour());
+
+	if (m_timer < 10)
+	{
+		m_time_display->SetText("0" + std::to_string(int(m_timer)));
+	}
+	else
+	{
+		m_time_display->SetText(std::to_string(int(m_timer)));
+	}
+	
+	m_time_display->SetColour(_col);
 
 	if (m_timer <= 0)
 	{
@@ -428,4 +456,19 @@ bool LevelManager::Timer(float _gt)
 		return true;
 	}
 	return false; 
+}
+
+bool LevelManager::GameTimer(float _gt)
+{
+	m_game_time -= _gt;
+	string min = std::to_string(int(m_game_time / 60.0f));
+	string sec = std::to_string(int(m_game_time) % 60);
+	m_game_timer->SetText(min + ":" + sec);
+
+	if (m_game_time <= 0)
+	{
+		return true;
+	}
+
+	return false;
 }

@@ -65,8 +65,14 @@ void Team::Update(GameData* _GD)
 
 void Team::CycleWorm()
 {
+	if (m_total_health <= 0)
+	{
+		return;
+	}
+
 	m_current++;
 	m_current %= m_worms.size();
+	
 	if (m_worms[m_current]->IsDead())
 	{
 		CycleWorm();

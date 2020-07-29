@@ -41,7 +41,8 @@ private:
 	void DeleteObject(GameObject2D* _obj);
 	void HudOcclusion();
 	void CycleTeam();
-	bool Timer(float _gt);
+	bool Timer(float _gt, Color _col);
+	bool GameTimer(float _gt);
 
 	void WinCondition();
 
@@ -56,8 +57,10 @@ private:
 
 	ID3D11Device* m_d3d11device = nullptr;
 	TextGO2D* m_time_display = nullptr;
+	TextGO2D* m_game_timer = nullptr;
 
 	float m_timer = 0;
+	float m_game_time = 900;
 	bool m_continue = true;
 
 	enum class GameState
@@ -67,7 +70,8 @@ private:
 		TEAMCHANGE,
 		USINGWEAPON,
 		RESULTS,
-		SETUP
+		SETUP,
+		RISING
 	};
 
 	GameState m_state = GameState::PLAYING;
