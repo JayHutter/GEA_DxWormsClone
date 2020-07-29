@@ -15,20 +15,17 @@ public:
 	virtual void Tick(GameData* _GD);
 	void Update(GameData* _GD);
 
-	Worm* GetWorm();
-	void CycleWorm();
-
 	//Weapons
-	void SetupWeapons(ID3D11Device* _GD);
-	void CycleWeapon(int _dir);
 	bool UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD);
 	void SelectWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects);
 	void DeleteWorm(Worm* _worm);
 	void AimWeapon(GameData* _GD);
 	void OnEndTurn(ID3D11Device* _DD);
 	void OnStartTrun();
+	void Control(GameData* _GD, ID3D11Device* _DD);
 
 	void RenderHUD(DrawData2D* _DD);
+	void RenderWormHUD(DrawData2D* _DD);
 	void ChangeWormSprite(GameData* _GD, ID3D11Device* _DD);
 
 	void SetPlacing(int _placing);
@@ -40,6 +37,9 @@ public:
 	Color Colour() { return m_colour; }
 
 private:
+	void SetupWeapons(ID3D11Device* _GD);
+	void CycleWeapon(int _dir);
+	void CycleWorm();
 	void UpdateHealth();
 
 	//Team Info

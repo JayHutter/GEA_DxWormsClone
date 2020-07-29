@@ -63,15 +63,14 @@ void Team::Update(GameData* _GD)
 	m_hud->SetHealth(m_total_health);
 }
 
-Worm* Team::GetWorm()
-{
-	return m_worms[m_current];
-}
-
 void Team::CycleWorm()
 {
 	m_current++;
 	m_current %= m_worms.size();
+	if (m_worms[m_current]->IsDead())
+	{
+		CycleWorm();
+	}
 }
 
 void Team::SetupWeapons(ID3D11Device* _GD)
@@ -120,6 +119,11 @@ void Team::CycleWeapon(int _dir)
 bool Team::UseWeapon(GameData* _GD, std::vector<GameObject2D*>& _objects, ID3D11Device* _DD)
 {
 
+	if (m_worms[m_current]->GetPhysComp()->AirTime() >= 0.15f)
+	{
+		return false;
+	}
+
 	if ((m_available[m_selection] > 0 || m_available[m_selection] == -1) && m_can_attack)
 	{
 		if (m_weapons[m_selection]->Chargeable() && _GD->m_MS.leftButton)
@@ -161,6 +165,11 @@ void Team::RenderHUD(DrawData2D* _DD)
 	}
 
 	m_hud->Draw(_DD);
+}
+
+void Team::RenderWormHUD(DrawData2D* _DD)
+{
+	m_worms[m_current]->DrawName(_DD);
 }
 
 void Team::DeleteWorm(Worm* _worm)
@@ -226,4 +235,44 @@ void Team::OnStartTrun()
 {
 	m_end = false;
 	m_can_attack = true;
+
+	CycleWorm();
+}
+
+void Team::Control(GameData* _GD, ID3D11Device* _DD)
+{
+	auto worm = m_worms[m_current];
+
+	if (worm->IsDead())
+	{
+		CycleWorm();
+		return;
+	}
+
+	if (m_charging)
+	{
+		return;
+	}
+
+	if (worm->GetPhysComp()->AirTime() < 0.15f)
+	{
+		worm->Move(_GD->m_KBS.D + (_GD->m_KBS.A * -1));
+
+		if (_GD->m_KBS_tracker.IsKeyPressed((Keyboard::Space)))
+		{
+			Vector2 force = Vector2(0, -300);
+			if (_GD->m_KBS.D)
+			{
+				force.x = 300;
+			}
+			else if (_GD->m_KBS.A)
+			{
+				force.x = -300;
+			}
+
+			worm->GetPhysComp()->AddForce(force);
+		}
+	}
+
+	CycleWeapon(_GD->m_KBS_tracker.IsKeyPressed(Keyboard::E) + (-1 * _GD->m_KBS_tracker.IsKeyPressed(Keyboard::Q)));
 }

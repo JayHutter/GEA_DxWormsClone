@@ -99,7 +99,7 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	ManageObjects(_GD, _terrain, _context);
-	Input(_GD);
+	m_teams[m_active].Control(_GD, m_d3d11device);
 	if (Timer(_GD->m_dt))
 	{
 		m_timer = 3;
@@ -120,7 +120,7 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 	ManageObjects(_GD, _terrain, _context);
 	if (!Timer(_GD->m_dt))
 	{
-		Input(_GD);
+		m_teams[m_active].Control(_GD, m_d3d11device);
 	}
 	else// if (m_teams[m_active].EndTurn())
 	{
@@ -159,7 +159,7 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 	{
 		t.RenderHUD(_DD);
 	}
-	m_teams[m_active].GetWorm()->DrawName(_DD);
+	m_teams[m_active].RenderWormHUD(_DD);
 	m_time_display->Draw(_DD);
 	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
@@ -341,46 +341,6 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 		delete _obj;
 		_obj = nullptr;
 	}
-}
-
-//Refactor
-void LevelManager::Input(GameData* _GD)
-{
-	auto key = _GD->m_KBS_tracker;
-	auto worm = m_teams[m_active].GetWorm();
-
-	if (worm->GetPhysComp()->AirTime() < 0.15f)
-	{
-		worm->Move(_GD->m_KBS.D + (_GD->m_KBS.A * -1));
-
-		if (key.IsKeyReleased(Keyboard::Space))
-		{
-			Vector2 force = Vector2(0, -300);
-			if (_GD->m_KBS.D)
-			{
-				force.x = 300;
-			}
-			else if (_GD->m_KBS.A)
-			{
-				force.x = -300;
-			}
-
-			worm->GetPhysComp()->AddForce(force);
-		}
-	}
-	
-	//DEBUG : Worm swap
-	//if (key.IsKeyPressed(Keyboard::Tab))
-	//{
-	//	m_teams[m_active].CycleWorm();
-	//}
-	//if (key.IsKeyPressed(Keyboard::LeftShift))
-	//{
-	//	m_active++;
-	//	m_active %= m_teams.size();
-	//}
-
-	m_teams[m_active].CycleWeapon(key.IsKeyPressed(Keyboard::E) + (-1 * key.IsKeyPressed(Keyboard::Q)));
 }
 
 Stage* LevelManager::GetStage()

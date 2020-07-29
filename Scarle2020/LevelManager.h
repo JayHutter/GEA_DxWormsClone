@@ -27,7 +27,6 @@ public:
 	void RenderDestruction(DrawData2D* _DD);
 
 	void ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
-	void Input(GameData* _GD);
 
 	Stage* GetStage();
 
