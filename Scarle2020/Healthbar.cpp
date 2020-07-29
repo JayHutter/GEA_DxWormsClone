@@ -43,7 +43,7 @@ void Healthbar::SetPercent(float _percent)
 void Healthbar::SetPosition(int _position)
 {
 	m_position = _position;
-	m_text->SetText(std::to_string(m_health));
+	m_text->SetText(std::to_string(m_position));
 }
 
 void Healthbar::UpdatePositions()

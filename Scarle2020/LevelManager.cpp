@@ -302,6 +302,8 @@ Stage* LevelManager::GetStage()
 	return m_stage;
 }
 
+//I have no idea why this doesnt work
+//Visualisers says the health has decreased but debugging its still at 400
 void LevelManager::WinCondition()
 {
 	std::vector<int> values;
