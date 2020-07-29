@@ -43,6 +43,7 @@ private:
 	void CycleTeam();
 	bool Timer(float _gt, Color _col);
 	bool GameTimer(float _gt);
+	bool TestWaterLevel(GameObject2D* _object);
 
 	void WinCondition();
 
@@ -62,6 +63,7 @@ private:
 	float m_timer = 0;
 	float m_game_time = 900;
 	bool m_continue = true;
+	float m_water_height = 600;
 
 	enum class GameState
 	{

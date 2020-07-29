@@ -219,6 +219,11 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 			}
 		}
 
+		if (TestWaterLevel(obj))
+		{
+			break;
+		}
+
 		//m_teams[m_active].TriggerEndTurn(obj->TriggerEndTurn());
 		if (obj->StopTurnEnd())
 		{
@@ -467,6 +472,17 @@ bool LevelManager::GameTimer(float _gt)
 
 	if (m_game_time <= 0)
 	{
+		return true;
+	}
+
+	return false;
+}
+
+bool LevelManager::TestWaterLevel(GameObject2D* _object)
+{
+	if (_object->GetPhysComp() && _object->GetPos().y > m_water_height)
+	{
+		DeleteObject(_object);
 		return true;
 	}
 
