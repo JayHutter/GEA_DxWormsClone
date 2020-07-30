@@ -36,6 +36,8 @@ public:
 	void TriggerEndTurn(bool _end);
 	Color Colour() { return m_colour; }
 	bool AllWormsDead();
+	bool SetScore(int _score);
+	int GetScore();
 
 private:
 	void SetupWeapons(ID3D11Device* _GD);
@@ -64,5 +66,6 @@ private:
 	int m_placing = 0;
 	Healthbar* m_hud = nullptr;
 	bool m_end = false;
+	int m_score = 1;
 };
 

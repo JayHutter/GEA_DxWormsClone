@@ -46,14 +46,15 @@ private:
 	bool TestWaterLevel(GameObject2D* _object);
 	bool CheckWin();
 	void WinScreen();
-
 	void WinCondition();
+	void CheckTeamDeath();
 
 	Stage* m_stage = nullptr;
 
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
 	std::vector<DestructionMask*> m_destruction;
+	int m_score = 0;
 
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
 	int m_active = 0;

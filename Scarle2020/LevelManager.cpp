@@ -60,6 +60,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	m_sea = new ImageGO2D("Sea", _GD);
 	m_sea->SetOrigin(Vector2(0, 0));
 	m_sea->SetPos(Vector2(0, m_water_height));
+	m_score = m_teams.size();
 }
 
 
@@ -128,6 +129,7 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 		m_state = GameState::USINGWEAPON;
 	}
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
+	CheckTeamDeath();
 }
 
 void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -148,6 +150,8 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 		m_game_time = 30;
 		m_state = GameState::RISING;
 	}
+
+	CheckTeamDeath();
 }
 
 void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -523,5 +527,43 @@ bool LevelManager::CheckWin()
 
 void LevelManager::WinScreen()
 {
+	std::vector<int> scores;
+	std::vector<int> indices;
 
+	for (int i=0; i<m_teams.size(); i++)
+	{
+		scores.push_back(m_teams[i].GetScore());
+		indices.push_back(i);
+	}
+
+	bool swapped = true;
+	while (swapped)
+	{
+		swapped = false;
+		for (int i = 0; i < indices.size() -1; i++)
+		{
+			if (scores[i] < scores[i + 1])
+			{
+				int temp_score = scores[i];
+				scores[i] = scores[i + 1];
+				scores[i + 1] = temp_score;
+
+				int temp_i = indices[i];
+				indices[i] = indices[i + 1];
+				indices[i + 1] = temp_i;
+				swapped = true;
+			}
+		}
+	}
+}
+
+void LevelManager::CheckTeamDeath()
+{
+	for (int i=0; i<m_teams.size(); i++)
+	{
+		if (m_teams[i].SetScore(m_score))
+		{
+			m_score--;
+		}
+	}
 }

@@ -307,3 +307,19 @@ bool Team::AllWormsDead()
 
 	return false;
 }
+
+bool Team::SetScore(int _score)
+{
+	if (m_score == 1 && AllWormsDead())
+	{
+		m_score = _score;
+		return true;
+	}
+
+	return false;
+}
+
+int Team::GetScore()
+{
+	return m_score;
+}
