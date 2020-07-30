@@ -96,7 +96,7 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		UsingWeapon(_GD, _terrain, _context);
 		break;
 	case GameState::RESULTS:
-		WinScreen();
+		WinScreen(_GD);
 		break;
 	case GameState::SETUP:
 		break;
@@ -392,15 +392,22 @@ Stage* LevelManager::GetStage()
 	return m_stage;
 }
 
-void LevelManager::WinCondition()
+void LevelManager::WinScreen(GameData* _GD)
+{
+	if (_GD->m_KBS_tracker.IsKeyPressed(Keyboard::Enter))
+	{
+		//EXIT BACK TO MENUS
+	}
+}
+
+void LevelManager::CalculateLeaderboard()
 {
 	std::vector<int> values;
-	std::vector<int> indices;
 
 	for (int i=0; i<m_teams.size(); i++)
 	{
 		values.push_back(m_teams[i].Health());
-		indices.push_back(i);
+		m_leaderboard.push_back(i);
 	}
 
 	bool swapped = true;
@@ -412,21 +419,44 @@ void LevelManager::WinCondition()
 			if (values[i] < values[i + 1])
 			{
 				int temp_val = values[i];
-				int temp_ind = indices[i];
+				int temp_ind = m_leaderboard[i];
 
 				values[i] = values[i + 1];
-				indices[i] = indices[i + 1];
+				m_leaderboard[i] = m_leaderboard[i + 1];
 				
 				values[i + 1] = temp_val;
-				indices[i + 1] = temp_ind;
+				m_leaderboard[i + 1] = temp_ind;
 				swapped = true;
 			}
 		}
 	}
 
-	for (int i = 0; i < indices.size(); i++)
+	for (int i = 0; i < m_leaderboard.size(); i++)
 	{
-		m_teams[indices[i]].SetPlacing(i+1);
+		m_teams[m_leaderboard[i]].SetPlacing(i+1);
+	}
+}
+
+void LevelManager::SetupWinScreen()
+{
+	TextGO2D* texta = new TextGO2D("GAME OVER");
+	texta->SetPos(Vector2(500, 100));
+	texta->SetScale(1.5f);
+	m_objects.push_back(texta);
+	
+	TextGO2D* textb = new TextGO2D("ENTER TO CONTINUE");
+	textb->SetPos(Vector2(450, 600));
+	textb->SetScale(1.5f);
+	m_objects.push_back(textb);
+
+	for (int i=0; i<m_leaderboard.size(); i++)
+	{
+		int score = m_teams[m_leaderboard[i]].GetScore();
+		TextGO2D* team_info = new TextGO2D(std::to_string(score));
+		team_info->SetPos(Vector2(500, 200 + (100 * i)));
+		team_info->SetColour(m_teams[m_leaderboard[i]].Colour());
+
+		m_objects.push_back(team_info);
 	}
 }
 
@@ -522,39 +552,14 @@ bool LevelManager::CheckWin()
 		}
 	}
 
-	return alive <= 1;
-}
-
-void LevelManager::WinScreen()
-{
-	std::vector<int> scores;
-	std::vector<int> indices;
-
-	for (int i=0; i<m_teams.size(); i++)
+	if (alive <= 1)
 	{
-		scores.push_back(m_teams[i].GetScore());
-		indices.push_back(i);
+		CalculateLeaderboard();
+		SetupWinScreen();
+		return true;
 	}
 
-	bool swapped = true;
-	while (swapped)
-	{
-		swapped = false;
-		for (int i = 0; i < indices.size() -1; i++)
-		{
-			if (scores[i] < scores[i + 1])
-			{
-				int temp_score = scores[i];
-				scores[i] = scores[i + 1];
-				scores[i + 1] = temp_score;
-
-				int temp_i = indices[i];
-				indices[i] = indices[i + 1];
-				indices[i + 1] = temp_i;
-				swapped = true;
-			}
-		}
-	}
+	return false;
 }
 
 void LevelManager::CheckTeamDeath()

@@ -45,15 +45,18 @@ private:
 	bool GameTimer(float _gt);
 	bool TestWaterLevel(GameObject2D* _object);
 	bool CheckWin();
-	void WinScreen();
+	void WinScreen(GameData* _GD);
 	void WinCondition();
+	void CalculateLeaderboard();
 	void CheckTeamDeath();
+	void SetupWinScreen();
 
 	Stage* m_stage = nullptr;
 
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
 	std::vector<DestructionMask*> m_destruction;
+	std::vector<int> m_leaderboard;
 	int m_score = 0;
 
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
