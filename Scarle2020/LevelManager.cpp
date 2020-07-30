@@ -402,11 +402,11 @@ void LevelManager::WinScreen(GameData* _GD)
 
 void LevelManager::CalculateLeaderboard()
 {
-	std::vector<int> values;
+	std::vector<int> scores;
 
-	for (int i=0; i<m_teams.size(); i++)
+	for (int i = 0; i < m_teams.size(); i++)
 	{
-		values.push_back(m_teams[i].Health());
+		scores.push_back(m_teams[i].GetScore());
 		m_leaderboard.push_back(i);
 	}
 
@@ -414,26 +414,20 @@ void LevelManager::CalculateLeaderboard()
 	while (swapped)
 	{
 		swapped = false;
-		for (int i = 0; i < values.size() -1; i++)
+		for (int i = 0; i < m_leaderboard.size() - 1; i++)
 		{
-			if (values[i] < values[i + 1])
+			if (scores[i] < scores[i + 1])
 			{
-				int temp_val = values[i];
-				int temp_ind = m_leaderboard[i];
+				int temp_score = scores[i];
+				scores[i] = scores[i + 1];
+				scores[i + 1] = temp_score;
 
-				values[i] = values[i + 1];
+				int temp_i = m_leaderboard[i];
 				m_leaderboard[i] = m_leaderboard[i + 1];
-				
-				values[i + 1] = temp_val;
-				m_leaderboard[i + 1] = temp_ind;
+				m_leaderboard[i + 1] = temp_i;
 				swapped = true;
 			}
 		}
-	}
-
-	for (int i = 0; i < m_leaderboard.size(); i++)
-	{
-		m_teams[m_leaderboard[i]].SetPlacing(i+1);
 	}
 }
 
@@ -453,7 +447,7 @@ void LevelManager::SetupWinScreen()
 	{
 		int score = m_teams[m_leaderboard[i]].GetScore();
 		TextGO2D* team_info = new TextGO2D(std::to_string(score));
-		team_info->SetPos(Vector2(500, 200 + (100 * i)));
+		team_info->SetPos(Vector2(500, 500 - (20 * m_teams.size() * i)));
 		team_info->SetColour(m_teams[m_leaderboard[i]].Colour());
 
 		m_objects.push_back(team_info);
