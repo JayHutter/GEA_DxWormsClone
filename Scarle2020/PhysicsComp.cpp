@@ -75,6 +75,17 @@ void PhysicsComp::SetFrictionVal(float _mu)
 	mu = _mu;
 }
 
+void PhysicsComp::StuckInGround(Vector2 _velocity)
+{
+	_velocity.Normalize();
+	float mag = Speed();
+	if (bounce_multiplier < 0.2)
+	{
+		velocity = mag * _velocity * 0.2;
+	}
+	velocity = mag * _velocity * bounce_multiplier;
+}
+
 void PhysicsComp::AddForce(Vector2 _force)
 {
 	velocity += _force;

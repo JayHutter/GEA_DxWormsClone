@@ -345,7 +345,8 @@ void LevelManager::ManageTerrainCollision(GameObject2D* _object, GameData* _GD, 
 			//Move object if stuck in wall
 			if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
 			{
-				phys->SetVelocityDir(coll->CalculateNormal(coll_data));
+				//phys->SetVelocityDir(coll->CalculateNormal(coll_data));
+				phys->StuckInGround(coll->CalculateNormal(coll_data));
 			}
 			else //apply resistive forces
 			{

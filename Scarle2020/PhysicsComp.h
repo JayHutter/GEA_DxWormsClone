@@ -23,6 +23,8 @@ public:
 	void SetSpeed(float _speed);
 	void SetFrictionVal(float _mu);
 
+	void StuckInGround(Vector2 _velocity);
+
 	void AddForce(Vector2 _force);
 	void MultiplyVelocity(Vector2 _force);
 	void MultiplyVelocity(float _power);
