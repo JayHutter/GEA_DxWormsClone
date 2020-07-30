@@ -70,12 +70,14 @@ void Team::CycleWorm()
 		return;
 	}
 
-	m_current++;
-	m_current %= m_worms.size();
-	
-	if (m_worms[m_current]->IsDead())
+	for (int i = m_current; i < m_current + m_worms.size(); i++)
 	{
-		CycleWorm();
+		i %= m_worms.size();
+		if (!m_worms[i]->IsDead())
+		{
+			m_current = i;
+			return;
+		}
 	}
 }
 
@@ -255,7 +257,7 @@ void Team::Control(GameData* _GD, ID3D11Device* _DD)
 
 	if (worm->IsDead())
 	{
-		CycleWorm();
+		//CycleWorm();
 		return;
 	}
 
@@ -285,4 +287,23 @@ void Team::Control(GameData* _GD, ID3D11Device* _DD)
 	}
 
 	CycleWeapon(_GD->m_KBS_tracker.IsKeyPressed(Keyboard::E) + (-1 * _GD->m_KBS_tracker.IsKeyPressed(Keyboard::Q)));
+}
+
+bool Team::AllWormsDead()
+{
+	int dead = 0;
+	for (auto worm : m_worms)
+	{
+		if (worm->IsDead())
+		{
+			dead++;
+		}
+	}
+
+	if (dead == m_worms.size())
+	{
+		return true;
+	}
+
+	return false;
 }

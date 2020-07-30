@@ -35,12 +35,13 @@ public:
 	bool EndTurn() { return m_end; }
 	void TriggerEndTurn(bool _end);
 	Color Colour() { return m_colour; }
+	bool AllWormsDead();
 
 private:
 	void SetupWeapons(ID3D11Device* _GD);
 	void CycleWeapon(int _dir);
 	void CycleWorm();
-	void UpdateHealth();
+	void UpdateHealth();	
 
 	//Team Info
 	Color m_colour = Colors::Red;

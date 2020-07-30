@@ -437,16 +437,17 @@ void LevelManager::CycleTeam()
 {
 	m_teams[m_active].OnEndTurn(m_d3d11device);
 	m_active++;
-	m_active %= m_teams.size();
-
-	if (m_teams[m_active].Health() <= 0)
+	for (int i = m_active; i < m_active + m_teams.size(); i++)
 	{
-		CycleTeam();
+		i %= m_teams.size();
+		if (m_teams[i].AllWormsDead())
+		{
+			m_active = i;
+			m_timer = 20;
+			m_teams[m_active].OnStartTrun();
+			return;
+		}
 	}
-
-	m_timer = 20;
-	m_teams[m_active].OnStartTrun();
-	//On start
 }
 
 bool LevelManager::Timer(float _gt, Color _col)
