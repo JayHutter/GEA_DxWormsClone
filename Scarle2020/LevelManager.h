@@ -44,6 +44,8 @@ private:
 	bool Timer(float _gt, Color _col);
 	bool GameTimer(float _gt);
 	bool TestWaterLevel(GameObject2D* _object);
+	bool CheckWin();
+	void WinScreen();
 
 	void WinCondition();
 

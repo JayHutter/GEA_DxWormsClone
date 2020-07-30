@@ -95,6 +95,7 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		UsingWeapon(_GD, _terrain, _context);
 		break;
 	case GameState::RESULTS:
+		WinScreen();
 		break;
 	case GameState::SETUP:
 		break;
@@ -157,6 +158,12 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 	{
 		GameTimer(_GD->m_dt);
 		m_timer = 3;
+		return;
+	}
+
+	if (CheckWin())
+	{
+		m_state = GameState::RESULTS;
 		return;
 	}
 
@@ -436,6 +443,7 @@ void LevelManager::HudOcclusion()
 void LevelManager::CycleTeam()
 {
 	m_teams[m_active].OnEndTurn(m_d3d11device);
+
 	m_active++;
 	for (int i = m_active; i < m_active + m_teams.size(); i++)
 	{
@@ -497,4 +505,23 @@ bool LevelManager::TestWaterLevel(GameObject2D* _object)
 	}
 
 	return false;
+}
+
+bool LevelManager::CheckWin()
+{
+	int alive = m_teams.size();
+	for (auto team : m_teams)
+	{
+		if (team.AllWormsDead())
+		{
+			alive--;
+		}
+	}
+
+	return alive <= 1;
+}
+
+void LevelManager::WinScreen()
+{
+
 }
