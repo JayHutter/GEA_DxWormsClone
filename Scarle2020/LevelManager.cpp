@@ -57,6 +57,9 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	m_game_timer->SetPos(Vector2(275, 650));
 	m_game_timer->SetScale(0.5f);
 	m_stage = new Stage(_GD, _name);
+	m_sea = new ImageGO2D("Sea", _GD);
+	m_sea->SetOrigin(Vector2(0, 0));
+	m_sea->SetPos(Vector2(0, m_water_height));
 }
 
 
@@ -172,14 +175,18 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		obj->Draw(_DD);
 	}
 
+	m_sea->Draw(_DD);
+
 	for (auto t : m_teams)
 	{
 		t.RenderHUD(_DD);
 	}
+
 	m_teams[m_active].RenderWormHUD(_DD);
 
 	m_time_display->Draw(_DD);
 	m_game_timer->Draw(_DD);
+
 	//m_teams[m_active[0]].worms[m_active[1]]->DrawHUD(_DD);
 }
 
@@ -346,13 +353,13 @@ void LevelManager::SpawnExplosion(GameObject2D* _object)
 	DeleteObject(_object);
 }
 
-void LevelManager::DeleteObject(GameObject2D* _obj)
+bool LevelManager::DeleteObject(GameObject2D* _obj)
 {
 	//Dont delete worms
 	if (dynamic_cast<Worm*>(_obj))
 	{
 		dynamic_cast<Worm*>(_obj)->Kill(m_d3d11device);
-		return;
+		return false;
 	}
 
 	//auto it = std::find(m_objects.begin(), m_objects.end(), _obj);
@@ -364,7 +371,9 @@ void LevelManager::DeleteObject(GameObject2D* _obj)
 		m_objects.erase(result, end);
 		delete _obj;
 		_obj = nullptr;
+		return true;
 	}
+	return false;
 }
 
 Stage* LevelManager::GetStage()
@@ -480,10 +489,10 @@ bool LevelManager::GameTimer(float _gt)
 
 bool LevelManager::TestWaterLevel(GameObject2D* _object)
 {
-	if (_object->GetPhysComp() && _object->GetPos().y > m_water_height)
+	if (_object->GetPhysComp() && _object->GetPos().y > m_water_height + 16)
 	{
-		DeleteObject(_object);
-		return true;
+		_object->SetPos(Vector2(-500, m_water_height+16));
+		return DeleteObject(_object);
 	}
 
 	return false;

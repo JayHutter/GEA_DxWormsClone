@@ -219,6 +219,9 @@
     <ImageContentTask Include="HealthbarTrans.png" />
     <ImageContentTask Include="HealthTrans.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Sea.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

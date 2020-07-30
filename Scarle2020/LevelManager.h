@@ -38,7 +38,7 @@ private:
 	void TestCollisions(GameData* _GD, GameObject2D* _object);
 	void ManageTerrainCollision(GameObject2D* _object, GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 	void SpawnExplosion(GameObject2D* _object);
-	void DeleteObject(GameObject2D* _obj);
+	bool DeleteObject(GameObject2D* _obj);
 	void HudOcclusion();
 	void CycleTeam();
 	bool Timer(float _gt, Color _col);
@@ -59,6 +59,7 @@ private:
 	ID3D11Device* m_d3d11device = nullptr;
 	TextGO2D* m_time_display = nullptr;
 	TextGO2D* m_game_timer = nullptr;
+	ImageGO2D* m_sea = nullptr;
 
 	float m_timer = 0;
 	float m_game_time = 900;
