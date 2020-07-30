@@ -10,22 +10,22 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<
 		_objects.push_back(worm);
 
 		//TEMP POS SETTING
-		if (_colour == Color(Colors::Red))
-		{
-			worm->SetPos(Vector2(50 + (i * 100), 100));
-		}
-		else if (_colour == Color(Colors::Blue))
-		{
-			worm->SetPos(Vector2(100 + (i * 100), 500));
-		}
-		else if (_colour == Color(Colors::Green))
-		{
-			worm->SetPos(Vector2(900 + (i * 100), 150));
-		}
-		else if (_colour == Color(Colors::Orange))
-		{
-			worm->SetPos(Vector2(700 + (i * 100), 500));
-		}
+		//if (_colour == Color(Colors::Red))
+		//{
+		//	worm->SetPos(Vector2(50 + (i * 100), 100));
+		//}
+		//else if (_colour == Color(Colors::Blue))
+		//{
+		//	worm->SetPos(Vector2(100 + (i * 100), 500));
+		//}
+		//else if (_colour == Color(Colors::Green))
+		//{
+		//	worm->SetPos(Vector2(900 + (i * 100), 150));
+		//}
+		//else if (_colour == Color(Colors::Orange))
+		//{
+		//	worm->SetPos(Vector2(700 + (i * 100), 500));
+		//}
 	}
 
 	SetupWeapons(_GD);

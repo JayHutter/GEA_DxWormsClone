@@ -61,6 +61,10 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	m_sea->SetOrigin(Vector2(0, 0));
 	m_sea->SetPos(Vector2(0, m_water_height));
 	m_score = m_teams.size();
+
+	m_state = GameState::SETUP;
+	m_timer = 0;
+	m_time_display->SetColour(m_teams[m_active].Colour());
 }
 
 
@@ -99,6 +103,10 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		WinScreen(_GD);
 		break;
 	case GameState::SETUP:
+		Setup(_GD, _terrain, _context);
+		break;
+	case GameState::SETUPSWAP:
+		SetupSwapTeam(_GD, _terrain, _context);
 		break;
 	case GameState::RISING:
 		break;
@@ -565,4 +573,57 @@ void LevelManager::CheckTeamDeath()
 			m_score--;
 		}
 	}
+}
+
+void LevelManager::Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	auto mouse = _GD->m_MS;
+	auto worms = m_teams[m_active].Worms();
+
+	_terrain->Map(_context);
+
+	if (mouse.leftButton)
+	{
+		worms[m_worm_no]->SetPos(Vector2(mouse.x, mouse.y));
+		worms[m_worm_no]->GetCollider()->UpdateHitbox(worms[m_worm_no]->GetPos());
+		auto col = worms[m_worm_no]->GetCollider()->TerrainCollsionV(_terrain, _context, _GD, worms[m_worm_no]->GetPos());
+		if (col == std::array<int, 4>{0, 0, 0, 0})
+		{			
+			m_timer = 2;
+			m_state = GameState::SETUPSWAP;
+		}
+		else
+		{
+			worms[m_worm_no]->SetPos(Vector2(-500, 0));
+		}
+	}
+
+	_terrain->Unmap(_context);
+
+	ManageObjects(_GD, _terrain, _context);
+}
+
+void LevelManager::SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	if (Timer(_GD->m_dt, Color(Colors::LightSlateGray)))
+	{
+		m_active++;
+		if (m_active >= m_teams.size())
+		{
+			m_active %= m_teams.size();
+			m_worm_no++;
+			if (m_worm_no >= m_teams[0].Worms().size())
+			{
+				m_timer = 30;
+				m_state = GameState::PLAYING;
+				return;
+			}
+		}
+
+		m_timer = 0;
+		m_time_display->SetColour(m_teams[m_active].Colour());
+		m_state = GameState::SETUP;
+	}
+
+	ManageObjects(_GD, _terrain, _context);
 }

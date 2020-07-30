@@ -46,10 +46,11 @@ private:
 	bool TestWaterLevel(GameObject2D* _object);
 	bool CheckWin();
 	void WinScreen(GameData* _GD);
-	void WinCondition();
 	void CalculateLeaderboard();
 	void CheckTeamDeath();
 	void SetupWinScreen();
+	void Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 
 	Stage* m_stage = nullptr;
 
@@ -71,6 +72,7 @@ private:
 	float m_game_time = 900;
 	bool m_continue = true;
 	float m_water_height = 600;
+	int m_worm_no = 0;
 
 	enum class GameState
 	{
@@ -80,9 +82,10 @@ private:
 		USINGWEAPON,
 		RESULTS,
 		SETUP,
+		SETUPSWAP,
 		RISING
 	};
 
-	GameState m_state = GameState::PLAYING;
+	GameState m_state = GameState::SETUP;
 };
 
