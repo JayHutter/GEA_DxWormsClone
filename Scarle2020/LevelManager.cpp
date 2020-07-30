@@ -440,7 +440,7 @@ void LevelManager::CycleTeam()
 	for (int i = m_active; i < m_active + m_teams.size(); i++)
 	{
 		i %= m_teams.size();
-		if (m_teams[i].AllWormsDead())
+		if (!m_teams[i].AllWormsDead())
 		{
 			m_active = i;
 			m_timer = 20;
