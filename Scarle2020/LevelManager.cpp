@@ -66,7 +66,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 
 void LevelManager::Tick(GameData* _GD)
 {
-	for (auto team : m_teams)
+	for (auto &team : m_teams)
 	{
 		team.Update(_GD);
 	}
@@ -188,7 +188,7 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 
 	m_sea->Draw(_DD);
 
-	for (auto t : m_teams)
+	for (auto &t : m_teams)
 	{
 		t.RenderHUD(_DD);
 	}
@@ -514,7 +514,7 @@ bool LevelManager::TestWaterLevel(GameObject2D* _object)
 bool LevelManager::CheckWin()
 {
 	int alive = m_teams.size();
-	for (auto team : m_teams)
+	for (auto &team : m_teams)
 	{
 		if (team.AllWormsDead())
 		{
