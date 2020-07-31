@@ -43,7 +43,7 @@ private:
 	void HudOcclusion();
 	void CycleTeam();
 	bool Timer(float _gt, Color _col);
-	bool GameTimer(float _gt);
+	void GameTimer(float _gt);
 	bool TestWaterLevel(GameObject2D* _object);
 	bool CheckWin();
 	void WinScreen(GameData* _GD);
@@ -52,6 +52,7 @@ private:
 	void SetupWinScreen();
 	void Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 	void SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	void Rising(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 
 	Stage* m_stage = nullptr;
 
@@ -74,6 +75,7 @@ private:
 	bool m_continue = true;
 	float m_water_height = 600;
 	int m_worm_no = 0;
+	bool m_sudden_death = false;
 
 	enum class GameState
 	{

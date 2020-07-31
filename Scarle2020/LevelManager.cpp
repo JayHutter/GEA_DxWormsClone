@@ -163,6 +163,7 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		SetupSwapTeam(_GD, _terrain, _context);
 		break;
 	case GameState::RISING:
+		Rising(_GD, _terrain, _context);
 		break;
 	}
 }
@@ -177,12 +178,7 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 		m_timer = 3;
 		m_state = GameState::TEAMCHANGE;
 	}
-
-	if (GameTimer(_GD->m_dt))
-	{
-		m_game_time = 30;
-		m_state = GameState::RISING;
-	}
+	GameTimer(_GD->m_dt);
 
 	m_teams[m_active].Tick(_GD);
 	if (m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device))
@@ -207,11 +203,7 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 		m_timer = 3;
 	}
 
-	if (GameTimer(_GD->m_dt))
-	{
-		m_game_time = 30;
-		m_state = GameState::RISING;
-	}
+	GameTimer(_GD->m_dt);
 
 	CheckTeamDeath();
 }
@@ -227,6 +219,14 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 		return;
 	}
 
+	if (m_game_time <= 0)
+	{
+		m_timer = 2;
+		m_game_time = 30;
+		m_state = GameState::RISING;
+		return;
+	}
+
 	if (CheckWin())
 	{
 		m_state = GameState::RESULTS;
@@ -237,6 +237,21 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 	{
 		CycleTeam();
 		m_state = GameState::PLAYING;
+	}
+}
+
+void LevelManager::Rising(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
+{
+	ManageObjects(_GD, _terrain, _context);
+
+	Vector2 pos = m_sea->GetPos() - Vector2(0, _GD->m_dt * 10);
+	m_sea->SetPos(pos);
+	m_water_height = m_sea->GetPos().y;
+
+	if (Timer(_GD->m_dt, Color(Colors::Aquamarine)))
+	{
+		m_timer = 3;
+		m_state = GameState::TEAMCHANGE;
 	}
 }
 
@@ -572,7 +587,7 @@ bool LevelManager::Timer(float _gt, Color _col)
 	return false; 
 }
 
-bool LevelManager::GameTimer(float _gt)
+void LevelManager::GameTimer(float _gt)
 {
 	m_game_time -= _gt;
 	int minutes = int(m_game_time / 60.0f);
@@ -597,10 +612,8 @@ bool LevelManager::GameTimer(float _gt)
 
 	if (m_game_time <= 0)
 	{
-		return true;
+		m_game_time = 0;
 	}
-
-	return false;
 }
 
 bool LevelManager::TestWaterLevel(GameObject2D* _object)
