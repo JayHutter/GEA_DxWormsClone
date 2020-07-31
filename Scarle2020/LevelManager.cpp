@@ -590,7 +590,7 @@ void LevelManager::Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCont
 		auto col = worms[m_worm_no]->GetCollider()->TerrainCollsionV(_terrain, _context, _GD, worms[m_worm_no]->GetPos());
 		if (col == std::array<int, 4>{0, 0, 0, 0})
 		{			
-			m_timer = 2;
+			m_timer = 1;
 			m_state = GameState::SETUPSWAP;
 		}
 		else
