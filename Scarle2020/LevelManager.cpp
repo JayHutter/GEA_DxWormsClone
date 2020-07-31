@@ -95,6 +95,11 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	auto colours = level["colour"];
 	for (int i = 0; i < _teams; i++)
 	{
+		if (i > colours.size() - 1)
+		{
+			break;
+		}
+
 		auto c = colours[i];
 		Color colour = { c["r"].get<float>(), c["g"].get<float>(), c["b"].get<float>() };
 		m_teams.push_back(Team(m_d3d11device, _worms, colour, i, m_objects));
