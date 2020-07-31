@@ -132,7 +132,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     m_level = new LevelManager(m_d3dDevice.Get());
    // m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
-    m_level->SetupLevel("test_stage2", 4, 4);
+    m_level->SetupLevel("test_stage2", 4, 1);
 
     alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
     alpha->SetPos(Vector2(600, 600));

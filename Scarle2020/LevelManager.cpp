@@ -570,8 +570,24 @@ bool LevelManager::Timer(float _gt, Color _col)
 bool LevelManager::GameTimer(float _gt)
 {
 	m_game_time -= _gt;
-	string min = std::to_string(int(m_game_time / 60.0f));
-	string sec = std::to_string(int(m_game_time) % 60);
+	int minutes = int(m_game_time / 60.0f);
+	int seconds = int(m_game_time) % 60;
+
+	string min;
+	string sec;
+
+	if (minutes < 10)
+	{
+		min = "0";
+	}
+	min += std::to_string(minutes);
+
+	if (seconds < 10)
+	{
+		sec = "0";
+	}
+	sec += std::to_string(seconds);
+
 	m_game_timer->SetText(min + ":" + sec);
 
 	if (m_game_time <= 0)
