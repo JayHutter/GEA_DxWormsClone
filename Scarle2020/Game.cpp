@@ -126,13 +126,13 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
 
-
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
     m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
 
     m_level = new LevelManager(m_d3dDevice.Get());
-    m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
+   // m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
+    m_level->SetupLevel("test_stage2", 4, 4);
 
     alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
     alpha->SetPos(Vector2(600, 600));

@@ -19,6 +19,7 @@ public:
 	~LevelManager();
 
 	void SetupLevel(string _name, int _teams, ID3D11Device* _GD);
+	void SetupLevel(string _name, int _teams, int _worms);
 
 	void Tick(GameData* _GD);
 	void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);

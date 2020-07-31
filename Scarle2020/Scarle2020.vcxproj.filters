@@ -229,6 +229,9 @@
     <ClInclude Include="Healthbar.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -372,5 +375,10 @@
     <ResourceCompile Include="resource.rc">
       <Filter>Base</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test_stage2.json">
+      <Filter>GameObjects</Filter>
+    </None>
   </ItemGroup>
 </Project>

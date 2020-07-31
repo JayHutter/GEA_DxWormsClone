@@ -2,6 +2,9 @@
 #include "LevelManager.h"
 #include "DrawData2D.h"
 #include "GameData.h"
+#include <iostream>
+#include <fstream>
+#include "nlohmann/json.hpp"
 
 LevelManager::LevelManager(ID3D11Device* _GD)
 {
@@ -9,6 +12,15 @@ LevelManager::LevelManager(ID3D11Device* _GD)
 	m_destruction.reserve(100);
 
 	m_d3d11device = _GD;
+
+	m_time_display = new TextGO2D("0");
+	m_time_display->SetPos(Vector2(280, 600));
+	m_game_timer = new TextGO2D("15:00");
+	m_game_timer->SetPos(Vector2(275, 650));
+	m_game_timer->SetScale(0.5f);
+	m_sea = new ImageGO2D("Sea", _GD);
+	m_sea->SetOrigin(Vector2(0, 0));
+	m_sea->SetPos(Vector2(0, m_water_height));
 }
 
 LevelManager::~LevelManager()
@@ -61,12 +73,49 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 	m_sea->SetOrigin(Vector2(0, 0));
 	m_sea->SetPos(Vector2(0, m_water_height));
 	m_score = m_teams.size();
-
-	m_state = GameState::SETUP;
-	m_timer = 0;
 	m_time_display->SetColour(m_teams[m_active].Colour());
 }
 
+//Load level from json file
+void LevelManager::SetupLevel(string _name, int _teams, int _worms)
+{
+	std::ifstream file(_name + ".json");
+	if (!file.is_open())
+	{
+		return;
+	}
+	nlohmann::json level;
+	file >> level;
+	
+	m_game_time = level["time"].get<int>();
+	m_water_height = level["water"].get<int>();
+
+	m_stage = new Stage(m_d3d11device, _name);
+
+	auto colours = level["colour"];
+	for (int i = 0; i < _teams; i++)
+	{
+		auto c = colours[i];
+		Color colour = { c["r"].get<float>(), c["g"].get<float>(), c["b"].get<float>() };
+		m_teams.push_back(Team(m_d3d11device, _worms, colour, i, m_objects));
+	}
+
+	auto objects = level["objects"];
+	for (auto& obj : objects)
+	{
+		StageObject* stg_obj = new StageObject(obj["sprite"].get<string>(), m_d3d11device);
+		stg_obj->SetPos(Vector2(obj["xPos"].get<float>(), obj["yPos"].get<float>()));
+		m_stage->AddSolid(stg_obj);
+	}
+
+	auto mines = level["mines"];
+	for (auto& m : mines)
+	{
+		Mine* mine = new Mine(m["chance"].get<int>(), m_d3d11device);
+		mine->SetPos(Vector2(m["xPos"].get<float>(), m["yPos"].get<float>()));
+		m_objects.push_back(mine);
+	}
+}
 
 void LevelManager::Tick(GameData* _GD)
 {

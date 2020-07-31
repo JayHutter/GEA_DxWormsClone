@@ -192,6 +192,7 @@
     <ClInclude Include="MarchCubes.h" />
     <ClInclude Include="Mine.h" />
     <ClInclude Include="MissileLauncher.h" />
+    <ClInclude Include="nlohmann\json.hpp" />
     <ClInclude Include="ObjectList.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsComp.h" />
@@ -282,6 +283,9 @@
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test_stage2.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
