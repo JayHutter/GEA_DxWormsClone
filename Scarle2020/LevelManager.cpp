@@ -124,13 +124,10 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	}
 }
 
-void LevelManager::Tick(GameData* _GD)
-{
-	
-}
-
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
+	QuitGame(_GD);
+
 	for (auto& team : m_teams)
 	{
 		team.Update(_GD);
@@ -501,7 +498,7 @@ void LevelManager::WinScreen(GameData* _GD)
 {
 	if (_GD->m_KBS_tracker.IsKeyPressed(Keyboard::Enter))
 	{
-		//EXIT BACK TO MENUS
+		m_delete = true;
 	}
 }
 

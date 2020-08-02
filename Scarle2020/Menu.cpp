@@ -55,6 +55,7 @@ void Menu::SetupMenu()
 void Menu::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	TestButtons(_GD);
+	QuitGame(_GD);
 }
 
 void Menu::Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states)

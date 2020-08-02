@@ -200,7 +200,15 @@ void Game::Update(DX::StepTimer const& _timer)
     {
         m_stack.back()->Update(m_GD, m_terrain, m_d3dContext.Get());
         LoadLevel();
-
+        if (m_stack.back()->DeleteScreen())
+        {
+            delete m_stack.back();
+            m_stack.pop_back();
+        }
+    }
+    else
+    {
+        ExitGame();
     }
 
     elapsedTime;
@@ -501,10 +509,10 @@ void Game::ReadInput()
     m_GD->m_KBS = m_keyboard->GetState();
     m_GD->m_KBS_tracker.Update(m_GD->m_KBS);
     //quit game on hiting escape
-    if (m_GD->m_KBS.Escape)
-    {
-        ExitGame();
-    }
+    //if (m_GD->m_KBS.Escape)
+    //{
+    //    ExitGame();
+    //}
 
     m_GD->m_MS = m_mouse->GetState();
 

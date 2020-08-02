@@ -22,11 +22,15 @@ public:
 	virtual void Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states) = 0;
 	virtual Screen* Load() = 0;
 
+	void QuitGame(GameData* _GD);
+
+	bool DeleteScreen() { return m_delete; }
 	Color GetBG() { return m_bg; }
 
 protected:
 	Color m_bg = Colors::Black;
 	ID3D11Device* m_d3d11device = nullptr;
 	Stage* m_stage = nullptr;
+	bool m_delete = false;
 };
 
