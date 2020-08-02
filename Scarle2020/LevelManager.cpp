@@ -88,6 +88,7 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	
 	m_game_time = level["time"].get<int>();
 	m_water_height = level["water"].get<int>();
+	m_sea->SetPos(Vector2(0, m_water_height));
 
 	m_stage = new Stage(m_d3d11device, _name);
 
