@@ -20,6 +20,8 @@ public:
 
 private:
 	void TestButtons(GameData* _GD);
+	void GetLevels();
+
 
 	void ChangeLevel(int _dir);
 	void ChangeWormCount(int _dir);

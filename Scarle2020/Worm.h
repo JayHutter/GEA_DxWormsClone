@@ -17,6 +17,7 @@ public:
 	virtual void OnCollision(GameData* _GD, GameObject2D* _other) {}
 	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) {}
 	
+	void EnablePhysics();
 	void Move(float _dir);
 
 	void DrawHUD(DrawData2D* _DD);

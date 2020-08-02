@@ -228,6 +228,9 @@
   <ItemGroup>
     <ImageContentTask Include="Button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="waluigi.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

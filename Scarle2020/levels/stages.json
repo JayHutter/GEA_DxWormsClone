@@ -1,0 +1,11 @@
+{
+"stages" :
+[
+	{
+		"name" : "test_stage2"
+	},
+	{
+		"name" : "waluigi"
+	}
+]
+}

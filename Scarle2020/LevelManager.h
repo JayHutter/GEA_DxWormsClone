@@ -85,6 +85,6 @@ private:
 		RISING
 	};
 
-	GameState m_state = GameState::SETUP;
+	GameState m_state = GameState::SETUPSWAP;
 };
 

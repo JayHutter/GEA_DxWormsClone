@@ -32,9 +32,7 @@ void Menu::SetupMenu()
 	m_buttons.push_back(m_teams);
 	m_buttons.push_back(m_worms);
 
-	m_levels.push_back("test_stage2");
-	m_levels.push_back("tet_stage2");
-	m_levels.push_back("3");
+	GetLevels();
 
 	m_name = new TextGO2D(m_levels[0]);
 	m_name->SetPos(Vector2(300, 600));
@@ -50,6 +48,28 @@ void Menu::SetupMenu()
 
 	m_stage = new Stage(m_d3d11device, "");
 	LoadStage();
+}
+
+void Menu::GetLevels()
+{
+	std::ifstream file("levels/stages.json");
+	if (!file.is_open())
+	{
+		m_play->SetState(true);
+		return;
+	}
+	m_play->SetState(false);
+	nlohmann::json level;
+	file >> level;
+	file.close();
+
+	auto levels = level["stages"];
+	for (auto l : levels)
+	{
+		m_levels.push_back(l["name"].get<string>());
+	}
+
+
 }
 
 void Menu::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -157,7 +177,7 @@ void Menu::LoadStage()
 
 	m_name->SetText(m_levels[m_selection]);
 
-	std::ifstream file(m_levels[m_selection] + ".json");
+	std::ifstream file("levels/" + m_levels[m_selection] + ".json");
 	if (!file.is_open())
 	{
 		m_play->SetState(true);

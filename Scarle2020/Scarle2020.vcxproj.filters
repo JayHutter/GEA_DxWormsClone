@@ -71,6 +71,9 @@
     <Filter Include="GameObjects\Weapons\Headers">
       <UniqueIdentifier>{10d05fe6-cec9-4ab6-b951-e0b0377598d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{9354bbbe-a4a2-4bde-95be-be50e5ba08dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -401,8 +404,14 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_stage2.json">
-      <Filter>GameObjects</Filter>
+    <None Include="levels\test_stage2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\stages.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\waluigi.json">
+      <Filter>Levels</Filter>
     </None>
   </ItemGroup>
 </Project>

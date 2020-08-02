@@ -76,7 +76,7 @@ void LevelManager::SetupLevel(string _name, int _teams, ID3D11Device* _GD)
 //Load level from json file
 void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 {
-	std::ifstream file(_name + ".json");
+	std::ifstream file("levels/" + _name + ".json");
 	if (!file.is_open())
 	{
 		return;
@@ -124,6 +124,8 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	}
 
 	m_score = m_teams.size();
+	m_timer = 1;
+	m_state = GameState::SETUPSWAP;
 }
 
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -701,6 +703,7 @@ void LevelManager::Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCont
 		{			
 			m_timer = 1;
 			m_state = GameState::SETUPSWAP;
+			worms[m_worm_no]->EnablePhysics();
 		}
 		else
 		{

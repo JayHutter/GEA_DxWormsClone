@@ -39,5 +39,6 @@
     <ImageContentTask Include="Sea.png" />
     <ImageContentTask Include="NoStage.png" />
     <ImageContentTask Include="Button.png" />
+    <ImageContentTask Include="waluigi.png" />
   </ItemGroup>
 </Project>

@@ -293,7 +293,9 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_stage2.json" />
+    <None Include="levels\stages.json" />
+    <None Include="levels\test_stage2.json" />
+    <None Include="levels\waluigi.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
