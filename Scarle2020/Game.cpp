@@ -197,20 +197,10 @@ void Game::Update(DX::StepTimer const& _timer)
         (*it)->Tick(m_GD);
     }
 
-   //if (m_level)
-   //{
-   //    m_level->Tick(m_GD);
-   //    m_level->Update(m_GD, m_terrain, m_d3dContext.Get());
-   //}
-   //
-   //if (m_menu)
-   //{
-   //    m_menu->Tick(m_GD);
-   //}
-
     if (m_stack.size() > 0)
     {
         m_stack.back()->Update(m_GD, m_terrain, m_d3dContext.Get());
+        LoadLevel();
 
     }
 
@@ -228,28 +218,6 @@ void Game::Render()
 
     Clear();
 
-    /*
-    //set immediate context of the graphics device
-    m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
-
-    //set which camera to be used
-    m_DD->m_cam = m_cam;
-    if (m_GD->m_GS == GS_PLAY_TPS_CAM)
-    {
-        m_DD->m_cam = m_TPScam;
-    }
-
-    //update the constant buffer for the rendering of VBGOs
-    VBGO::UpdateConstantBuffer(m_DD);
-
-    //Draw 3D Game Obejects
-    for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
-    {
-        (*it)->Draw(m_DD);
-    }
-    
-    */
-
     // Draw sprite batch stuff
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
@@ -261,38 +229,6 @@ void Game::Render()
     if (m_stack.size() > 0)
     {
         m_stack.back()->Draw(m_DD2D, m_terrain, m_d3dContext.Get(), m_states);
-        //Draw Terrain to render target
-        //m_terrain->Begin(m_d3dContext.Get());
-        //m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
-        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //stage->Draw(m_DD2D);
-        //m_DD2D->m_Sprites->End();
-        //m_terrain->End(m_d3dContext.Get());
-        //
-        ////Terrain Destruction
-        //m_terrain->Begin(m_d3dContext.Get());
-        //m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
-        //m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
-        //m_level->RenderDestruction(m_DD2D);
-        //m_DD2D->m_Sprites->End();
-        //m_terrain->End(m_d3dContext.Get());
-        //
-        ////Draw invincible parts of the terrain
-        //m_terrain->Begin(m_d3dContext.Get());
-        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //m_level->GetStage()->RenderSolids(m_DD2D);
-        //m_DD2D->m_Sprites->End();
-        //m_terrain->End(m_d3dContext.Get());
-        //
-        ////draw the terrain at the back
-        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
-        //m_DD2D->m_Sprites->End();
-        //
-        ////Draw exsiting objects
-        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //m_level->Draw(m_DD2D);
-        //m_DD2D->m_Sprites->End();
     }
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
@@ -579,9 +515,12 @@ void Game::ReadInput()
   //  SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
 }
 
-void Game::LoadLevel(string _name, int _player, int _worms)
+void Game::LoadLevel()
 {
-    auto level = new LevelManager(m_d3dDevice.Get());
-    level->SetupLevel(_name, _player, _worms);
-    m_stack.push_back(level);
+    auto new_screen = m_stack.back()->Load();
+
+    if (new_screen)
+    {
+        m_stack.push_back(new_screen);
+    }
 }

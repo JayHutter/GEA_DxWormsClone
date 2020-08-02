@@ -72,7 +72,7 @@ private:
 
     void OnDeviceLost();
 
-    void LoadLevel(string _name, int _player, int _worms);
+    void LoadLevel();
 
     // Device resources.
     HWND                                            m_window;

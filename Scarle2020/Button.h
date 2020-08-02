@@ -10,7 +10,8 @@ enum class Command
 	WORMPLUS,
 	WORMMINUS,
 	TEAMPLUS,
-	TEAMMINUS
+	TEAMMINUS,
+	START
 };
 
 class Button : public ImageGO2D

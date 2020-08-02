@@ -16,6 +16,8 @@ public:
 	void SetupMenu();
 	virtual void Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states);
 
+	virtual Screen* Load();
+
 private:
 	void TestButtons(GameData* _GD);
 

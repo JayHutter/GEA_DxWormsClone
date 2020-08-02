@@ -20,6 +20,7 @@ public:
 
 	virtual void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context) = 0;
 	virtual void Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states) = 0;
+	virtual Screen* Load() = 0;
 
 	Color GetBG() { return m_bg; }
 

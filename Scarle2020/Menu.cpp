@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "GameData.h"
 #include "DrawData2D.h"
+#include "LevelManager.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
 
@@ -13,13 +14,13 @@ void Menu::SetupMenu()
 {
 	Button* b1 = new Button(Command::LEVELMINUS, Vector2(50, 575), Vector2(1, 1), "<", m_d3d11device);
 	Button* b2 = new Button(Command::LEVELPLUS, Vector2(800, 575), Vector2(1, 1), ">", m_d3d11device);
-	Button* b4 = new Button(Command::TEAMPLUS, Vector2(1200, 375), Vector2(0.5, 1),"+", m_d3d11device);
-	Button* b5 = new Button(Command::TEAMMINUS, Vector2(970, 375), Vector2(0.5, 1), "-", m_d3d11device);
-	Button* b6 = new Button(Command::WORMPLUS, Vector2(1200, 125), Vector2(0.5, 1), "+", m_d3d11device);
-	Button* b7 = new Button(Command::WORMMINUS, Vector2(970, 125), Vector2(0.5, 1), "-", m_d3d11device);
-	m_play = new Button(Command::NONE, Vector2(970, 575), Vector2(2.3, 1), "PLAY", m_d3d11device);
-	m_worms = new InputBox(Command::NONE, Vector2(1053, 125), Vector2(1, 1), 4, m_d3d11device);
-	m_teams = new InputBox(Command::NONE, Vector2(1053, 375), Vector2(1, 1), 4, m_d3d11device);
+	Button* b4 = new Button(Command::TEAMPLUS, Vector2(1200, 125), Vector2(0.5, 1),"+", m_d3d11device);
+	Button* b5 = new Button(Command::TEAMMINUS, Vector2(970, 125), Vector2(0.5, 1), "-", m_d3d11device);
+	Button* b6 = new Button(Command::WORMPLUS, Vector2(1200, 375), Vector2(0.5, 1), "+", m_d3d11device);
+	Button* b7 = new Button(Command::WORMMINUS, Vector2(970, 375), Vector2(0.5, 1), "-", m_d3d11device);
+	m_play = new Button(Command::START, Vector2(970, 575), Vector2(2.3, 1), "PLAY", m_d3d11device);
+	m_teams = new InputBox(Command::NONE, Vector2(1053, 125), Vector2(1, 1), 4, m_d3d11device);
+	m_worms = new InputBox(Command::NONE, Vector2(1053, 375), Vector2(1, 1), 8, m_d3d11device);
 
 	m_buttons.push_back(b1);
 	m_buttons.push_back(b2);
@@ -31,8 +32,11 @@ void Menu::SetupMenu()
 	m_buttons.push_back(m_teams);
 	m_buttons.push_back(m_worms);
 
+	m_levels.push_back("test_stage2");
+	m_levels.push_back("tet_stage2");
+	m_levels.push_back("3");
 
-	m_name = new TextGO2D("FILE");
+	m_name = new TextGO2D(m_levels[0]);
 	m_name->SetPos(Vector2(300, 600));
 
 	TextGO2D* w = new TextGO2D("WORMS");
@@ -44,11 +48,8 @@ void Menu::SetupMenu()
 	m_objects.push_back(t);
 	m_objects.push_back(m_name);
 
-	m_levels.push_back("test_stage2");
-	m_levels.push_back("tet_stage2");
-	m_levels.push_back("3");
-
-	m_stage = new Stage(m_d3d11device, "STAGE");
+	m_stage = new Stage(m_d3d11device, "");
+	LoadStage();
 }
 
 void Menu::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -106,6 +107,9 @@ void Menu::TestButtons(GameData* _GD)
 		case Command::WORMMINUS:
 			ChangeWormCount(-1);
 			break;
+		case Command::START:
+			PlayGame();
+			break;
 		}
 	}
 }
@@ -142,7 +146,7 @@ void Menu::ChangeTeamCount(int _dir)
 
 void Menu::PlayGame()
 {
-
+	m_start = true;
 }
 
 void Menu::LoadStage()
@@ -174,4 +178,21 @@ void Menu::LoadStage()
 	}
 
 	m_stage->Resize(0.75f);
+}
+
+Screen* Menu::Load()
+{
+	if (m_start)
+	{
+		m_start = false;
+		auto level = new LevelManager(m_d3d11device);
+
+		int worm = m_worms->GetValue();
+		int team = m_teams->GetValue();
+		level->SetupLevel(m_levels[m_selection],team,worm );
+
+		return level;
+	}
+
+	return nullptr;
 }

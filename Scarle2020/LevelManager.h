@@ -23,6 +23,7 @@ public:
 
 	void Tick(GameData* _GD);
 	virtual void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	virtual Screen* Load() { return nullptr; }
 
 	virtual void Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states);
 	void RenderObjects(DrawData2D* _DD);
