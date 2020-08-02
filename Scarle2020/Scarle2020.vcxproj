@@ -167,6 +167,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllWeapons.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="CMOGO.h" />
     <ClInclude Include="CollisionComp.h" />
@@ -186,10 +187,12 @@
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Homerun.h" />
     <ClInclude Include="ImageGO2D.h" />
+    <ClInclude Include="InputBox.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="MarchCubes.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Mine.h" />
     <ClInclude Include="MissileLauncher.h" />
     <ClInclude Include="nlohmann\json.hpp" />
@@ -199,6 +202,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageObject.h" />
@@ -221,6 +225,7 @@
     <ClInclude Include="Worm.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="CMOGO.cpp" />
     <ClCompile Include="CollisionComp.cpp">
@@ -237,11 +242,13 @@
     <ClCompile Include="Healthbar.cpp" />
     <ClCompile Include="Homerun.cpp" />
     <ClCompile Include="ImageGO2D.cpp" />
+    <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MarchCubes.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="MissileLauncher.cpp" />
     <ClCompile Include="pch.cpp">
@@ -256,6 +263,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageObject.cpp" />

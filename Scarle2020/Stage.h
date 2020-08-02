@@ -11,6 +11,7 @@ public:
 	void AddSolid(StageObject* _object);
 
 	void RenderSolids(DrawData2D* _DD);
+	void Resize(float _scale);
 private:
 	std::vector<StageObject*> solids;
 };

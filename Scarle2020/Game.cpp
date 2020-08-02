@@ -130,12 +130,21 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //TODO: What size do you REALLY need for this?
     m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
 
-    m_level = new LevelManager(m_d3dDevice.Get());
-   // m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
-    m_level->SetupLevel("test_stage2", 4, 4);
+    //m_level = new LevelManager(m_d3dDevice.Get());
+    ////m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
+    //m_level->SetupLevel("test_stage2", 2, 2);
 
-    alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
-    alpha->SetPos(Vector2(600, 600));
+   auto m_menu = new Menu(m_d3dDevice.Get());
+   m_menu->SetupMenu();
+
+
+    //auto level = new LevelManager(m_d3dDevice.Get());
+    //level->SetupLevel("test_stage2", 2, 2);
+
+    m_stack.push_back(m_menu);
+
+    //alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
+    //alpha->SetPos(Vector2(600, 600));
 }
 
 // Executes the basic game loop.
@@ -188,20 +197,22 @@ void Game::Update(DX::StepTimer const& _timer)
         (*it)->Tick(m_GD);
     }
 
-    if (m_level)
-    {
-        m_level->Tick(m_GD);
-        m_level->Update(m_GD, m_terrain, m_d3dContext.Get());
-        //m_level->ManageObjects(m_GD, m_terrain, m_d3dContext.Get());
-        //m_level->Input(m_GD);
-    }
+   //if (m_level)
+   //{
+   //    m_level->Tick(m_GD);
+   //    m_level->Update(m_GD, m_terrain, m_d3dContext.Get());
+   //}
+   //
+   //if (m_menu)
+   //{
+   //    m_menu->Tick(m_GD);
+   //}
 
-    //Test object deletion
-    //if (m_GD->m_KBS_tracker.IsKeyPressed(Keyboard::Space))
-    //{
-    //    delete m_level;
-    //    m_level = nullptr;
-    //}
+    if (m_stack.size() > 0)
+    {
+        m_stack.back()->Update(m_GD, m_terrain, m_d3dContext.Get());
+
+    }
 
     elapsedTime;
 }
@@ -247,40 +258,41 @@ void Game::Render()
     }
     m_DD2D->m_Sprites->End();
 
-    if (m_level)
+    if (m_stack.size() > 0)
     {
+        m_stack.back()->Draw(m_DD2D, m_terrain, m_d3dContext.Get(), m_states);
         //Draw Terrain to render target
-        m_terrain->Begin(m_d3dContext.Get());
-        m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
-        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        m_level->GetStage()->Draw(m_DD2D);
-        m_DD2D->m_Sprites->End();
-        m_terrain->End(m_d3dContext.Get());
-
-        //Terrain Destruction
-        m_terrain->Begin(m_d3dContext.Get());
-        m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
-        m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
-        m_level->RenderDestruction(m_DD2D);
-        m_DD2D->m_Sprites->End();
-        m_terrain->End(m_d3dContext.Get());
-        
-        //Draw invincible parts of the terrain
-        m_terrain->Begin(m_d3dContext.Get());
-        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        m_level->GetStage()->RenderSolids(m_DD2D);
-        m_DD2D->m_Sprites->End();
-        m_terrain->End(m_d3dContext.Get());
-
-        //draw the terrain at the back
-        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
-        m_DD2D->m_Sprites->End();
-   
-        //Draw exsiting objects
-        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        m_level->RenderObjects(m_DD2D);
-        m_DD2D->m_Sprites->End();
+        //m_terrain->Begin(m_d3dContext.Get());
+        //m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
+        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        //stage->Draw(m_DD2D);
+        //m_DD2D->m_Sprites->End();
+        //m_terrain->End(m_d3dContext.Get());
+        //
+        ////Terrain Destruction
+        //m_terrain->Begin(m_d3dContext.Get());
+        //m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
+        //m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
+        //m_level->RenderDestruction(m_DD2D);
+        //m_DD2D->m_Sprites->End();
+        //m_terrain->End(m_d3dContext.Get());
+        //
+        ////Draw invincible parts of the terrain
+        //m_terrain->Begin(m_d3dContext.Get());
+        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        //m_level->GetStage()->RenderSolids(m_DD2D);
+        //m_DD2D->m_Sprites->End();
+        //m_terrain->End(m_d3dContext.Get());
+        //
+        ////draw the terrain at the back
+        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        //m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
+        //m_DD2D->m_Sprites->End();
+        //
+        ////Draw exsiting objects
+        //m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        //m_level->Draw(m_DD2D);
+        //m_DD2D->m_Sprites->End();
     }
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
@@ -293,7 +305,15 @@ void Game::Render()
 void Game::Clear()
 {
     // Clear the views.
-    m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::SkyBlue);
+    if (m_stack.size() > 0)
+    {
+        m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), m_stack.back()->GetBG());
+    }
+    else
+    {
+        m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::SkyBlue);
+    }
+
     m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
     m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
@@ -557,4 +577,11 @@ void Game::ReadInput()
     RECT window;
     GetWindowRect(m_window, &window);
   //  SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
+}
+
+void Game::LoadLevel(string _name, int _player, int _worms)
+{
+    auto level = new LevelManager(m_d3dDevice.Get());
+    level->SetupLevel(_name, _player, _worms);
+    m_stack.push_back(level);
 }

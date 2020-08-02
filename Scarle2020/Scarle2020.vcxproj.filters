@@ -232,6 +232,18 @@
     <ClInclude Include="nlohmann\json.hpp">
       <Filter>Base\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBox.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -359,6 +371,18 @@
     </ClCompile>
     <ClCompile Include="Healthbar.cpp">
       <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

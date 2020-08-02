@@ -32,3 +32,12 @@ void Stage::RenderSolids(DrawData2D* _DD)
 		s->Draw(_DD);
 	}
 }
+
+void Stage::Resize(float _scale)
+{
+	m_scale = Vector2(_scale, _scale);
+	for (auto obj : solids)
+	{
+		obj->SetScale(_scale);
+	}
+}

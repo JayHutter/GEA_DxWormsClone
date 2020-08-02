@@ -6,13 +6,10 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 
-LevelManager::LevelManager(ID3D11Device* _GD)
+LevelManager::LevelManager(ID3D11Device* _GD) : Screen(_GD)
 {
 	m_objects.reserve(100);
 	m_destruction.reserve(100);
-
-	m_d3d11device = _GD;
-
 	m_time_display = new TextGO2D("0");
 	m_time_display->SetPos(Vector2(280, 600));
 	m_game_timer = new TextGO2D("15:00");
@@ -86,6 +83,8 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	}
 	nlohmann::json level;
 	file >> level;
+
+	file.close();
 	
 	m_game_time = level["time"].get<int>();
 	m_water_height = level["water"].get<int>();
@@ -124,22 +123,16 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 
 void LevelManager::Tick(GameData* _GD)
 {
-	for (auto &team : m_teams)
-	{
-		team.Update(_GD);
-	}
 	
-	//if (m_teams[m_active].EndTurn() || m_timer <= 0)
-	//{
-	//	CycleTeam();
-	//}
-
-	//HudOcclusion();
-	//WinCondition();
 }
 
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
+	for (auto& team : m_teams)
+	{
+		team.Update(_GD);
+	}
+
 	switch (m_state)
 	{
 	case GameState::PLAYING:
@@ -253,6 +246,42 @@ void LevelManager::Rising(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 		m_timer = 3;
 		m_state = GameState::TEAMCHANGE;
 	}
+}
+
+void LevelManager::Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states)
+{
+	//Draw Terrain to render target
+	_terrain->Begin(_context);
+	_terrain->ClearRenderTarget(_context, 0.f, 0.f, 0.f, 0.f);
+	_DD->m_Sprites->Begin(SpriteSortMode_Deferred, _states->NonPremultiplied());
+	m_stage->Draw(_DD);
+	_DD->m_Sprites->End();
+	_terrain->End(_context);
+
+	//Terrain Destruction
+	_terrain->Begin(_context);
+	_context->OMSetBlendState(_terrain->GetDigBlend(), 0, 0xffffff);
+	_DD->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, _terrain->GetDigBlend());
+	RenderDestruction(_DD);
+	_DD->m_Sprites->End();
+	_terrain->End(_context);
+
+	//Draw invincible parts of the terrain
+	_terrain->Begin(_context);
+	_DD->m_Sprites->Begin(SpriteSortMode_Deferred, _states->NonPremultiplied());
+	m_stage->RenderSolids(_DD);
+	_DD->m_Sprites->End();
+	_terrain->End(_context);
+
+	//draw the terrain at the back
+	_DD->m_Sprites->Begin(SpriteSortMode_Deferred, _states->NonPremultiplied());
+	_DD->m_Sprites->Draw(_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
+	_DD->m_Sprites->End();
+
+	//Draw exsiting objects
+	_DD->m_Sprites->Begin(SpriteSortMode_Deferred, _states->NonPremultiplied());
+	RenderObjects(_DD);
+	_DD->m_Sprites->End();
 }
 
 //Render
@@ -463,11 +492,6 @@ bool LevelManager::DeleteObject(GameObject2D* _obj)
 		return true;
 	}
 	return false;
-}
-
-Stage* LevelManager::GetStage()
-{
-	return m_stage;
 }
 
 void LevelManager::WinScreen(GameData* _GD)

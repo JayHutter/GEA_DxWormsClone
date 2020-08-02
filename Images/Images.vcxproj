@@ -222,6 +222,12 @@
   <ItemGroup>
     <ImageContentTask Include="Sea.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="NoStage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Button.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

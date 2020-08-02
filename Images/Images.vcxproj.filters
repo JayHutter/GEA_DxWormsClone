@@ -37,5 +37,7 @@
     <ImageContentTask Include="HealthbarTrans.png" />
     <ImageContentTask Include="HealthTrans.png" />
     <ImageContentTask Include="Sea.png" />
+    <ImageContentTask Include="NoStage.png" />
+    <ImageContentTask Include="Button.png" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 #pragma once
-#include <d3d11_1.h>
+#include "Screen.h"
 #include <vector>
 #include <list>
 #include "CommonStates.h"
@@ -12,7 +12,7 @@
 #include "Team.h"
 #include "Explosion.h"
 
-class LevelManager
+class LevelManager : public Screen
 {
 public:
 	LevelManager(ID3D11Device* _GD);
@@ -22,14 +22,13 @@ public:
 	void SetupLevel(string _name, int _teams, int _worms);
 
 	void Tick(GameData* _GD);
-	void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
+	virtual void Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 
+	virtual void Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _context, CommonStates* _states);
 	void RenderObjects(DrawData2D* _DD);
 	void RenderDestruction(DrawData2D* _DD);
 
 	void ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
-
-	Stage* GetStage();
 
 private:
 	void Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
@@ -54,8 +53,6 @@ private:
 	void SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 	void Rising(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context);
 
-	Stage* m_stage = nullptr;
-
 	std::vector<Team> m_teams;
 	std::vector<GameObject2D*> m_objects;
 	std::vector<DestructionMask*> m_destruction;
@@ -65,7 +62,6 @@ private:
 	Color default_colors[4] = { Colors::Red, Colors::Blue, Colors::Green, Colors::Orange };
 	int m_active = 0;
 
-	ID3D11Device* m_d3d11device = nullptr;
 	TextGO2D* m_time_display = nullptr;
 	TextGO2D* m_game_timer = nullptr;
 	ImageGO2D* m_sea = nullptr;
