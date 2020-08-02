@@ -104,6 +104,9 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 		m_teams.push_back(Team(m_d3d11device, _worms, colour, i, m_objects));
 	}
 
+	auto bg = level["background"];
+	m_bg = Color{ bg["r"].get<float>(), bg["g"].get<float>(), bg["b"].get<float>() };
+
 	auto objects = level["objects"];
 	for (auto& obj : objects)
 	{

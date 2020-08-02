@@ -54,7 +54,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(_window);
     m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
-    //Hide the mouse pointer
     ShowCursor(true);
 
     //seed the random number generator
@@ -303,10 +302,10 @@ void Game::OnResuming()
 
 void Game::OnWindowSizeChanged(int _width, int _height)
 {
-    m_outputWidth = std::max(_width, 1);
-    m_outputHeight = std::max(_height, 1);
-
-    CreateResources();
+   //m_outputWidth = std::max(_width, 1);
+   //m_outputHeight = std::max(_height, 1);
+   //
+   //CreateResources();
 
     // TODO: Game window is being resized.
 }
