@@ -122,6 +122,8 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 		mine->SetPos(Vector2(m["xPos"].get<float>(), m["yPos"].get<float>()));
 		m_objects.push_back(mine);
 	}
+
+	m_score = m_teams.size();
 }
 
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
