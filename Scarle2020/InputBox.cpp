@@ -2,9 +2,26 @@
 #include "InputBox.h"
 #include "GameData.h"
 
-InputBox::InputBox(Command _command, Vector2 _pos, Vector2 _scale, int _default, ID3D11Device* _GD) : Button(_command, _pos, _scale, std::to_string(_default), _GD)
+InputBox::InputBox(Command _command, Vector2 _pos, Vector2 _scale, int _default, int _min, int _max, ID3D11Device* _GD) : Button(_command, _pos, _scale, std::to_string(_default), _GD)
 {
 	m_value = _default;
+
+	m_min = _min;
+	m_max = _max;
+
+	if (_min <= 0)
+	{
+		m_min = 1;
+	}
+	if (_max > 10)
+	{
+		m_max = 10;
+	}
+
+	if (m_max < m_min)
+	{
+		m_max = m_min + 1;
+	}
 }
 
 Command InputBox::Clicked(GameData* _GD)
@@ -65,6 +82,8 @@ void InputBox::GetInputValue(GameData* _GD)
 		m_value = 9;
 	}
 
+	NormaliseValue();
+
 	m_disp->SetText(std::to_string(m_value));
 }
 
@@ -78,5 +97,20 @@ void InputBox::SetValue(int _val)
 	}
 
 	m_value = (m_value % 10) + 1;
+
+	NormaliseValue();
 	m_disp->SetText(std::to_string(m_value));
+}
+
+void InputBox::NormaliseValue()
+{
+	if (m_value < m_min)
+	{
+		m_value = m_max;
+	}
+	
+	if (m_value > m_max)
+	{
+		m_value = m_min;
+	}
 }
