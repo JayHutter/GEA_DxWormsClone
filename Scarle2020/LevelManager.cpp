@@ -134,6 +134,8 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 {
 	QuitGame(_GD);
 
+	ManageObjects(_GD, _terrain, _context);
+
 	switch (m_state)
 	{
 	case GameState::PLAYING:
@@ -170,7 +172,6 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 //Game States
 void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
-	ManageObjects(_GD, _terrain, _context);
 	m_teams[m_active].Control(_GD, m_d3d11device);
 	if (Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
@@ -191,7 +192,6 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 
 void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
-	ManageObjects(_GD, _terrain, _context);
 	if (!Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
 		m_teams[m_active].Control(_GD, m_d3d11device);
@@ -209,7 +209,6 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 
 void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
-	ManageObjects(_GD, _terrain, _context);
 	//Dont change team if an object prevents it
 	if (!m_continue)
 	{
@@ -241,8 +240,6 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 
 void LevelManager::Rising(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
-	ManageObjects(_GD, _terrain, _context);
-
 	Vector2 pos = m_sea->GetPos() - Vector2(0, _GD->m_dt * 10);
 	m_sea->SetPos(pos);
 	m_water_height = m_sea->GetPos().y;
@@ -452,13 +449,10 @@ void LevelManager::ManageTerrainCollision(GameObject2D* _object, GameData* _GD, 
 			//Move object if stuck in wall
 			if (coll_data[0] > 0 && coll_data[1] > 0 && coll_data[2] > 0 && coll_data[3] > 0)
 			{
-				//phys->SetVelocityDir(coll->CalculateNormal(coll_data));
-				phys->StuckInGround(coll->CalculateNormal(coll_data));
+				phys->SetVelocityDir(coll->CalculateNormal(coll_data));
+				//phys->StuckInGround(coll->CalculateNormal(coll_data));
 			}
-			else //apply resistive forces
-			{
-				phys->ReactionForce(coll->CalculateNormal(coll_data));
-			}
+			phys->ReactionForce(coll->CalculateNormal(coll_data));
 		}
 		phys->ApplyGravity(coll_data[0] < 4);
 		phys->ApplyVelocity(_GD->m_dt);
@@ -717,8 +711,6 @@ void LevelManager::Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCont
 	}
 
 	_terrain->Unmap(_context);
-
-	ManageObjects(_GD, _terrain, _context);
 }
 
 void LevelManager::SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -742,6 +734,4 @@ void LevelManager::SetupSwapTeam(GameData* _GD, RenderTarget* _terrain, ID3D11De
 		m_time_display->SetColour(m_teams[m_active].Colour());
 		m_state = GameState::SETUP;
 	}
-
-	ManageObjects(_GD, _terrain, _context);
 }
