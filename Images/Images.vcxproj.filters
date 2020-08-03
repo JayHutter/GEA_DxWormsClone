@@ -40,5 +40,10 @@
     <ImageContentTask Include="NoStage.png" />
     <ImageContentTask Include="Button.png" />
     <ImageContentTask Include="waluigi.png" />
+    <ImageContentTask Include="snowy1.png" />
+    <ImageContentTask Include="snowy2.png" />
+    <ImageContentTask Include="snowy3.png" />
+    <ImageContentTask Include="snowy4.png" />
+    <ImageContentTask Include="snowyborder.png" />
   </ItemGroup>
 </Project>

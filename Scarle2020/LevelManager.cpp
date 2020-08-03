@@ -126,17 +126,13 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 
 	m_score = m_teams.size();
 	m_timer = 1;
+	m_active = -1;
 	m_state = GameState::SETUPSWAP;
 }
 
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	QuitGame(_GD);
-
-	for (auto& team : m_teams)
-	{
-		team.Update(_GD);
-	}
 
 	switch (m_state)
 	{
@@ -163,6 +159,11 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 	case GameState::RISING:
 		Rising(_GD, _terrain, _context);
 		break;
+	}
+
+	for (auto& team : m_teams)
+	{
+		team.Update(_GD);
 	}
 }
 
@@ -197,8 +198,8 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 	}
 	else// if (m_teams[m_active].EndTurn())
 	{
-		m_state = GameState::TEAMCHANGE;
 		m_timer = 3;
+		m_state = GameState::TEAMCHANGE;		
 	}
 
 	GameTimer(_GD->m_dt);
@@ -304,7 +305,10 @@ void LevelManager::RenderObjects(DrawData2D* _DD)
 		t.RenderHUD(_DD);
 	}
 
-	m_teams[m_active].RenderWormHUD(_DD);
+	if (m_active >= 0)
+	{
+		m_teams[m_active].RenderWormHUD(_DD);
+	}
 
 	m_time_display->Draw(_DD);
 	m_game_timer->Draw(_DD);
@@ -703,8 +707,8 @@ void LevelManager::Setup(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCont
 		if (col == std::array<int, 4>{0, 0, 0, 0})
 		{			
 			m_timer = 1;
-			m_state = GameState::SETUPSWAP;
 			worms[m_worm_no]->EnablePhysics();
+			m_state = GameState::SETUPSWAP;
 		}
 		else
 		{

@@ -21,7 +21,7 @@ void PhysicsComp::ApplyVelocity(float _gt)
 
 void PhysicsComp::ApplyGravity(bool _falling)
 {
-	if (_falling)
+	if (_falling && applyGrav)
 	{
 		AddForce(Vector2(0, gravity));
 	}
@@ -31,7 +31,7 @@ void PhysicsComp::ApplyGravity(bool _falling)
 
 void PhysicsComp::ApplyGravity()
 {
-	if (aerial)
+	if (aerial && applyGrav)
 	{
 		AddForce(Vector2(0, gravity));
 	}
@@ -165,6 +165,11 @@ bool PhysicsComp::MovingUp()
 		return true;
 	}
 	return false;
+}
+
+void PhysicsComp::EnableGravity(bool _enabled)
+{
+	applyGrav = _enabled;
 }
 
 

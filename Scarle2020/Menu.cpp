@@ -8,6 +8,7 @@
 
 Menu::Menu(ID3D11Device* _GD) : Screen(_GD)
 {
+	m_bg = { 0, 0, 0.3f };
 }
 
 void Menu::SetupMenu()
@@ -20,7 +21,7 @@ void Menu::SetupMenu()
 	Button* b7 = new Button(Command::WORMMINUS, Vector2(970, 375), Vector2(0.5, 1), "-", m_d3d11device);
 	m_play = new Button(Command::START, Vector2(970, 575), Vector2(2.3, 1), "PLAY", m_d3d11device);
 	m_teams = new InputBox(Command::NONE, Vector2(1053, 125), Vector2(1, 1), 4, 2, 8, m_d3d11device);
-	m_worms = new InputBox(Command::NONE, Vector2(1053, 375), Vector2(1, 1), 8, 1, 10, m_d3d11device);
+	m_worms = new InputBox(Command::NONE, Vector2(1053, 375), Vector2(1, 1), 4, 1, 10, m_d3d11device);
 
 	m_buttons.push_back(b1);
 	m_buttons.push_back(b2);
@@ -66,7 +67,7 @@ void Menu::GetLevels()
 	auto levels = level["stages"];
 	for (auto l : levels)
 	{
-		m_levels.push_back(l["name"].get<string>());
+		m_levels.push_back(l.get<string>());
 	}
 
 
@@ -95,6 +96,7 @@ void Menu::Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _c
 	if (m_stage)
 	{
 		m_stage->Draw(_DD);
+		m_stage->RenderSolids(_DD);
 	}
 
 	_DD->m_Sprites->End();

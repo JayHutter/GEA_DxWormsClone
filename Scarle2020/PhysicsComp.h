@@ -35,6 +35,8 @@ public:
 	bool MovingDown();
 	bool MovingUp();
 
+	void EnableGravity(bool _enabled);
+
 	float AirTime() { return air_time; }
 
 	Vector2 GetVel() { return velocity; }

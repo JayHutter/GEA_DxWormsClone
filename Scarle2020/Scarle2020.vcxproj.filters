@@ -413,5 +413,17 @@
     <None Include="levels\waluigi.json">
       <Filter>Levels</Filter>
     </None>
+    <None Include="levels\snowy1.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy3.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy4.json">
+      <Filter>Levels</Filter>
+    </None>
   </ItemGroup>
 </Project>

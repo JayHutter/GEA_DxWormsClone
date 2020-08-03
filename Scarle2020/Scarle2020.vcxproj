@@ -293,6 +293,10 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="levels\snowy1.json" />
+    <None Include="levels\snowy2.json" />
+    <None Include="levels\snowy3.json" />
+    <None Include="levels\snowy4.json" />
     <None Include="levels\stages.json" />
     <None Include="levels\test_stage2.json" />
     <None Include="levels\waluigi.json" />

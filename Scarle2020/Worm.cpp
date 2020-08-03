@@ -4,7 +4,7 @@
 
 Worm::Worm(ID3D11Device* _GD, Color _colour, string _name) : ImageGO2D("worm", _GD)
 {
-	//c_phys = new PhysicsComp(&m_pos, 0.5f, 0, true);
+	c_phys = new PhysicsComp(&m_pos, 0.5f, 0, false);
 	c_collider = new CollisionComp(20, 24);
 
 	m_team_colour = _colour;
@@ -37,6 +37,10 @@ void Worm::EnablePhysics()
 	if (!c_phys)
 	{
 		c_phys = new PhysicsComp(&m_pos, 0.5f, 0, true);
+	}
+	else
+	{
+		c_phys->EnableGravity(true);
 	}
 }
 
