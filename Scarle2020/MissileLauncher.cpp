@@ -55,7 +55,7 @@ bool MissileLauncher::Spawn(GameData* _GD, std::vector<GameObject2D*>& _objects,
 	Vector2 pos = m_pos + Vector2(0, -25);
 	pos.x += (25 * m_owner->Direction());
 
-	Projectile* missile = new Projectile("Missile", pos, 16, 16, false, 0, 30, Vector2(200, 0), 1, 6, m_owner, _DD);
+	Projectile* missile = new Projectile("Missile", pos, 16, 16, 0, true, 30, Vector2(200, 0), 1, 6, m_owner, _DD);
 	_objects.push_back(missile);
 
 	Vector2 force = Vector2(_GD->m_MS.x, _GD->m_MS.y);

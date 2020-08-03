@@ -9,6 +9,7 @@ class PhysicsComp
 {
 public:
 	PhysicsComp(Vector2* _position, float _mu, float _bounce, bool _gravity);
+	PhysicsComp(Vector2* _position, float* _rot, float _mu, float _bounce, bool _gravity);
 	~PhysicsComp() = default;
 
 	void ApplyVelocity(float _gt);
@@ -45,6 +46,7 @@ private:
 	void ControlSpeed();
 	float Speed();
 	void ApplyFriction(Vector2 _normal);
+	void Rotation();
 
 	bool applyGrav = true;
 	float gravity = 10;
@@ -52,6 +54,7 @@ private:
 	bool aerial = true;
 
 	Vector2* pos = nullptr;
+	float* rot = nullptr;
 	float max_speed = 1000;
 	float min_speed = 10;
 	float mu = 0.3f; //Coefficient of friction

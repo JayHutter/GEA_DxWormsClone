@@ -78,7 +78,7 @@ void Grenade::Use(GameData* _GD, Worm* _owner, float _charge)
 {
 	if (!c_phys)
 	{
-		c_phys = new PhysicsComp(&m_pos, 0.3f, m_bounce, true);
+		c_phys = new PhysicsComp(&m_pos, &m_rotation, 0.3f, m_bounce, true);
 	}
 	if (!c_collider)
 	{

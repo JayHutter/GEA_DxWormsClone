@@ -8,7 +8,7 @@ Projectile::Projectile(string _sprite, Vector2 _pos, float _width, float _height
 	m_active = _time;
 
 	c_collider = new CollisionComp(_width, _height, _pos);
-	c_phys = new PhysicsComp(&m_pos, 0.2f, _bounce, _gravity);
+	c_phys = new PhysicsComp(&m_pos, &m_rotation, 0.2f, _bounce, _gravity);
 
 	m_damage = _damage;
 	m_knockback = _knockback;

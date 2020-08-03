@@ -17,7 +17,7 @@ Mine::Mine(int _fake_percent, ID3D11Device* _GD) : Weapon("Mine", _GD)
 	m_active = 3; //How long it takes to explode once triggered
 	m_chargeable = true;
 	
-	c_phys = new PhysicsComp(&m_pos, 0.3f, 0.2f, true);
+	c_phys = new PhysicsComp(&m_pos, &m_rotation, 0.3f, 0.2f, true);
 	c_collider = new CollisionComp(16, 16);
 	m_aim_sprite = "WormMine";
 

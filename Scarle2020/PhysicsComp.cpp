@@ -9,11 +9,21 @@ PhysicsComp::PhysicsComp(Vector2* _position, float _mu, float _bounce, bool _gra
 	applyGrav = _gravity;
 }
 
+PhysicsComp::PhysicsComp(Vector2* _position, float* _rot, float _mu, float _bounce, bool _gravity)
+{
+	pos = _position;
+	mu = _mu;
+	bounce_multiplier = _bounce;
+	applyGrav = _gravity;
+	rot = _rot;
+}
+
 void PhysicsComp::ApplyVelocity(float _gt)
 {
 	ControlSpeed();
 
 	*pos += velocity * _gt;
+	Rotation();
 
 	air_time = aerial *( air_time + _gt);
 	ApplyGravity();
@@ -211,4 +221,17 @@ void PhysicsComp::ApplyFriction(Vector2 _normal)
 
 	float friction = mu * _normal.x;
 	velocity.x -= friction;
+}
+
+void PhysicsComp::Rotation()
+{
+	if (!rot || velocity.x == 0)
+	{
+		return;
+	}
+
+	Vector2 force = velocity;
+	force.Normalize();
+
+	*rot = float(atan(velocity.y / velocity.x));
 }
