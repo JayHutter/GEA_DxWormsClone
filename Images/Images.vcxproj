@@ -149,6 +149,95 @@
   <ItemGroup>
     <ImageContentTask Include="logo_small.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="worm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="test_stage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="test_stage2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="alpha_test.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="enclosure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="destruction_mask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="explosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Banana.png" />
+    <ImageContentTask Include="Frag.png" />
+    <ImageContentTask Include="Grenade.png" />
+    <ImageContentTask Include="Holy.png" />
+    <ImageContentTask Include="Mine.png" />
+    <ImageContentTask Include="Missile.png" />
+    <ImageContentTask Include="TNT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Teleport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Bowling.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormBanana.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormBat.png" />
+    <ImageContentTask Include="WormBowling.png" />
+    <ImageContentTask Include="WormFrag.png" />
+    <ImageContentTask Include="WormGrenade.png" />
+    <ImageContentTask Include="WormHoly.png" />
+    <ImageContentTask Include="WormMine.png" />
+    <ImageContentTask Include="WormMissile.png" />
+    <ImageContentTask Include="WormTNT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="WormTeleport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="BananaFragment.png" />
+    <ImageContentTask Include="FragFragment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Grave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Health.png" />
+    <ImageContentTask Include="Healthbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="HealthbarTrans.png" />
+    <ImageContentTask Include="HealthTrans.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Sea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="NoStage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="waluigi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="snowy1.png" />
+    <ImageContentTask Include="snowy2.png" />
+    <ImageContentTask Include="snowy3.png" />
+    <ImageContentTask Include="snowy4.png" />
+    <ImageContentTask Include="snowyborder.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

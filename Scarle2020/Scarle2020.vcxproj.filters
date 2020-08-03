@@ -53,6 +53,27 @@
     <Filter Include="GameObjects\Component\Source">
       <UniqueIdentifier>{2244ace4-8ea8-4180-aa77-bd32ee7241d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Mangers">
+      <UniqueIdentifier>{c5798edc-391b-4a9f-994a-9604e0a5dced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Source">
+      <UniqueIdentifier>{193b80e3-2e2d-4861-b0bd-6dd773c118cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Header">
+      <UniqueIdentifier>{8bc0b96b-8c14-4683-8464-02f2a9b4d80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons">
+      <UniqueIdentifier>{c76be566-4924-46d7-8c84-a8154e51706e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Source">
+      <UniqueIdentifier>{02c3741c-10b6-4b9c-a971-f90c8468e03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Headers">
+      <UniqueIdentifier>{10d05fe6-cec9-4ab6-b951-e0b0377598d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{9354bbbe-a4a2-4bde-95be-be50e5ba08dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StepTimer.h">
@@ -68,9 +89,6 @@
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameObject2D.h">
-      <Filter>GameObjects\2D\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageGO2D.h">
       <Filter>GameObjects\2D\Headers</Filter>
     </ClInclude>
     <ClInclude Include="TextGO2D.h">
@@ -154,6 +172,81 @@
     <ClInclude Include="RenderTarget.h">
       <Filter>Base\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGO2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DestructionMask.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StageObject.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Homerun.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileLauncher.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AllWeapons.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Grenade.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Dropper.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Healthbar.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBox.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -228,6 +321,72 @@
     <ClCompile Include="RenderTarget.cpp">
       <Filter>Base\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DestructionMask.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StageObject.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Homerun.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileLauncher.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Grenade.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Dropper.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Healthbar.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -243,5 +402,28 @@
     <ResourceCompile Include="resource.rc">
       <Filter>Base</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="levels\test_stage2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\stages.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\waluigi.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy1.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy3.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy4.json">
+      <Filter>Levels</Filter>
+    </None>
   </ItemGroup>
 </Project>

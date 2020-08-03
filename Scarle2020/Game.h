@@ -11,6 +11,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Audio.h"
+#include "Stage.h"
+#include "LevelManager.h"
+#include "Menu.h"
 
 using std::list;
 
@@ -69,6 +72,8 @@ private:
 
     void OnDeviceLost();
 
+    void LoadLevel();
+
     // Device resources.
     HWND                                            m_window;
     int                                             m_outputWidth;
@@ -115,4 +120,11 @@ private:
 
     //base line for 2D destrucable terrain
     RenderTarget* m_terrain = NULL;
+
+    //LevelManager* m_level = nullptr;
+    //
+    //Menu* m_menu = nullptr;
+
+    std::vector<Screen*> m_stack;
+
 };

@@ -19,6 +19,10 @@
 #include "SpriteFont.h"
 #include "CommonStates.h"
 
+//Objects
+#include "Worm.h"
+#include "Stage.h"
+
 extern void ExitGame();
 
 using namespace DirectX;
@@ -27,8 +31,8 @@ using Microsoft::WRL::ComPtr;
 
 Game::Game() noexcept :
     m_window(nullptr),
-    m_outputWidth(800),
-    m_outputHeight(600),
+    m_outputWidth(1280),
+    m_outputHeight(720),
     m_featureLevel(D3D_FEATURE_LEVEL_9_1)
 {
 }
@@ -49,9 +53,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_keyboard = std::make_unique<Keyboard>();
     m_mouse = std::make_unique<Mouse>();
     m_mouse->SetWindow(_window);
-    m_mouse->SetMode(Mouse::MODE_RELATIVE);
-    //Hide the mouse pointer
-    ShowCursor(false);
+    m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
+    ShowCursor(true);
 
     //seed the random number generator
     srand((UINT)time(NULL));
@@ -80,7 +83,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //find how big my window is to correctly calculate my aspect ratio
     float AR = (float)_width / (float)_height;
-
+        
+    /*
     //create a base camera
     m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
     m_cam->SetPos(Vector3(0.0f, 200.0f, 200.0f));
@@ -90,66 +94,9 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_light = new Light(Vector3(0.0f, 100.0f, 160.0f), Color(1.0f, 1.0f, 1.0f, 1.0f), Color(0.4f, 0.1f, 0.1f, 1.0f));
     m_GameObjects.push_back(m_light);
 
-    //add Player
-    Player* pPlayer = new Player("BirdModelV1", m_d3dDevice.Get(), m_fxFactory);
-    m_GameObjects.push_back(pPlayer);
-
     //add a secondary camera
-    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 10.0f, 50.0f));
-    m_GameObjects.push_back(m_TPScam);
-
-    //example basic 3D stuff
-    Terrain* terrain = new Terrain("table", m_d3dDevice.Get(), m_fxFactory, Vector3(100.0f, 0.0f, 100.0f), 0.0f, 0.0f, 0.0f, 0.25f * Vector3::One);
-    m_GameObjects.push_back(terrain);
-
-    FileVBGO* terrainBox = new FileVBGO("terrainTex", m_d3dDevice.Get());
-    m_GameObjects.push_back(terrainBox);
-
-    FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
-    m_GameObjects.push_back(Box);
-    Box->SetPos(Vector3(0.0f, 0.0f, -100.0f));
-    Box->SetPitch(XM_PIDIV4);
-    Box->SetScale(20.0f);
-
-    //L-system like tree
-    m_GameObjects.push_back(new Tree(4, 4, .6f, 10.0f * Vector3::Up, XM_PI / 6.0f, "JEMINA vase -up", m_d3dDevice.Get(), m_fxFactory));
-
-    VBCube* cube = new VBCube();
-    cube->init(11, m_d3dDevice.Get());
-    cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
-    cube->SetScale(4.0f);
-    m_GameObjects.push_back(cube);
-
-    VBSpike* spikes = new VBSpike();
-    spikes->init(11, m_d3dDevice.Get());
-    spikes->SetPos(Vector3(0.0f, 0.0f, 100.0f));
-    spikes->SetScale(4.0f);
-    m_GameObjects.push_back(spikes);
-
-    VBSpiral* spiral = new VBSpiral();
-    spiral->init(11, m_d3dDevice.Get());
-    spiral->SetPos(Vector3(-100.0f, 0.0f, 0.0f));
-    spiral->SetScale(4.0f);
-    m_GameObjects.push_back(spiral);
-
-    VBPillow* pillow = new VBPillow();
-    pillow->init(11, m_d3dDevice.Get());
-    pillow->SetPos(Vector3(-100.0f, 0.0f, -100.0f));
-    pillow->SetScale(4.0f);
-    m_GameObjects.push_back(pillow);
-
-    VBSnail* snail = new VBSnail(m_d3dDevice.Get(), "shell", 150, 0.98f, 0.09f * XM_PI, 0.4f, Color(1.0f, 0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 1.0f, 1.0f));
-    snail->SetPos(Vector3(-100.0f, 0.0f, 100.0f));
-    snail->SetScale(2.0f);
-    m_GameObjects.push_back(snail);
-
-    //Marching Cubes
-    VBMarchCubes* VBMC = new VBMarchCubes();
-    VBMC->init(Vector3(-8.0f, -8.0f, -17.0f), Vector3(8.0f, 8.0f, 23.0f), 60.0f * Vector3::One, 0.01, m_d3dDevice.Get());
-    VBMC->SetPos(Vector3(100, 0, -100));
-    VBMC->SetPitch(-XM_PIDIV2);
-    VBMC->SetScale(Vector3(3, 3, 1.5));
-    m_GameObjects.push_back(VBMC);
+    //m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 10.0f, 50.0f));
+    //m_GameObjects.push_back(m_TPScam);
 
     //create DrawData struct and populate its pointers
     m_DD = new DrawData;
@@ -157,40 +104,46 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_DD->m_states = m_states;
     m_DD->m_cam = m_cam;
     m_DD->m_light = m_light;
+    */
 
     //create GameData struct and populate its pointers
     m_GD = new GameData;
     m_GD->m_GS = GS_PLAY_MAIN_CAM;
 
-    //example basic 2D stuff
-    ImageGO2D* logo = new ImageGO2D("logo_small", m_d3dDevice.Get());
-    logo->SetPos(200.0f * Vector2::One);
-    m_GameObjects2D.push_back(logo);
-
-    TextGO2D* text = new TextGO2D("Test Text");
-    text->SetPos(Vector2(100, 10));
-    text->SetColour(Color((float*)&Colors::Yellow));
-    m_GameObjects2D.push_back(text);
-
     //Test Sounds
-    Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
-    loop->SetVolume(0.1f);
-    loop->Play();
-    m_Sounds.push_back(loop);
+    //Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
+    //loop->SetVolume(0.1f);
+    //loop->Play();
+    //m_Sounds.push_back(loop);
 
-    TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
-    m_Sounds.push_back(TS);
+    //TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
+    //m_Sounds.push_back(TS);
 
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
+
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
 
     //create RenderTarget for Terrain
     //TODO: What size do you REALLY need for this?
-    m_terrain = new RenderTarget(m_d3dDevice.Get(), 200, 200);
+    m_terrain = new RenderTarget(m_d3dDevice.Get(), m_outputWidth, m_outputHeight);
+
+    //m_level = new LevelManager(m_d3dDevice.Get());
+    ////m_level->SetupLevel("test_stage2", 4, m_d3dDevice.Get());
+    //m_level->SetupLevel("test_stage2", 2, 2);
+
+   auto m_menu = new Menu(m_d3dDevice.Get());
+   m_menu->SetupMenu();
+
+
+    //auto level = new LevelManager(m_d3dDevice.Get());
+    //level->SetupLevel("test_stage2", 2, 2);
+
+    m_stack.push_back(m_menu);
+
+    //alpha = new ImageGO2D("alpha_test", m_d3dDevice.Get());
+    //alpha->SetPos(Vector2(600, 600));
 }
 
 // Executes the basic game loop.
@@ -230,26 +183,32 @@ void Game::Update(DX::StepTimer const& _timer)
     ReadInput();
     //upon space bar switch camera state
     //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
-    if (m_GD->m_KBS_tracker.pressed.Space)
-    {
-        if (m_GD->m_GS == GS_PLAY_MAIN_CAM)
-        {
-            m_GD->m_GS = GS_PLAY_TPS_CAM;
-        }
-        else
-        {
-            m_GD->m_GS = GS_PLAY_MAIN_CAM;
-        }
-    }
 
-    //update all objects
+    //update all objects  TODO: Move to manager
+    /*
     for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
     {
         (*it)->Tick(m_GD);
     }
+    */
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
         (*it)->Tick(m_GD);
+    }
+
+    if (m_stack.size() > 0)
+    {
+        m_stack.back()->Update(m_GD, m_terrain, m_d3dContext.Get());
+        LoadLevel();
+        if (m_stack.back()->DeleteScreen())
+        {
+            delete m_stack.back();
+            m_stack.pop_back();
+        }
+    }
+    else
+    {
+        ExitGame();
     }
 
     elapsedTime;
@@ -266,49 +225,7 @@ void Game::Render()
 
     Clear();
 
-    //set immediate context of the graphics device
-    m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
-
-    //set which camera to be used
-    m_DD->m_cam = m_cam;
-    if (m_GD->m_GS == GS_PLAY_TPS_CAM)
-    {
-        m_DD->m_cam = m_TPScam;
-    }
-
-    //update the constant buffer for the rendering of VBGOs
-    VBGO::UpdateConstantBuffer(m_DD);
-
-    //Draw 3D Game Obejects
-    for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
-    {
-        (*it)->Draw(m_DD);
-    }
-/*
-    //Code potentially for drawing into the Terrain RenderTarget
-    //Draw stuff to the render texture
-    m_terrain->Begin(m_d3dContext.Get());
-    m_terrain->ClearRenderTarget(m_d3dContext.Get(), 0.f, 0.f, 0.f, 0.f);
-    m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        //draw background stuff to begin with (probably only need to do this at the start of a level
-    m_DD2D->m_Sprites->End();
-    m_terrain->End(m_d3dContext.Get());
-
-    //Code potentially for digging from the Terrain
-    //Destruction of the terrain
-    m_terrain->Begin(m_d3dContext.Get());
-    m_d3dContext->OMSetBlendState(m_terrain->GetDigBlend(), 0, 0xffffff);
-    m_DD2D->m_Sprites->Begin(DirectX::SpriteSortMode_Deferred, m_terrain->GetDigBlend());
-        //Draw Destruction here
-    m_DD2D->m_Sprites->End();
-    m_terrain->End(m_d3dContext.Get());
-
-    //draw the terrain at the back
-    m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-    m_DD2D->m_Sprites->Draw(m_terrain->GetShaderResourceView(), XMFLOAT2(0.0f, 0.0f));
-    m_DD2D->m_Sprites->End();
-*/
-    // Draw sprite batch stuff 
+    // Draw sprite batch stuff
     m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
     for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
     {
@@ -316,9 +233,14 @@ void Game::Render()
     }
     m_DD2D->m_Sprites->End();
 
+    if (m_stack.size() > 0)
+    {
+        m_stack.back()->Draw(m_DD2D, m_terrain, m_d3dContext.Get(), m_states);
+    }
+
     //drawing text screws up the Depth Stencil State, this puts it back again!
     m_d3dContext->OMSetDepthStencilState(m_states->DepthDefault(), 0);
-
+    
     Present();
 }
 
@@ -326,7 +248,15 @@ void Game::Render()
 void Game::Clear()
 {
     // Clear the views.
-    m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::MidnightBlue);
+    if (m_stack.size() > 0)
+    {
+        m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), m_stack.back()->GetBG());
+    }
+    else
+    {
+        m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::SkyBlue);
+    }
+
     m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
     m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
@@ -342,7 +272,7 @@ void Game::Present()
     // The first argument instructs DXGI to block until VSync, putting the application
     // to sleep until the next VSync. This ensures we don't waste any cycles rendering
     // frames that will never be displayed to the screen.
-    HRESULT hr = m_swapChain->Present(1, 0);
+     HRESULT hr = m_swapChain->Present(1, 0);
 
     // If the device was reset we must completely reinitialize the renderer.
     if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
@@ -380,10 +310,10 @@ void Game::OnResuming()
 
 void Game::OnWindowSizeChanged(int _width, int _height)
 {
-    m_outputWidth = std::max(_width, 1);
-    m_outputHeight = std::max(_height, 1);
-
-    CreateResources();
+   //m_outputWidth = std::max(_width, 1);
+   //m_outputHeight = std::max(_height, 1);
+   //
+   //CreateResources();
 
     // TODO: Game window is being resized.
 }
@@ -392,8 +322,8 @@ void Game::OnWindowSizeChanged(int _width, int _height)
 void Game::GetDefaultSize(int& _width, int& _height) const
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
-    _width = 800;
-    _height = 600;
+    _width = 1280;
+    _height = 720;
 }
 
 // These are the resources that depend on the device.
@@ -579,15 +509,25 @@ void Game::ReadInput()
     m_GD->m_KBS = m_keyboard->GetState();
     m_GD->m_KBS_tracker.Update(m_GD->m_KBS);
     //quit game on hiting escape
-    if (m_GD->m_KBS.Escape)
-    {
-        ExitGame();
-    }
+    //if (m_GD->m_KBS.Escape)
+    //{
+    //    ExitGame();
+    //}
 
     m_GD->m_MS = m_mouse->GetState();
 
     //lock the cursor to the centre of the window
     RECT window;
     GetWindowRect(m_window, &window);
-    SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
+  //  SetCursorPos((window.left + window.right) >> 1, (window.bottom + window.top) >> 1);
+}
+
+void Game::LoadLevel()
+{
+    auto new_screen = m_stack.back()->Load();
+
+    if (new_screen)
+    {
+        m_stack.push_back(new_screen);
+    }
 }

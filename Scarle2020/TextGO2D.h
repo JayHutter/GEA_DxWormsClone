@@ -14,6 +14,11 @@ public:
 
 	virtual void Tick(GameData* _GD);
 	virtual void Draw(DrawData2D* _DD);
+	virtual void OnCollisionEnter(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollision(GameData* _GD, GameObject2D* _other) {}
+	virtual void OnCollisionExit(GameData* _GD, GameObject2D* _other) {}
+
+	void SetText(string _text);
 protected:
 	string m_text;
 };
