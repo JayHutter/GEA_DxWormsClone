@@ -552,7 +552,7 @@ void LevelManager::SetupWinScreen()
 	{
 		int score = m_teams[m_leaderboard[i]].GetScore();
 		TextGO2D* team_info = new TextGO2D(std::to_string(score));
-		team_info->SetPos(Vector2(640, 500 - (20 * m_teams.size() * i)));
+		team_info->SetPos(Vector2(640, 500 - ((300 / m_teams.size()) * i)));
 		team_info->SetColour(m_teams[m_leaderboard[i]].Colour());
 
 		m_objects.push_back(team_info);
