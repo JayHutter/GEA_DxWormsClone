@@ -38,6 +38,8 @@ void Mine::Tick(GameData* _GD)
 	if (c_phys->GetVel().x > 10 || c_phys->GetVel().y > 10)
 	{
 		m_triggered = false;
+		m_prevent_swap = false;
+		m_colour = Colors::White;
 	}
 
 	if (m_triggered)
