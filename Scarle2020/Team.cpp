@@ -54,7 +54,7 @@ void Team::CycleWorm()
 		return;
 	}
 
-	for (int i = m_current; i < m_current + m_worms.size(); i++)
+	for (int i = m_current +1; i < m_current + m_worms.size(); i++)
 	{
 		i %= m_worms.size();
 		if (!m_worms[i]->IsDead())
