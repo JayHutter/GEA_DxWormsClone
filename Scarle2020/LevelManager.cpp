@@ -172,6 +172,14 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 //Game States
 void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
+	CheckTeamDeath();
+
+	if (CheckWin())
+	{
+		m_state = GameState::RESULTS;
+		return;
+	}
+
 	m_teams[m_active].Control(_GD, m_d3d11device);
 	if (Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
@@ -193,12 +201,17 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 		m_timer = 3;
 		m_state = GameState::TEAMCHANGE;
 	}
-
-	CheckTeamDeath();
 }
 
 void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
+	CheckTeamDeath();
+	if (CheckWin())
+	{
+		m_state = GameState::RESULTS;
+		return;
+	}
+
 	if (!Timer(_GD->m_dt, m_teams[m_active].Colour()))
 	{
 		m_teams[m_active].Control(_GD, m_d3d11device);
@@ -210,8 +223,6 @@ void LevelManager::UsingWeapon(GameData* _GD, RenderTarget* _terrain, ID3D11Devi
 	}
 
 	GameTimer(_GD->m_dt);
-
-	CheckTeamDeath();
 }
 
 void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
@@ -229,12 +240,6 @@ void LevelManager::ChangeTeam(GameData* _GD, RenderTarget* _terrain, ID3D11Devic
 		m_timer = 2;
 		m_game_time = 30;
 		m_state = GameState::RISING;
-		return;
-	}
-
-	if (CheckWin())
-	{
-		m_state = GameState::RESULTS;
 		return;
 	}
 
