@@ -18,6 +18,10 @@ Team::Team(ID3D11Device* _GD, int _worms, Color _colour, int _port, std::vector<
 
 	Vector2 hud_pos = Vector2(20, 650 - (34 * _port));
 	m_hud = new Healthbar(m_total_health, m_colour, hud_pos, _GD);
+	m_weapon_disp = new TextGO2D("0");
+	m_weapon_disp->SetColour(m_colour);
+	m_weapon_disp->SetScale(0.5f);
+	m_weapon_disp->SetPos(Vector2(-200, 0));
 }
 
 Team::~Team()
@@ -162,6 +166,8 @@ void Team::RenderHUD(DrawData2D* _DD)
 void Team::RenderWormHUD(DrawData2D* _DD)
 {
 	m_worms[m_current]->DrawName(_DD);
+	UpdateWeaponDisplay();
+	m_weapon_disp->Draw(_DD);
 }
 
 void Team::DeleteWorm(Worm* _worm)
@@ -316,5 +322,16 @@ void Team::CheckDamage()
 	if (health < m_start_health)
 	{
 		m_end = true;
+	}
+}
+
+void Team::UpdateWeaponDisplay()
+{
+	m_weapon_disp->SetText(std::to_string(m_available[m_selection]));
+	m_weapon_disp->SetPos(m_worms[m_current]->GetPos() - Vector2(0, 75));
+
+	if (m_available[m_selection] == -1)
+	{
+		m_weapon_disp->SetText("INF");
 	}
 }

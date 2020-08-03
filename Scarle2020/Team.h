@@ -45,6 +45,7 @@ private:
 	void CycleWorm();
 	void UpdateHealth();	
 	void CheckDamage();
+	void UpdateWeaponDisplay();
 
 	//Team Info
 	Color m_colour = Colors::Red;
@@ -62,6 +63,8 @@ private:
 	bool m_charging = false;
 	bool m_can_attack = true;
 	float m_charge = 0;
+
+	TextGO2D* m_weapon_disp = nullptr;
 
 	int m_total_health = 0;
 	int m_placing = 0;
