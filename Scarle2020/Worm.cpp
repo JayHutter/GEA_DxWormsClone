@@ -50,10 +50,14 @@ void Worm::Move(float _dir)
 	{
 		c_phys->SetVelocityX(50 * _dir);
 
-		m_dir = 1;
+		
 		if (_dir < 0)
 		{
 			m_dir = -1;
+		}
+		if (_dir > 0)
+		{
+			m_dir = 1;
 		}
 	}
 }
