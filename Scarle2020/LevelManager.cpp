@@ -183,10 +183,17 @@ void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceConte
 	m_teams[m_active].Tick(_GD);
 	if (m_teams[m_active].UseWeapon(_GD, m_objects, m_d3d11device))
 	{
-		m_timer = 5;
+		m_timer = 4;
 		m_state = GameState::USINGWEAPON;
 	}
 	m_teams[m_active].ChangeWormSprite(_GD, m_d3d11device);
+
+	if (m_teams[m_active].EndTurn())
+	{
+		m_timer = 3;
+		m_state = GameState::TEAMCHANGE;
+	}
+
 	CheckTeamDeath();
 }
 

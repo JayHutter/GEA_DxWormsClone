@@ -37,6 +37,8 @@ void Team::Tick(GameData* _GD)
 	{
 		weapon->SetPos(m_worms[m_current]->GetPos());
 	}
+
+	CheckDamage();
 }
 
 void Team::Update(GameData* _GD)
@@ -231,6 +233,7 @@ void Team::OnStartTrun()
 	m_can_attack = true;
 
 	CycleWorm();
+	m_start_health = m_worms[m_current]->Health();
 }
 
 void Team::Control(GameData* _GD, ID3D11Device* _DD)
@@ -304,4 +307,14 @@ bool Team::SetScore(int _score)
 int Team::GetScore()
 {
 	return m_score;
+}
+
+void Team::CheckDamage()
+{
+	float health = m_worms[m_current]->Health();
+
+	if (health < m_start_health)
+	{
+		m_end = true;
+	}
 }

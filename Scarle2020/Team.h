@@ -44,6 +44,7 @@ private:
 	void CycleWeapon(int _dir);
 	void CycleWorm();
 	void UpdateHealth();	
+	void CheckDamage();
 
 	//Team Info
 	Color m_colour = Colors::Red;
@@ -67,5 +68,6 @@ private:
 	Healthbar* m_hud = nullptr;
 	bool m_end = false;
 	int m_score = 1;
+	float m_start_health = 0;
 };
 
