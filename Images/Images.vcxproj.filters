@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ImageContentTask Include="logo_small.png" />
+    <ImageContentTask Include="default.png" />
+    <ImageContentTask Include="worm.png" />
+    <ImageContentTask Include="test_stage.png" />
+    <ImageContentTask Include="test_stage2.png" />
+    <ImageContentTask Include="alpha_test.png" />
+    <ImageContentTask Include="enclosure.png" />
+    <ImageContentTask Include="destruction_mask.png" />
+    <ImageContentTask Include="explosion.png" />
+    <ImageContentTask Include="Banana.png" />
+    <ImageContentTask Include="Frag.png" />
+    <ImageContentTask Include="Grenade.png" />
+    <ImageContentTask Include="Holy.png" />
+    <ImageContentTask Include="Mine.png" />
+    <ImageContentTask Include="Missile.png" />
+    <ImageContentTask Include="TNT.png" />
+    <ImageContentTask Include="Teleport.png" />
+    <ImageContentTask Include="Bowling.png" />
+    <ImageContentTask Include="WormBanana.png" />
+    <ImageContentTask Include="WormBat.png" />
+    <ImageContentTask Include="WormBowling.png" />
+    <ImageContentTask Include="WormFrag.png" />
+    <ImageContentTask Include="WormGrenade.png" />
+    <ImageContentTask Include="WormHoly.png" />
+    <ImageContentTask Include="WormMine.png" />
+    <ImageContentTask Include="WormMissile.png" />
+    <ImageContentTask Include="WormTNT.png" />
+    <ImageContentTask Include="WormTeleport.png" />
+    <ImageContentTask Include="BananaFragment.png" />
+    <ImageContentTask Include="FragFragment.png" />
+    <ImageContentTask Include="Grave.png" />
+    <ImageContentTask Include="Health.png" />
+    <ImageContentTask Include="Healthbar.png" />
+    <ImageContentTask Include="HealthbarTrans.png" />
+    <ImageContentTask Include="HealthTrans.png" />
+    <ImageContentTask Include="Sea.png" />
+    <ImageContentTask Include="NoStage.png" />
+    <ImageContentTask Include="Button.png" />
+    <ImageContentTask Include="waluigi.png" />
+    <ImageContentTask Include="snowy1.png" />
+    <ImageContentTask Include="snowy2.png" />
+    <ImageContentTask Include="snowy3.png" />
+    <ImageContentTask Include="snowy4.png" />
+    <ImageContentTask Include="snowyborder.png" />
+  </ItemGroup>
+</Project>

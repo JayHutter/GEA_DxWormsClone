@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>a5f418e7-b12a-4ee2-baf9-06024dbcde64</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{d95c8634-c1d4-432c-9836-d439c5d8809e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{faa4cf3b-901f-4ea5-a28d-4da4e6330111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Headers">
+      <UniqueIdentifier>{0a60f31a-4209-4087-8eac-2d339131c9f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Source">
+      <UniqueIdentifier>{7c4af275-eef3-44d7-91a9-67a1741cd24e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\2D">
+      <UniqueIdentifier>{72f175c9-aaff-4c7e-adfa-37d8a4d783c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\2D\Headers">
+      <UniqueIdentifier>{5bdaafad-c698-449e-94dd-89523380ec4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\2D\Source">
+      <UniqueIdentifier>{dd659469-b5d3-4c0d-a385-05199eec72d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\3D">
+      <UniqueIdentifier>{2ad05af7-6a23-4c30-aee6-7303c8ed988c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\3D\Headers">
+      <UniqueIdentifier>{b9766528-7a26-4537-b247-90ed605ef36d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\3D\Source">
+      <UniqueIdentifier>{a0d26c7c-0e3c-4bc9-9a5b-8a44b6ed1ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{519f581a-87e1-4e0f-bc5a-02520bafd65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Headers">
+      <UniqueIdentifier>{a8e3b563-54e0-4a9b-a545-ec48c23ee6f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Source">
+      <UniqueIdentifier>{3a9a7c92-ea31-4c2b-a902-3a6fd59547bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Component">
+      <UniqueIdentifier>{bcb9c3e1-51c6-4bf0-9744-e9fd77975f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Component\Headers">
+      <UniqueIdentifier>{c30649d7-8872-48b1-b701-ff87e59d7b5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Component\Source">
+      <UniqueIdentifier>{2244ace4-8ea8-4180-aa77-bd32ee7241d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers">
+      <UniqueIdentifier>{c5798edc-391b-4a9f-994a-9604e0a5dced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Source">
+      <UniqueIdentifier>{193b80e3-2e2d-4861-b0bd-6dd773c118cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Mangers\Header">
+      <UniqueIdentifier>{8bc0b96b-8c14-4683-8464-02f2a9b4d80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons">
+      <UniqueIdentifier>{c76be566-4924-46d7-8c84-a8154e51706e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Source">
+      <UniqueIdentifier>{02c3741c-10b6-4b9c-a971-f90c8468e03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Weapons\Headers">
+      <UniqueIdentifier>{10d05fe6-cec9-4ab6-b951-e0b0377598d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{9354bbbe-a4a2-4bde-95be-be50e5ba08dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawData2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextGO2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectList.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawData.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMOGO.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fileVBGO.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MarchCubes.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TPSCamera.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeBit.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VBCube.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VBGO.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VBPillow.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VBSnail.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VBspiral.h">
+      <Filter>GameObjects\3D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Loop.h">
+      <Filter>Sound\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSound.h">
+      <Filter>Sound\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGO2D.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComp.h">
+      <Filter>GameObjects\Component\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DestructionMask.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StageObject.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Homerun.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileLauncher.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AllWeapons.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Grenade.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Dropper.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.h">
+      <Filter>GameObjects\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Healthbar.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>Base\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBox.h">
+      <Filter>GameObjects\2D\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>GameObjects\Mangers\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Base\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Base\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Base\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject2D.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGO2D.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TextGO2D.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CMOGO.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="fileVBGO.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MarchCubes.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TPSCamera.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="treebit.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VBCube.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VBGO.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="VBSnail.cpp">
+      <Filter>GameObjects\3D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Loop.cpp">
+      <Filter>Sound\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSound.cpp">
+      <Filter>Sound\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>Base\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComp.cpp">
+      <Filter>GameObjects\Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DestructionMask.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="StageObject.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Homerun.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileLauncher.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Grenade.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Dropper.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>GameObjects\Weapons\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Healthbar.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>GameObjects\2D\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>GameObjects\Mangers\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest">
+      <Filter>Assets</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Base</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="levels\test_stage2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\stages.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\waluigi.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy1.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy2.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy3.json">
+      <Filter>Levels</Filter>
+    </None>
+    <None Include="levels\snowy4.json">
+      <Filter>Levels</Filter>
+    </None>
+  </ItemGroup>
+</Project>
