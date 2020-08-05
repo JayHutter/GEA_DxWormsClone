@@ -37,6 +37,7 @@ Command InputBox::Clicked(GameData* _GD)
 	return Button::Clicked(_GD);
 }
 
+//Convert key press to integer
 void InputBox::GetInputValue(GameData* _GD)
 {
 	auto key = _GD->m_KBS;

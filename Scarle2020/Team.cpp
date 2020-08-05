@@ -257,6 +257,7 @@ void Team::Control(GameData* _GD, ID3D11Device* _DD)
 		return;
 	}
 
+	//Dont test input if in air
 	if (worm->GetPhysComp()->AirTime() < 0.15f)
 	{
 		worm->Move(_GD->m_KBS.D + (_GD->m_KBS.A * -1));
@@ -315,6 +316,7 @@ int Team::GetScore()
 	return m_score;
 }
 
+//Test if worm has received damage this turn to end turn
 void Team::CheckDamage()
 {
 	float health = m_worms[m_current]->Health();

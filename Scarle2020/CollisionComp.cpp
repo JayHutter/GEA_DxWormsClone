@@ -68,6 +68,7 @@ bool CollisionComp::TerrainCollision(RenderTarget* _render_target, ID3D11DeviceC
 }
 */
 
+//Test if side has collided with pixel
 bool CollisionComp::TerrainCollision(RenderTarget* _render_target, ID3D11DeviceContext* _context, GameData* _GD, Vector2 _pos, Side _vert, Side _hori)
 {
 	switch (_vert)
@@ -139,6 +140,7 @@ std::array<int, 4> CollisionComp::TerrainCollsionV(RenderTarget* _render_target,
 	return pixels;	
 }
 
+//Calculate the collision normal from the collision data
 Vector2 CollisionComp::CalculateNormal(std::array<int, 4> _collisions)
 {
 	Vector2 normal = Vector2::Zero;
@@ -207,6 +209,7 @@ RECT CollisionComp::Hitbox()
 	return hitbox;
 }
 
+//Calculate normal if collided with anohter object
 Vector2 CollisionComp::CalculateNormal(RECT _other)
 {	
 	Vector2 other_pos = Vector2(_other.left + ((_other.right - _other.left) / 2),

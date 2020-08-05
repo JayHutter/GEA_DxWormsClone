@@ -8,7 +8,6 @@ Explosion::Explosion(Worm* _owner, ID3D11Device* _GD) : ImageGO2D("explosion", _
 	//c_collider = new CollisionComp(128, 128);
 }
 
-
 void Explosion::SetData(float _size, Vector2 _pos, float _damage, float _knockback)
 {
 	m_scale = Vector2(_size, _size);

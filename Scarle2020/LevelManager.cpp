@@ -130,6 +130,7 @@ void LevelManager::SetupLevel(string _name, int _teams, int _worms)
 	m_state = GameState::SETUPSWAP;
 }
 
+//Game flow
 void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	QuitGame(_GD);
@@ -169,7 +170,7 @@ void LevelManager::Update(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceCon
 	}
 }
 
-//Game States
+
 void LevelManager::Play(GameData* _GD, RenderTarget* _terrain, ID3D11DeviceContext* _context)
 {
 	CheckTeamDeath();
@@ -353,6 +354,7 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 			TestCollisions(_GD, obj);
 		}
 
+		//Spawn any objects from existing objects if requested
 		if (dynamic_cast<Weapon*>(obj))
 		{
 			if (dynamic_cast<Weapon*>(obj)->Spawn(_GD, m_objects, m_d3d11device))
@@ -388,6 +390,7 @@ void LevelManager::ManageObjects(GameData* _GD, RenderTarget* _terrain, ID3D11De
 	_terrain->Unmap(_context);
 }
 
+//Test object to object collision
 void LevelManager::TestCollisions(GameData* _GD, GameObject2D* _object)
 {
 	auto coll = _object->GetCollider();
@@ -486,6 +489,7 @@ void LevelManager::SpawnExplosion(GameObject2D* _object)
 	DeleteObject(_object);
 }
 
+//Delete the object data and remove it from the object list
 bool LevelManager::DeleteObject(GameObject2D* _obj)
 {
 	//Dont delete worms
@@ -517,6 +521,7 @@ void LevelManager::WinScreen(GameData* _GD)
 	}
 }
 
+//Sort the team order
 void LevelManager::CalculateLeaderboard()
 {
 	std::vector<int> scores;
