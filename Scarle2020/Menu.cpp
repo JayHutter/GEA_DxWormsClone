@@ -51,6 +51,7 @@ void Menu::SetupMenu()
 	LoadStage();
 }
 
+//Load all available levels
 void Menu::GetLevels()
 {
 	std::ifstream file("levels/stages.json");
@@ -102,6 +103,7 @@ void Menu::Draw(DrawData2D* _DD, RenderTarget* _terrain, ID3D11DeviceContext* _c
 	_DD->m_Sprites->End();
 }
 
+//Run speicifed command the button triggers
 void Menu::TestButtons(GameData* _GD)
 {
 	for (auto b : m_buttons)
@@ -172,6 +174,7 @@ void Menu::PlayGame()
 	m_start = true;
 }
 
+//Load a preview of the stage
 void Menu::LoadStage()
 {
 	delete m_stage;

@@ -85,6 +85,7 @@ void PhysicsComp::SetFrictionVal(float _mu)
 	mu = _mu;
 }
 
+//Push object up if stuck
 void PhysicsComp::StuckInGround(Vector2 _velocity)
 {
 	_velocity.Normalize();

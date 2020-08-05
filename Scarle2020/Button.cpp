@@ -26,6 +26,7 @@ Button::Button(Command _command, Vector2 _pos, Vector2 _scale, string _text, ID3
 	m_disp->SetScale(2);
 }
 
+//Highligh if cursor collide return true if clicked
 Command Button::Clicked(GameData* _GD)
 {
 	auto mouse = _GD->m_MS;

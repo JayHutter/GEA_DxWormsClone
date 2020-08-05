@@ -24,6 +24,7 @@ void GameObject2D::AddHealth(int _health)
 	m_health += _health;
 }
 
+//If the passed object previously collide with this object
 bool GameObject2D::IsCollided(GameObject2D* _obj)
 {
 	auto it = std::find(m_collided.begin(), m_collided.end(), _obj);
